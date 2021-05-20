@@ -1,12 +1,9 @@
 #include "vec2.h"
 
+#include "MathHelper.h"
+
 #include <cmath>
 #include <cassert>
-
-namespace
-{
-	constexpr float kBiasF = 0.001f;
-}
 
 template<typename T>
 vec2<T>::vec2():x(0),y(0)
@@ -201,6 +198,12 @@ vec2<T> orthogonalVec(const vec2<T>& v)
 	return vec2<T>(-v.y, v.x);
 }
 
+template<typename T>
+bool isParallelVec(const vec2<T>& a, const vec2<T>& b)
+{
+	return dot(orthogonalVec(a), b) == 0;
+}
+
 #pragma region Specialization
 template <>
 vec2u vec2u::operator - () const
@@ -212,14 +215,20 @@ vec2u vec2u::operator - () const
 template <>
 bool operator == (const vec2f& a, float value)
 {
-	return std::fabsf(a.x) <= kBiasF && std::fabsf(a.y) <= kBiasF;
+	return MathHelper::isEqual(a.x,value) && MathHelper::isEqual(a.y, value);
 }
 
 template <> 
 bool operator == (const vec2f& a, const vec2f& b)
 {
 	auto vec_dif = a - b;
-	return vec_dif == kBiasF;
+	return vec_dif == MathHelper::kBiasF;
+}
+
+template <>
+bool isParallelVec(const vec2f& a, const vec2f& b)
+{
+	return MathHelper::isEqual(dot(orthogonalVec(a), b), 0.0f);
 }
 #pragma endregion
 
