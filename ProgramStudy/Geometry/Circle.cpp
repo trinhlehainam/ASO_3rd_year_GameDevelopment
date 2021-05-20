@@ -63,5 +63,5 @@ void Circle::Update(float deltaTime_ms)
 
 void Circle::SpecialAction()
 {
-	Speed = -Speed * 1.25f;
+	SetAlive(false);
 }

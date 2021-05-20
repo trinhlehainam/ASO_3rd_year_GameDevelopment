@@ -33,4 +33,5 @@ void Triangle::Update(float deltaTime_ms)
 
 void Triangle::SpecialAction()
 {
+	
 }

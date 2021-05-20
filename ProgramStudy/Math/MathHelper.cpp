@@ -83,11 +83,31 @@ namespace MathHelper
 		return isOverlap(cir, rect);
 	}
 
+	bool isOverlap(const AABB& a, const AABB& b)
+	{
+		auto aLeft = a.Pos.x;
+		auto aRight = a.Pos.x + a.Size.x;
+		auto aTop = a.Pos.y;
+		auto aBottom = a.Pos.y + a.Size.y;
+
+		auto bLeft = b.Pos.x;
+		auto bRight = b.Pos.x + b.Size.x;
+		auto bTop = b.Pos.y;
+		auto bBottom = b.Pos.y + b.Size.y;
+
+		return isOverlap(aLeft, aRight, bLeft, bRight) && isOverlap(aTop, aBottom, bTop, bBottom);
+	}
+
 	bool isOverlap(const line2& a, const line2& b)
 	{
 		if (!isParallelVec(a.dir, b.dir))
 			return true;
 		return isEquivalent(a, b);
+	}
+
+	bool isOverlap(float minA, float maxA, float minB, float maxB)
+	{
+		return maxA >= minB && maxA <= maxB;
 	}
 
 	bool isOverlap(const IShape* a, const IShape* b)
@@ -106,7 +126,15 @@ namespace MathHelper
 		}
 		else if (a->Type == IShape::TYPE::AABB)
 		{
+			auto rectA = dynamic_cast<const AABB*>(a);
 
+			if (b->Type == IShape::TYPE::AABB)
+			{
+				auto rectB = dynamic_cast<const AABB*>(b);
+				
+				if (isOverlap(*rectA, *rectB))
+					return true;
+			}
 		}
 
 		return false;
