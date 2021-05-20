@@ -1,5 +1,7 @@
 #pragma once
 
+#include "vec2.h"
+
 namespace MathHelper
 {
 	// Floating point numbers are rarely exact the same.
@@ -23,10 +25,15 @@ namespace MathHelper
 	float randf(float min, float max);
 	template<typename T> bool isEqual(T a, T b);
 
+	bool isEquivalent(const line2& a, const line2& b);
+};
+
+namespace MathHelper
+{
 	bool isOverlap(const IShape* a, const IShape* b);
 	bool isOverlap(const Circle& a, const Circle& b);
 	bool isOverlap(const Circle& cir, const AABB& rect);
 	bool isOverlap(const AABB& rect, const Circle& cir);
 	bool isOverlap(const line2& a, const line2& b);
-};
+}
 

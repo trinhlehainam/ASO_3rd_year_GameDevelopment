@@ -1,5 +1,7 @@
 #include "Circle.h"
 
+#include "../Math/MathHelper.h"
+
 #include <DxLib.h>
 
 Circle::Circle():IShape(TYPE::CIRCLE),Radius(0.0f)

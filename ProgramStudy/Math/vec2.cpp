@@ -189,7 +189,7 @@ vec2<T> reflectionVec(const vec2<T>& i, const vec2<T>& n)
 template<typename T>
 vec2<T> projectVec(const vec2<T>& v, const vec2<T>& onto)
 {
-	return onto*(dot(v,onto)/dot(onto,onto));
+	return onto * (dot(v, onto) / dot(onto, onto));
 }
 
 template<typename T>
@@ -291,6 +291,7 @@ template float dot(const vec2f& a, const vec2f& b);
 template vec2f reflectionVec(const vec2f& i, const vec2f& n);
 template vec2f projectVec(const vec2f& v, const vec2f& n);
 template vec2f orthogonalVec(const vec2f& v);
+
 #pragma endregion
 
 #pragma region double
@@ -307,6 +308,7 @@ template bool operator >= (const vec2d& a, const vec2d& b);
 template bool operator >  (const vec2d& a, const vec2d& b);
 template bool operator <= (const vec2d& a, const vec2d& b);
 template bool operator <  (const vec2d& a, const vec2d& b);
+
 template double dot(const vec2d& a, const vec2d& b);
 template vec2d reflectionVec(const vec2d& i, const vec2d& n);
 template vec2d projectVec(const vec2d& vi, const vec2d& onto);

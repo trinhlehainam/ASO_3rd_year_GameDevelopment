@@ -3,6 +3,7 @@
 #include <iostream>
 
 #include <DxLib.h>
+#include "../Math/MathHelper.h"
 
 AABB::AABB():IShape(TYPE::AABB),Size()
 {

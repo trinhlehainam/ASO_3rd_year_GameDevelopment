@@ -44,6 +44,7 @@ namespace MathHelper
 	{
 		return std::abs(a - b) <= kBiasD;
 	}
+
 #pragma endregion
 
 
@@ -51,12 +52,20 @@ namespace MathHelper
 	template bool isEqual(int, int);
 	template bool isEqual(unsigned int, unsigned int);
 	template bool isEqual(short, short);
+	
 #pragma endregion
-
 };
 
 namespace MathHelper
 {
+	bool isEquivalent(const line2& a, const line2& b)
+	{
+		if (!isParallelVec(a.dir, b.dir))
+			return false;
+
+		return isParallelVec(a.base - b.base, a.dir);
+	}
+
 	bool isOverlap(const Circle& a, const Circle& b)
 	{
 		auto d = a.Pos - b.Pos;
@@ -78,7 +87,7 @@ namespace MathHelper
 	{
 		if (!isParallelVec(a.dir, b.dir))
 			return true;
-		return line2::isEquivalent(a, b);
+		return isEquivalent(a, b);
 	}
 
 	bool isOverlap(const IShape* a, const IShape* b)
