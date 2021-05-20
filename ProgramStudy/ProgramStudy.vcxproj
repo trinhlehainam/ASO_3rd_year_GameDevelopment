@@ -146,7 +146,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Math\line2.cpp" />
-    <ClCompile Include="Utilities\PhysicsHelper.cpp" />
+    <ClCompile Include="Math\segment2.cpp" />
     <ClCompile Include="Geometry\ChristmasTree.cpp" />
     <ClCompile Include="Geometry\Circle.cpp" />
     <ClCompile Include="Geometry\GeometryManager.cpp" />
@@ -162,7 +162,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Math\line2.h" />
-    <ClInclude Include="Utilities\PhysicsHelper.h" />
+    <ClInclude Include="Math\segment2.h" />
     <ClInclude Include="Geometry\ChristmasTree.h" />
     <ClInclude Include="Geometry\Circle.h" />
     <ClInclude Include="Geometry\GeometryManager.h" />

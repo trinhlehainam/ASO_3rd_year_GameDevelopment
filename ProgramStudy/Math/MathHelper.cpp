@@ -2,6 +2,10 @@
 
 #include <cmath>
 
+#include "../Math/line2.h"
+#include "../Geometry/AABB.h"
+#include "../Geometry/Circle.h"
+
 namespace MathHelper
 {
 	const float kBiasF = 0.001f;
@@ -50,3 +54,52 @@ namespace MathHelper
 #pragma endregion
 
 };
+
+namespace MathHelper
+{
+	bool isOverlap(const Circle& a, const Circle& b)
+	{
+		auto d = a.Pos - b.Pos;
+		auto r = a.Radius + b.Radius;
+		return d * d <= r * r;
+	}
+
+	bool isOverlap(const Circle& cir, const AABB& rect)
+	{
+		return false;
+	}
+
+	bool isOverlap(const AABB& rect, const Circle& cir)
+	{
+		return isOverlap(cir, rect);
+	}
+
+	bool isOverlap(const line2& a, const line2& b)
+	{
+		if (!isParallelVec(a.dir, b.dir))
+			return true;
+		return line2::isEquivalent(a, b);
+	}
+
+	bool isOverlap(const IShape* a, const IShape* b)
+	{
+		if (a->Type == IShape::TYPE::CIRCLE)
+		{
+			auto circleA = dynamic_cast<const Circle*>(a);
+
+			if (b->Type == IShape::TYPE::CIRCLE)
+			{
+				auto circleB = dynamic_cast<const Circle*>(b);
+
+				if (isOverlap(*circleA, *circleB))
+					return true;
+			}
+		}
+		else if (a->Type == IShape::TYPE::AABB)
+		{
+
+		}
+
+		return false;
+	}
+}

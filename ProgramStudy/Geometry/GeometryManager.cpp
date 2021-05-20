@@ -1,7 +1,6 @@
 #include "GeometryManager.h"
 
 #include "../Math/MathHelper.h"
-#include "../Utilities/PhysicsHelper.h"
 
 #include "IShape.h"
 #include "AABB.h"
@@ -43,7 +42,7 @@ void GeometryManager::Update(float deltaTime_ms)
 		{
 			if (i == j)
 				continue;
-			if (PhysicsHelper::CheckCollision(m_shapes[i].get(), m_shapes[j].get()))
+			if (MathHelper::isOverlap(m_shapes[i].get(), m_shapes[j].get()))
 			{
 				m_activeDelete = true;
 				m_activeAdd = true;

@@ -12,7 +12,9 @@ struct line2
 
 	vec2f base;
 	vec2f dir;
+
+	static bool isEquivalent(const line2& a, const line2& b);
 };
 
-bool isEquivalent(const line2& a, const line2& b);
+
 
