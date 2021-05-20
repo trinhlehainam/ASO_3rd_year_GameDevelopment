@@ -1,5 +1,6 @@
 #include "PhysicsHelper.h"
 
+#include "../Math/line2.h"
 #include "../Geometry/AABB.h"
 #include "../Geometry/Circle.h"
 
@@ -20,6 +21,13 @@ namespace PhysicsHelper
 	bool CheckCollision(const AABB& rect, const Circle& cir)
 	{
 		return CheckCollision(cir, rect);
+	}
+
+	bool CheckCollision(const line2& a, const line2& b)
+	{
+		if (!isParallelVec(a.dir, b.dir))
+			return true;
+		return isEquivalent(a,b);
 	}
 
 	bool CheckCollision(const IShape* a, const IShape* b)

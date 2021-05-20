@@ -4,10 +4,10 @@
 
 namespace MathHelper
 {
-	// Floating point numbers are rarely exact the same.
-	// -> Two floating point numbers are equal when they are in range of below bias
 	const float kBiasF = 0.001f;
 	const double kBiasD = 0.0001;
+
+	const float kMsToSecond = 1 / 1000.0f;
 }
 
 namespace MathHelper

@@ -2,8 +2,13 @@
 
 namespace MathHelper
 {
+	// Floating point numbers are rarely exact the same.
+	// -> Two floating point numbers are equal when they are in range of below bias
 	extern const float kBiasF;
 	extern const double kBiasD;
+	//
+
+	extern const float kMsToSecond;
 }
 
 namespace MathHelper

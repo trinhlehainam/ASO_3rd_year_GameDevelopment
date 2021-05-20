@@ -6,17 +6,13 @@
 #include <Dxlib.h>
 
 #include "_debug/_DebugDispOut.h"
+#include "Math/MathHelper.h"
 
 #include "Geometry/GeometryManager.h"
 #include "Geometry/AABB.h"
 #include "Geometry/Circle.h"
 #include "Geometry/Triangle.h"
 #include "Geometry/ChristmasTree.h"
-
-namespace
-{
-	constexpr float MS_TO_SECOND = 1/1000.0f;
-}
 
 int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
 {
@@ -55,7 +51,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 		ClearDrawScreen();
 		geoMng.Render();
 
-		DxLib::DrawFormatString(20, 10, GetColor(255, 255, 255), "FPS : %.2f", deltaTime_ms / MS_TO_SECOND);
+		DxLib::DrawFormatString(20, 10, GetColor(255, 255, 255), "FPS : %.2f", deltaTime_ms / MathHelper::kMsToSecond);
 
 		_dbgDraw();
 		ScreenFlip();
