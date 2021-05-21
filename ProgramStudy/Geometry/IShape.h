@@ -32,7 +32,7 @@ public:
 
 public:
 	// Limit shape's position in Range(width, height)
-	virtual void ConstrainPosition(float width, float height) = 0;
+	virtual bool ConstrainPosition(float width, float height) = 0;
 	virtual void Update(float deltaTime_ms) = 0;
 	virtual void SpecialAction() = 0;
 

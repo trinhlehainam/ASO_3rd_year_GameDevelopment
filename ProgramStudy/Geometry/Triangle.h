@@ -10,7 +10,7 @@ public:
 	explicit Triangle(vec2f a, vec2f b, vec2f c, unsigned int color);
 	explicit Triangle(vec2f a, vec2f b, vec2f c, vec2f speed, unsigned int color);
 
-	void ConstrainPosition(float width, float height) override;
+	bool ConstrainPosition(float width, float height) override;
 	void Update(float deltaTime_ms) override;
 	void Draw() override;
 	void Draw(float scale) override;

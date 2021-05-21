@@ -1,5 +1,7 @@
 #include "ChristmasTree.h"
 
+#include <algorithm>
+
 #include "AABB.h"
 #include "Triangle.h"
 
@@ -24,12 +26,25 @@ ChristmasTree::~ChristmasTree()
 {
 }
 
-void ChristmasTree::ConstrainPosition(float width, float height)
+bool ChristmasTree::ConstrainPosition(float width, float height)
 {
+	for (const auto& elem : Elements)
+	{
+		if (elem->ConstrainPosition(width, height))
+		{
+			Speed = elem->Speed;
+			return true;
+		}
+	}
+		
+	return false;
 }
 
 void ChristmasTree::Update(float deltaTime_ms)
 {
+	for (const auto& element : Elements)
+		element->Speed = Speed;
+
 	for (const auto& element : Elements)
 		element->Update(deltaTime_ms);
 }

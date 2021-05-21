@@ -10,7 +10,7 @@ public:
     explicit AABB(vec2f pos, vec2f speed, vec2f size, unsigned int color);
     ~AABB();
 
-    void ConstrainPosition(float width, float height) override;
+    bool ConstrainPosition(float width, float height) override;
     void Update(float deltaTime_ms) override;
     void SpecialAction() override;
     void Draw() override;

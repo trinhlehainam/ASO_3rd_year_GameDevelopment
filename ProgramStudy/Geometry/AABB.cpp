@@ -35,7 +35,7 @@ void AABB::Draw(float scale)
 	DxLib::DrawBoxAA(Pos.x, Pos.y, (Pos.x + Size.x) * scale, (Pos.y + Size.y) * scale, Color, 1);
 }
 
-void AABB::ConstrainPosition(float width, float height)
+bool AABB::ConstrainPosition(float width, float height)
 {
 	vec2f n;
 	if (Pos.x <= 0.0f)
@@ -58,7 +58,11 @@ void AABB::ConstrainPosition(float width, float height)
 		n = vec2f(0.0f, -1.0f);
 		Pos.y = height - Size.y;
 	}
+
+	if (n == 0.0f) return false;
 	Speed = reflectionVec(Speed, n);
+
+	return true;
 }
 
 void AABB::Update(float deltaTime_ms)

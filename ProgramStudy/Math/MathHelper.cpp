@@ -177,6 +177,10 @@ namespace MathHelper
 					return true;
 			}
 		}
+		else if (a->Type == IShape::TYPE::CHRISTMAS_TREE)
+		{
+
+		}
 
 		return false;
 	}

@@ -11,7 +11,7 @@ public:
     explicit ChristmasTree(vec2f pos, vec2f speed);
     ~ChristmasTree();
 
-    virtual void ConstrainPosition(float width, float height) override;
+    virtual bool ConstrainPosition(float width, float height) override;
     virtual void Update(float deltaTime_ms) override;
     virtual void SpecialAction() override;
     virtual void Draw() override;

@@ -32,7 +32,7 @@ void Triangle::Draw(float scale)
 	DxLib::DrawTriangleAA(P[0].x, P[0].y, P[1].x, P[1].y, P[2].x, P[2].y, Color, 1);
 }
 
-void Triangle::ConstrainPosition(float width, float height)
+bool Triangle::ConstrainPosition(float width, float height)
 {
 	vec2f maxVec{ std::max({ P[0].x,P[1].x,P[2].x }),std::max({ P[0].y,P[1].y,P[2].y }) };
 	vec2f minVec{ std::min({ P[0].x,P[1].x,P[2].x }),std::min({ P[0].y,P[1].y,P[2].y }) };
@@ -55,7 +55,10 @@ void Triangle::ConstrainPosition(float width, float height)
 		n = vec2f(0.0f, -1.0f);
 	}
 
+	if (n == 0.0f) return false;
 	Speed = reflectionVec(Speed, n);
+
+	return true;
 }
 
 void Triangle::Update(float deltaTime_ms)

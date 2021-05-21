@@ -30,7 +30,7 @@ void Circle::Draw(float scale)
 	DxLib::DrawCircleAA(Pos.x, Pos.y, Radius * scale, 32, Color);
 }
 
-void Circle::ConstrainPosition(float width, float height)
+bool Circle::ConstrainPosition(float width, float height)
 {
 	vec2f n;
 	if (Pos.x - Radius <= 0)
@@ -53,7 +53,11 @@ void Circle::ConstrainPosition(float width, float height)
 		n = vec2f(0.0f, -1.0f);
 		Pos.y = height - Radius;
 	}
+	if (n == 0.0f) return false;
+
 	Speed = reflectionVec(Speed, n);
+
+	return true;
 }
 
 void Circle::Update(float deltaTime_ms)

@@ -9,7 +9,7 @@ public:
     explicit Circle(vec2f pos, float radius, unsigned int color);
     explicit Circle(vec2f pos, vec2f speed, float radius, unsigned int color);
 
-    void ConstrainPosition(float width, float height) override;
+    bool ConstrainPosition(float width, float height) override;
     void Update(float deltaTime_ms) override;
     void Draw() override;
     void Draw(float scale) override;
