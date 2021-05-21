@@ -1,0 +1,3 @@
+// TODO : SpecialAction will receive vector objects (std::vector<std::unique_ptr<IShape>>)
+// TODO : Some object when go out of screen will be deleted -> Use ConstrainPosition to set up this feature
+// TODO : Object that contain multiple shapes : if one shape is affected -> whole object is affected depend on this one shape
