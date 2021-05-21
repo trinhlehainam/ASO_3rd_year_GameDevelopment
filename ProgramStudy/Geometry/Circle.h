@@ -5,9 +5,9 @@ class Circle :
 {
 public:
     Circle();
-    explicit Circle(float x, float y, float radius);
-    explicit Circle(vec2f pos, float radius);
-    explicit Circle(vec2f pos, vec2f speed, float radius);
+    explicit Circle(float x, float y, float radius, unsigned int color);
+    explicit Circle(vec2f pos, float radius, unsigned int color);
+    explicit Circle(vec2f pos, vec2f speed, float radius, unsigned int color);
 
     void ConstrainPosition(float width, float height) override;
     void Update(float deltaTime_ms) override;

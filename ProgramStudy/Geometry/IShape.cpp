@@ -4,19 +4,19 @@ IShape::IShape():Pos(),IsAlive(true)
 {
 }
 
-IShape::IShape(TYPE type):Type(type), IsAlive(true)
+IShape::IShape(TYPE type, unsigned int color):Type(type), Color(color) ,IsAlive(true)
 {
 }
 
-IShape::IShape(TYPE type, float x, float y):Pos(x,y),Type(type), IsAlive(true)
+IShape::IShape(TYPE type, float x, float y, unsigned int color): Pos(x, y), Type(type), Color(color), IsAlive(true)
 {
 }
 
-IShape::IShape(TYPE type, vec2f pos):Pos(pos), Type(type), IsAlive(true)
+IShape::IShape(TYPE type, vec2f pos, unsigned int color):Pos(pos), Type(type), Color(color), IsAlive(true)
 {
 }
 
-IShape::IShape(TYPE type, vec2f pos, vec2f speed):Pos(pos),Speed(speed), Type(type), IsAlive(true)
+IShape::IShape(TYPE type, vec2f pos, vec2f speed, unsigned int color): Pos(pos), Speed(speed), Type(type), Color(color) ,IsAlive(true)
 {
 }
 

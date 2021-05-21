@@ -1,9 +1,9 @@
 #include "vec2.h"
 
-#include "MathHelper.h"
-
 #include <cmath>
 #include <cassert>
+
+#include "MathHelper.h"
 
 template<typename T>
 vec2<T>::vec2():x(0),y(0)
@@ -178,6 +178,20 @@ template<typename T>
 T dot(const vec2<T>& a, const vec2<T>& b)
 {
 	return a.x * b.x + a.y * b.y;
+}
+
+template<typename T>
+T length(const vec2<T>& v)
+{
+	return static_cast<T>(std::sqrt(v.x * v.x + v.y * v.y));
+}
+
+template<typename T>
+vec2<T> unitVec(const vec2<T>& v)
+{
+	auto l = length(v);
+	assert(!MathHelper::isEqual<T>(l,0));
+	return v / l;
 }
 
 template<typename T>

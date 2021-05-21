@@ -5,9 +5,9 @@ class AABB :
 {
 public:
     AABB();
-    explicit AABB(float x, float y, float width, float height);
-    explicit AABB(vec2f pos, vec2f size);
-    explicit AABB(vec2f pos, vec2f speed, vec2f size);
+    explicit AABB(float x, float y, float width, float height, unsigned int color);
+    explicit AABB(vec2f pos, vec2f size, unsigned int color);
+    explicit AABB(vec2f pos, vec2f speed, vec2f size, unsigned int color);
     ~AABB();
 
     void ConstrainPosition(float width, float height) override;

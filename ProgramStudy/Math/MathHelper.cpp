@@ -1,8 +1,10 @@
 #include "MathHelper.h"
 
 #include <cmath>
+#include <algorithm>
 
 #include "../Math/line2.h"
+#include "../Math/segment2.h"
 #include "../Geometry/AABB.h"
 #include "../Geometry/Circle.h"
 
@@ -66,6 +68,24 @@ namespace MathHelper
 		return isParallelVec(a.base - b.base, a.dir);
 	}
 
+	bool isOnSameSide(const line2& l, const segment2& s)
+	{
+		auto orthoVec = orthogonalVec(l.dir);
+		return dot(orthoVec, s.a) * dot(orthoVec, s.b) > 0.0f;
+	}
+
+	range projectSegmentRange(const segment2& s, const vec2f& onto)
+	{
+		auto ontoUnit = onto / std::sqrt(dot(onto,onto));
+
+		range r;
+		r.min = dot(s.a, onto);
+		r.max = dot(s.a, onto);
+		std::sort(&r.min, &r.max);
+
+		return r;
+	}
+
 	bool isOverlap(const Circle& a, const Circle& b)
 	{
 		auto d = a.Pos - b.Pos;
@@ -105,9 +125,30 @@ namespace MathHelper
 		return isEquivalent(a, b);
 	}
 
+	bool isOverlap(const segment2& a, const segment2& b)
+	{
+		line2 axisA{ a.a,a.b - a.a };
+		if(isOnSameSide(axisA, b))
+			return false;
+		
+		line2 axisB{ b.a,b.b - b.a };
+		if (isOnSameSide(axisB, a))
+			return false;
+
+		if (!isParallelVec(axisA.dir, axisB.dir))
+			return true;
+
+		return isOverlap(projectSegmentRange(a, axisA.dir), projectSegmentRange(b, axisA.dir));
+	}
+
 	bool isOverlap(float minA, float maxA, float minB, float maxB)
 	{
 		return maxA >= minB && maxA <= maxB;
+	}
+
+	bool isOverlap(const range& a, const range& b)
+	{
+		return isOverlap(a.min, a.max, b.min, b.max);
 	}
 
 	bool isOverlap(const IShape* a, const IShape* b)

@@ -13,10 +13,10 @@ public:
 	};
 public:
 	IShape();
-	explicit IShape(TYPE type);
-	explicit IShape(TYPE type, float x, float y);
-	explicit IShape(TYPE type, vec2f pos);
-	explicit IShape(TYPE type, vec2f pos, vec2f speed);
+	explicit IShape(TYPE type, unsigned int color);
+	explicit IShape(TYPE type, float x, float y, unsigned int color);
+	explicit IShape(TYPE type, vec2f pos, unsigned int color);
+	explicit IShape(TYPE type, vec2f pos, vec2f speed, unsigned int color);
 	virtual ~IShape();
 
 public:

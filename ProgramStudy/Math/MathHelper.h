@@ -22,18 +22,28 @@ namespace MathHelper
 	float randf(float num);
 	float randf(float min, float max);
 	template<typename T> bool isEqual(T a, T b);
+};
 
-	bool isEquivalent(const line2& a, const line2& b);
+// Value of 2 points in one axis
+struct range
+{
+	float min, max;
 };
 
 namespace MathHelper
 {
+	bool isEquivalent(const line2& a, const line2& b);
+	// Check two points of segment line on the same side that seperated by line
+	bool isOnSameSide(const line2& l, const segment2& s);
+
 	bool isOverlap(float minA, float maxA, float minB, float maxB);
+	bool isOverlap(const range& a, const range& b);
+	bool isOverlap(const line2& a, const line2& b);
+	bool isOverlap(const segment2& a, const segment2& b);
 	bool isOverlap(const IShape* a, const IShape* b);
 	bool isOverlap(const Circle& a, const Circle& b);
 	bool isOverlap(const Circle& cir, const AABB& rect);
 	bool isOverlap(const AABB& rect, const Circle& cir);
 	bool isOverlap(const AABB& a, const AABB& b);
-	bool isOverlap(const line2& a, const line2& b);
 }
 

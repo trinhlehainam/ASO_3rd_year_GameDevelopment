@@ -1,33 +1,66 @@
 #include "Triangle.h"
 
+#include <cmath>
+#include <algorithm>
+
 #include <DxLib.h>
 
-Triangle::Triangle(vec2f a, vec2f b, vec2f c) :Points{ a,b,c }, IShape(IShape::TYPE::TRIANGLE)
+#ifdef max 
+#undef max
+#endif
+
+#ifdef min 
+#undef min
+#endif
+
+Triangle::Triangle(vec2f a, vec2f b, vec2f c, unsigned int color) :P{ a,b,c }, IShape(IShape::TYPE::TRIANGLE, color)
 {
 }
 
-Triangle::Triangle(vec2f a, vec2f b, vec2f c, vec2f speed) : Points{ a,b,c }, IShape(IShape::TYPE::TRIANGLE)
+Triangle::Triangle(vec2f a, vec2f b, vec2f c, vec2f speed, unsigned int color) : P{ a,b,c }, IShape(IShape::TYPE::TRIANGLE, color)
 {
 	Speed = speed;
 }
 
 void Triangle::Draw()
 {
-	DxLib::DrawTriangleAA(Points[0].x, Points[0].y, Points[1].x, Points[1].y, Points[2].x, Points[2].y, GetColor(0, 0, 255), 1);
+	DxLib::DrawTriangleAA(P[0].x, P[0].y, P[1].x, P[1].y, P[2].x, P[2].y, Color, 1);
 }
 
 void Triangle::Draw(float scale)
 {
-	DxLib::DrawTriangleAA(Points[0].x, Points[0].y, Points[1].x, Points[1].y, Points[2].x, Points[2].y, GetColor(0, 0, 255), 1);
+	DxLib::DrawTriangleAA(P[0].x, P[0].y, P[1].x, P[1].y, P[2].x, P[2].y, Color, 1);
 }
 
 void Triangle::ConstrainPosition(float width, float height)
 {
+	vec2f maxVec{ std::max({ P[0].x,P[1].x,P[2].x }),std::max({ P[0].y,P[1].y,P[2].y }) };
+	vec2f minVec{ std::min({ P[0].x,P[1].x,P[2].x }),std::min({ P[0].y,P[1].y,P[2].y }) };
+
+	vec2f n;
+	if (minVec.x <= 0.0f)
+	{
+		n = vec2f{ 1.0f,0.0f };
+	}
+	else if (minVec.y <= 0.0f)
+	{
+		n = vec2f(0.0f, 1.0f);
+	}
+	else if (maxVec.x >= width)
+	{
+		n = vec2f(-1.0f, 0.0f);
+	}
+	else if (maxVec.y >= height)
+	{
+		n = vec2f(0.0f, -1.0f);
+	}
+
+	Speed = reflectionVec(Speed, n);
 }
 
 void Triangle::Update(float deltaTime_ms)
 {
-	for (auto& point : Points)
+	for (auto& point : P)
 		point += Speed * deltaTime_ms;
 }
 
