@@ -47,8 +47,8 @@ vec2<T>& vec2<T>::operator+=(const vec2& other)
 template<typename T>
 vec2<T>& vec2<T>::operator-=(const vec2& other)
 {
-	x += other.x;
-	y += other.y;
+	x -= other.x;
+	y -= other.y;
 	return *this;
 }
 
@@ -210,7 +210,7 @@ vec2<T> projectVec(const vec2<T>& v, const vec2<T>& onto)
 template<typename T>
 vec2<T> orthogonalVec(const vec2<T>& v)
 {
-	return vec2<T>(-v.y, v.x);
+	return vec2<T>{-v.y, v.x};
 }
 
 template<typename T>

@@ -69,5 +69,8 @@ void Triangle::Update(float deltaTime_ms)
 
 void Triangle::SpecialAction()
 {
-	
+	Color = 0xffd700;
+	Speed = -Speed;
+	for (auto& point : P)
+		point += Speed * 0.05f;
 }

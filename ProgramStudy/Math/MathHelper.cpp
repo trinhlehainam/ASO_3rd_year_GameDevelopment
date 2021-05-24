@@ -2,11 +2,13 @@
 
 #include <cmath>
 #include <algorithm>
+#include <array>
 
 #include "../Math/line2.h"
 #include "../Math/segment2.h"
 #include "../Geometry/AABB.h"
 #include "../Geometry/Circle.h"
+#include "../Geometry/Triangle.h"
 
 namespace MathHelper
 {
@@ -71,7 +73,7 @@ namespace MathHelper
 	bool isOnSameSide(const line2& l, const segment2& s)
 	{
 		auto orthoVec = orthogonalVec(l.dir);
-		return dot(orthoVec, s.a) * dot(orthoVec, s.b) > 0.0f;
+		return dot(orthoVec, s.a - l.base) * dot(orthoVec, s.b - l.base) > 0.0f;
 	}
 
 	range projectSegmentRange(const segment2& s, const vec2f& onto)
@@ -118,6 +120,36 @@ namespace MathHelper
 		return isOverlap(aLeft, aRight, bLeft, bRight) && isOverlap(aTop, aBottom, bTop, bBottom);
 	}
 
+	bool isOverlap(const Triangle& a, const Triangle& b)
+	{
+		// Create segments from triangle
+		std::array<segment2, 3> a_segments, b_segments;
+		for (int i = 0; i < 3; ++i)
+		{
+			auto i_next = (i + 1) % 3;
+			a_segments[i].a = a.P[i];
+			a_segments[i].b = a.P[i_next];
+		}
+		for (int i = 0; i < 3; ++i)
+		{
+			auto i_next = (i + 1) % 3;
+			b_segments[i].a = b.P[i];
+			b_segments[i].b = b.P[i_next];
+		}
+		//
+
+		for (const auto& a_segment : a_segments)
+		{
+			for (const auto& b_segment : b_segments)
+			{
+				if (isOverlap(a_segment, b_segment))
+					return true;
+			}
+		}
+
+		return false;
+	}
+
 	bool isOverlap(const line2& a, const line2& b)
 	{
 		if (!isParallelVec(a.dir, b.dir))
@@ -127,11 +159,11 @@ namespace MathHelper
 
 	bool isOverlap(const segment2& a, const segment2& b)
 	{
-		line2 axisA{ a.a,a.b - a.a };
+		line2 axisA{ a.a, a.b - a.a };
 		if(isOnSameSide(axisA, b))
 			return false;
 		
-		line2 axisB{ b.a,b.b - b.a };
+		line2 axisB{ b.a, b.b - b.a };
 		if (isOnSameSide(axisB, a))
 			return false;
 
@@ -177,9 +209,17 @@ namespace MathHelper
 					return true;
 			}
 		}
-		else if (a->Type == IShape::TYPE::CHRISTMAS_TREE)
+		else if (a->Type == IShape::TYPE::TRIANGLE)
 		{
+			auto triA = dynamic_cast<const Triangle*>(a);
 
+			if (b->Type == IShape::TYPE::TRIANGLE)
+			{
+				auto triB = dynamic_cast<const Triangle*>(b);
+
+				if (isOverlap(*triA, *triB))
+					return true;
+			}
 		}
 
 		return false;

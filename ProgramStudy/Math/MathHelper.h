@@ -11,12 +11,6 @@ namespace MathHelper
 	extern const float kMsToSecond;
 }
 
-class AABB;
-class Circle;
-class IShape;
-struct line2;
-struct segment2;
-
 namespace MathHelper
 {
 	float randf(float num);
@@ -30,6 +24,13 @@ struct range
 {
 	float min, max;
 };
+
+class IShape;
+class AABB;
+class Circle;
+class Triangle;
+struct line2;
+struct segment2;
 
 namespace MathHelper
 {
@@ -46,5 +47,6 @@ namespace MathHelper
 	bool isOverlap(const Circle& cir, const AABB& rect);
 	bool isOverlap(const AABB& rect, const Circle& cir);
 	bool isOverlap(const AABB& a, const AABB& b);
+	bool isOverlap(const Triangle& a, const Triangle& b);
 }
 

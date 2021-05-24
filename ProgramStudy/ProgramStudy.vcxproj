@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scenes\IScene.cpp" />
     <ClCompile Include="Math\line2.cpp" />
     <ClCompile Include="Math\segment2.cpp" />
     <ClCompile Include="Geometry\ChristmasTree.cpp" />
@@ -156,11 +157,13 @@
     <ClCompile Include="Math\MathHelper.cpp" />
     <ClCompile Include="Math\vec2.cpp" />
     <ClCompile Include="Geometry\Triangle.cpp" />
+    <ClCompile Include="Scenes\TitleScene.cpp" />
     <ClCompile Include="Utilities\ScopedTimer.cpp" />
     <ClCompile Include="_debug\_DebugConOut.cpp" />
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scenes\IScene.h" />
     <ClInclude Include="Math\line2.h" />
     <ClInclude Include="Math\segment2.h" />
     <ClInclude Include="Geometry\ChristmasTree.h" />
@@ -171,6 +174,7 @@
     <ClInclude Include="Math\MathHelper.h" />
     <ClInclude Include="Math\vec2.h" />
     <ClInclude Include="Geometry\Triangle.h" />
+    <ClInclude Include="Scenes\TitleScene.h" />
     <ClInclude Include="Utilities\ScopedTimer.h" />
     <ClInclude Include="_debug\_DebugConOut.h" />
     <ClInclude Include="_debug\_DebugDispOut.h" />

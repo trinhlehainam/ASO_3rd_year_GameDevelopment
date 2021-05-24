@@ -2,7 +2,7 @@
 
 segment2::segment2() = default;
 
-segment2::segment2(const vec2f& a, const vec2f& b)
+segment2::segment2(const vec2f& a, const vec2f& b):a(a),b(b)
 {
 }
 
