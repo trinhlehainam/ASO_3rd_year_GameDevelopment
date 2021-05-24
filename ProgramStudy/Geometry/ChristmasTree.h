@@ -13,7 +13,7 @@ public:
 
     virtual bool ConstrainPosition(float width, float height) override;
     virtual void Update(float deltaTime_ms) override;
-    virtual void SpecialAction() override;
+    virtual void SpecialAction(std::vector<std::unique_ptr<IShape>>& container) override;
     virtual void Draw() override;
     virtual void Draw(float scale) override;
 

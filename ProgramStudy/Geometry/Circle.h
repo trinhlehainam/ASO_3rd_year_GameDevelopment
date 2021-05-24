@@ -13,7 +13,7 @@ public:
     void Update(float deltaTime_ms) override;
     void Draw() override;
     void Draw(float scale) override;
-    void SpecialAction() override;
+    void SpecialAction(std::vector<std::unique_ptr<IShape>>& container) override;
 
     float Radius;
 };

@@ -46,8 +46,8 @@ void GeometryManager::Update(float deltaTime_ms)
 			{
 				m_activeDelete = true;
 				m_activeAdd = true;
-				m_shapes[i]->SpecialAction();
-				m_shapes[j]->SpecialAction();
+				m_shapes[i]->SpecialAction(m_shapes);
+				m_shapes[j]->SpecialAction(m_shapes);
 			}
 		}
 	}
@@ -62,11 +62,6 @@ void GeometryManager::Update(float deltaTime_ms)
 	if (m_activeAdd)
 	{
 		m_activeAdd = false;
-		if (m_shapes.size() > 10) return;
-		m_shapes.emplace_back(std::make_unique<AABB>(vec2f{ MathHelper::randf(800.0f), MathHelper::randf(600.0f) },
-													 vec2f{ MathHelper::randf(-150.0f, 150.0f), MathHelper::randf(-150.0f,150.0f) },
-													 vec2f{ MathHelper::randf(50.0f,150.0f), MathHelper::randf(50.0f,150.0f) },
-													 0xFF0000));
 	}
 }
 

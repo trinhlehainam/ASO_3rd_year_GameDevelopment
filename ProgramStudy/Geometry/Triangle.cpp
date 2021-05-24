@@ -67,7 +67,7 @@ void Triangle::Update(float deltaTime_ms)
 		point += Speed * deltaTime_ms;
 }
 
-void Triangle::SpecialAction()
+void Triangle::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)
 {
 	Color = 0xffd700;
 	Speed = -Speed;

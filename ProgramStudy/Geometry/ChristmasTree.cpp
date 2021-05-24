@@ -49,7 +49,7 @@ void ChristmasTree::Update(float deltaTime_ms)
 		element->Update(deltaTime_ms);
 }
 
-void ChristmasTree::SpecialAction()
+void ChristmasTree::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)
 {
 }
 

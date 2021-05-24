@@ -28,9 +28,9 @@ void SceneMng::Render()
 }
 
 // Avoid copy and assign
-//SceneMng::SceneMng(const SceneMng&) = default;
-//SceneMng::SceneMng(SceneMng&&) noexcept = default;
-//SceneMng& SceneMng::operator=(const SceneMng&) = default;
-//SceneMng& SceneMng::operator=(SceneMng&&) noexcept = default;
+SceneMng::SceneMng(const SceneMng&) {}
+SceneMng::SceneMng(SceneMng&&) noexcept {}
+void SceneMng::operator=(const SceneMng&) {}
+void SceneMng::operator=(SceneMng&&) noexcept {}
 
 

@@ -1,8 +1,9 @@
 #include "Circle.h"
 
+#include <DxLib.h>
 #include "../Math/MathHelper.h"
 
-#include <DxLib.h>
+#include "AABB.h"
 
 Circle::Circle():IShape(TYPE::CIRCLE, GetColor(0,255,0)),Radius(0.0f)
 {
@@ -65,7 +66,16 @@ void Circle::Update(float deltaTime_ms)
 	Pos += Speed * deltaTime_ms;
 }
 
-void Circle::SpecialAction()
+void Circle::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)
 {
+	if (container.size() < 50)
+	{
+		container.push_back(std::make_unique<AABB>(
+			vec2f{ MathHelper::randf(600.0f,800.0f),MathHelper::randf(400.0f,500.0f) },
+			vec2f{ MathHelper::randf(-100.0f,100.0f),MathHelper::randf(-100.0f,100.0f) },
+			vec2f{ MathHelper::randf(150.0f),MathHelper::randf(150.0f) },
+			0xffffff));
+	}
+	
 	SetAlive(false);
 }

@@ -16,10 +16,10 @@ private:
 	SceneMng();
 private:
 	// Don't allow copy and move semantics
-	//SceneMng(const SceneMng&);
-	//SceneMng(SceneMng&&) noexcept;
-	//SceneMng& operator = (const SceneMng&);
-	//SceneMng& operator = (SceneMng&&) noexcept;
+	SceneMng(const SceneMng&);
+	SceneMng(SceneMng&&) noexcept;
+	void operator = (const SceneMng&);
+	void operator = (SceneMng&&) noexcept;
 	//
 private:
 	std::unique_ptr<IScene> m_scene;
