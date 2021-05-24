@@ -13,8 +13,7 @@
 #include "Geometry/Circle.h"
 #include "Geometry/Triangle.h"
 #include "Geometry/ChristmasTree.h"
-#include "Math/segment2.h"
-#include "Scenes/TitleScene.h"
+#include "Scenes/SceneMng.h"
 
 namespace
 {
@@ -34,8 +33,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 	_dbgSetup(kScreenWidth, kScreenHeight, 255);
 
-	std::unique_ptr<IScene> scene;
-	scene = std::make_unique<TitleScene>();
+	static auto& sceneMng = SceneMng::Instance();
 
 	GeometryManager geoMng(kScreenWidth, kScreenHeight);
 	geoMng.AddShape(std::make_unique<AABB>(vec2f{ 100.0f,50.0f }, vec2f{ 50.0f,50.0f }, vec2f{ 100.0f,100.0f }, 0xFF0000));
@@ -59,11 +57,11 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 
 		float deltaTime_ms = std::chrono::duration<float, std::chrono::seconds::period>(currentTime_chroro - lastTime_chrono).count();
 		geoMng.Update(deltaTime_ms);
-		scene->Update(deltaTime_ms);
+		sceneMng.Update(deltaTime_ms);
 
 		ClearDrawScreen();
 		geoMng.Render();
-		scene->Render();
+		sceneMng.Render();
 
 		DxLib::DrawFormatString(20, 10, GetColor(255, 255, 255), "FPS : %.2f", deltaTime_ms / MathHelper::kMsToSecond);
 

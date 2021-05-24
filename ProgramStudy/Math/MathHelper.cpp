@@ -36,6 +36,12 @@ namespace MathHelper
 		return a == b;
 	}
 
+	template<typename T>
+	T clamp(T value, T min, T max)
+	{
+		return std::max(min,std::min(max, value));
+	}
+
 #pragma region Specialization
 	template <>
 	bool isEqual(float a, float b)
@@ -97,7 +103,11 @@ namespace MathHelper
 
 	bool isOverlap(const Circle& cir, const AABB& rect)
 	{
-		return false;
+		auto clamped_x = clamp(cir.Pos.x, rect.Pos.x, rect.Pos.x + rect.Size.x);
+		auto clamped_y = clamp(cir.Pos.y, rect.Pos.y, rect.Pos.y + rect.Size.y);
+		vec2f closet_point{ clamped_x,clamped_y };
+		auto d = closet_point - cir.Pos;
+		return d * d <= cir.Radius * cir.Radius;
 	}
 
 	bool isOverlap(const AABB& rect, const Circle& cir)
@@ -194,6 +204,13 @@ namespace MathHelper
 				auto circleB = dynamic_cast<const Circle*>(b);
 
 				if (isOverlap(*circleA, *circleB))
+					return true;
+			}
+			if (b->Type == IShape::TYPE::AABB)
+			{
+				auto rectB = dynamic_cast<const AABB*>(b);
+
+				if (isOverlap(*circleA, *rectB))
 					return true;
 			}
 		}

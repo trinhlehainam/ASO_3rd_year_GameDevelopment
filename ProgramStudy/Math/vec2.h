@@ -1,6 +1,4 @@
 #pragma once
-#include <vector>
-#include <array>
 
 template <typename T>
 struct vec2

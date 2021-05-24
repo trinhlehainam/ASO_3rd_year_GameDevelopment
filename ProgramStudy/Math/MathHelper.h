@@ -16,7 +16,7 @@ namespace MathHelper
 	float randf(float num);
 	float randf(float min, float max);
 	template<typename T> bool isEqual(T a, T b);
-
+	template<typename T> T clamp(T value, T min, T max);
 };
 
 // Value of 2 points in one axis
