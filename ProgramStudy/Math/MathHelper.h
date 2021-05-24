@@ -38,11 +38,13 @@ namespace MathHelper
 	// Check two points of segment line on the same side that seperated by line
 	bool isOnSameSide(const line2& l, const segment2& s);
 
+	bool isOverlap(const IShape* a, const IShape* b);
+
 	bool isOverlap(float minA, float maxA, float minB, float maxB);
 	bool isOverlap(const range& a, const range& b);
 	bool isOverlap(const line2& a, const line2& b);
 	bool isOverlap(const segment2& a, const segment2& b);
-	bool isOverlap(const IShape* a, const IShape* b);
+
 	bool isOverlap(const Circle& a, const Circle& b);
 	bool isOverlap(const Circle& cir, const AABB& rect);
 	bool isOverlap(const AABB& rect, const Circle& cir);

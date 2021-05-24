@@ -80,7 +80,7 @@ void AABB::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)
 			vec2f{ MathHelper::randf(200.0f,900.0f),MathHelper::randf(200.0f,600.0f) },
 			vec2f{ MathHelper::randf(-100.0f,100.0f),MathHelper::randf(-100.0f,100.0f) },
 			MathHelper::randf(100.0f),
-			0xffffff));
+			0xe25822));
 	}
 	SetAlive(false);
 }

@@ -74,7 +74,7 @@ void Circle::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)
 			vec2f{ MathHelper::randf(600.0f,800.0f),MathHelper::randf(400.0f,500.0f) },
 			vec2f{ MathHelper::randf(-100.0f,100.0f),MathHelper::randf(-100.0f,100.0f) },
 			vec2f{ MathHelper::randf(150.0f),MathHelper::randf(150.0f) },
-			0xffffff));
+			0x2389da));
 	}
 	
 	SetAlive(false);

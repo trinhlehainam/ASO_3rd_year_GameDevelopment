@@ -199,13 +199,13 @@ namespace MathHelper
 		{
 			auto circleA = dynamic_cast<const Circle*>(a);
 
-			if (b->Type == IShape::TYPE::CIRCLE)
+			/*if (b->Type == IShape::TYPE::CIRCLE)
 			{
 				auto circleB = dynamic_cast<const Circle*>(b);
 
 				if (isOverlap(*circleA, *circleB))
 					return true;
-			}
+			}*/
 			if (b->Type == IShape::TYPE::AABB)
 			{
 				auto rectB = dynamic_cast<const AABB*>(b);
@@ -218,11 +218,18 @@ namespace MathHelper
 		{
 			auto rectA = dynamic_cast<const AABB*>(a);
 
-			if (b->Type == IShape::TYPE::AABB)
+			/*if (b->Type == IShape::TYPE::AABB)
 			{
 				auto rectB = dynamic_cast<const AABB*>(b);
 				
 				if (isOverlap(*rectA, *rectB))
+					return true;
+			}*/
+			if (b->Type == IShape::TYPE::CIRCLE)
+			{
+				auto circleB = dynamic_cast<const Circle*>(b);
+
+				if (isOverlap(*rectA, *circleB))
 					return true;
 			}
 		}
