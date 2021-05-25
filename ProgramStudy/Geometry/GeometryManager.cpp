@@ -11,6 +11,8 @@ namespace
 {
 	bool isOverlap(const IShape* a, const IShape* b)
 	{
+		if (!a->EnableCollision || !b->EnableCollision)
+			return false;
 
 		if (a->Type == IShape::TYPE::CIRCLE)
 		{

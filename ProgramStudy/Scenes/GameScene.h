@@ -1,18 +1,23 @@
 #pragma once
 #include "IScene.h"
 
-class TitleScene :
+#include <memory>
+
+class GeometryManager;
+
+class GameScene :
     public IScene
 {
 public:
-    TitleScene();
-    ~TitleScene();
+    GameScene();
+    ~GameScene();
+
 private:
     bool Init() override;
     void Update(float deltaTime_ms) override;
     void Render() override;
 
 private:
-    int m_hBgImage;
+    std::unique_ptr<GeometryManager> m_geoMng;
 };
 

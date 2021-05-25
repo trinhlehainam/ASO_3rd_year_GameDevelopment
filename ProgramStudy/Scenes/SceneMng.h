@@ -27,7 +27,6 @@ private:
 	//
 private:
 	std::unique_ptr<IScene> m_scene;
-	std::unique_ptr<GeometryManager> m_geoMng;
 	std::chrono::steady_clock::time_point m_lastTime;
 };
 

@@ -145,6 +145,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Scenes\GameScene.cpp" />
     <ClCompile Include="Scenes\SceneMng.cpp" />
     <ClCompile Include="Scenes\IScene.cpp" />
     <ClCompile Include="Math\line2.cpp" />
@@ -164,6 +165,7 @@
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Scenes\GameScene.h" />
     <ClInclude Include="Scenes\SceneMng.h" />
     <ClInclude Include="Scenes\IScene.h" />
     <ClInclude Include="Math\line2.h" />
