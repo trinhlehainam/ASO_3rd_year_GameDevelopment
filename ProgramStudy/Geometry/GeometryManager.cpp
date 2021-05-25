@@ -5,6 +5,67 @@
 #include "IShape.h"
 #include "AABB.h"
 #include "Circle.h"
+#include "Triangle.h"
+
+namespace
+{
+	bool isOverlap(const IShape* a, const IShape* b)
+	{
+
+		if (a->Type == IShape::TYPE::CIRCLE)
+		{
+			auto circleA = dynamic_cast<const Circle*>(a);
+
+			/*if (b->Type == IShape::TYPE::CIRCLE)
+			{
+				auto circleB = dynamic_cast<const Circle*>(b);
+
+				if (isOverlap(*circleA, *circleB))
+					return true;
+			}*/
+			if (b->Type == IShape::TYPE::AABB)
+			{
+				auto rectB = dynamic_cast<const AABB*>(b);
+
+				if (MathHelper::isOverlap(*circleA, *rectB))
+					return true;
+			}
+		}
+		else if (a->Type == IShape::TYPE::AABB)
+		{
+			auto rectA = dynamic_cast<const AABB*>(a);
+
+			/*if (b->Type == IShape::TYPE::AABB)
+			{
+				auto rectB = dynamic_cast<const AABB*>(b);
+
+				if (isOverlap(*rectA, *rectB))
+					return true;
+			}*/
+			if (b->Type == IShape::TYPE::CIRCLE)
+			{
+				auto circleB = dynamic_cast<const Circle*>(b);
+
+				if (MathHelper::isOverlap(*rectA, *circleB))
+					return true;
+			}
+		}
+		else if (a->Type == IShape::TYPE::TRIANGLE)
+		{
+			auto triA = dynamic_cast<const Triangle*>(a);
+
+			if (b->Type == IShape::TYPE::TRIANGLE)
+			{
+				auto triB = dynamic_cast<const Triangle*>(b);
+
+				if (MathHelper::isOverlap(*triA, *triB))
+					return true;
+			}
+		}
+
+		return false;
+	}
+}
 
 GeometryManager::GeometryManager(float screenWidth, float screenHeight):
 	m_screenWidth(screenWidth), m_screenHeight(screenHeight),
@@ -42,7 +103,7 @@ void GeometryManager::Update(float deltaTime_ms)
 		{
 			if (i == j)
 				continue;
-			if (MathHelper::isOverlap(m_shapes[i].get(), m_shapes[j].get()))
+			if (isOverlap(m_shapes[i].get(), m_shapes[j].get()))
 			{
 				m_activeDelete = true;
 				m_activeAdd = true;

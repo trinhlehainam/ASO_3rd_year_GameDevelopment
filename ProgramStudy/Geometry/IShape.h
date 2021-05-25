@@ -28,10 +28,12 @@ public:
 	TYPE Type;
 	bool IsAlive;
 	unsigned int Color;
+	bool EnableCollision;
 
 public:
 	void SetAlive(bool isAlive);
 	void SetColor(unsigned int color);
+	void SetCollisionFlag(bool enableCollision);
 
 public:
 	// Limit shape's position in Range(width, height)
