@@ -1,7 +1,9 @@
 #pragma once
 #include <memory>
+#include <chrono>
 
 class IScene;
+class GeometryManager;
 
 // Singleton
 class SceneMng
@@ -10,8 +12,10 @@ public:
 	static SceneMng& Instance();
 	~SceneMng();
 
-	void Update(float deltaTime_ms);
-	void Render();
+	bool SysInit();
+	void Run();
+	void Exit();
+
 private:
 	SceneMng();
 private:
@@ -23,5 +27,7 @@ private:
 	//
 private:
 	std::unique_ptr<IScene> m_scene;
+	std::unique_ptr<GeometryManager> m_geoMng;
+	std::chrono::steady_clock::time_point m_lastTime;
 };
 

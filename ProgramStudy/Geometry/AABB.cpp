@@ -74,10 +74,10 @@ void AABB::Update(float deltaTime_ms)
 
 void AABB::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)
 {
-	if (container.size() < 50)
+	if (container.size() < 10)
 	{
 		container.push_back(std::make_unique<Circle>(
-			vec2f{ MathHelper::randf(200.0f,900.0f),MathHelper::randf(200.0f,600.0f) },
+			vec2f{ MathHelper::randf(100.0f,900.0f),MathHelper::randf(100.0f,600.0f) },
 			vec2f{ MathHelper::randf(-100.0f,100.0f),MathHelper::randf(-100.0f,100.0f) },
 			MathHelper::randf(100.0f),
 			0xe25822));
