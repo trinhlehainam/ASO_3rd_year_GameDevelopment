@@ -15,7 +15,7 @@ namespace
 	constexpr int kScreenHeight = 768;
 }
 
-#pragma region MyRegion
+#pragma region Pimpl
 class SceneMng::Impl
 {
 public:
