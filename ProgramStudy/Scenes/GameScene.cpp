@@ -46,3 +46,8 @@ void GameScene::Render()
 {
 	m_geoMng->Render();
 }
+
+std::unique_ptr<IScene> GameScene::ChangeScene(std::unique_ptr<IScene>)
+{
+	return std::unique_ptr<IScene>();
+}

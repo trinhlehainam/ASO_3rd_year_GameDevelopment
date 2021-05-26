@@ -22,12 +22,22 @@ public:
 	Impl();
 	~Impl() = default;
 
+	float GetDeltaTime_ms();
+	void UpdateClock();
+
 	std::unique_ptr<IScene> scene;
 	std::chrono::steady_clock::time_point lastTime;
 };
 
-SceneMng::Impl::Impl() :scene(std::make_unique<TitleScene>()), lastTime(std::chrono::high_resolution_clock::now())
+SceneMng::Impl::Impl() :scene(std::make_unique<TitleScene>()), lastTime(std::chrono::high_resolution_clock::now()) {}
+
+float SceneMng::Impl::GetDeltaTime_ms()
 {
+	return std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - lastTime).count();;
+}
+void SceneMng::Impl::UpdateClock()
+{
+	lastTime = std::chrono::high_resolution_clock::now();
 }
 #pragma endregion
 
@@ -39,9 +49,7 @@ SceneMng& SceneMng::Instance()
 
 SceneMng::SceneMng():m_impl(std::make_unique<Impl>()) {}
 
-SceneMng::~SceneMng()
-{
-}
+SceneMng::~SceneMng() {}
 
 bool SceneMng::Init()
 {
@@ -72,21 +80,19 @@ void SceneMng::Run()
 	{
 		_dbgStartDraw();
 
-		float deltaTime_ms = std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - m_impl->lastTime).count();
-		m_impl->lastTime = std::chrono::high_resolution_clock::now();
+		float deltaTime_ms = m_impl->GetDeltaTime_ms();
+		m_impl->UpdateClock();
 
 		m_impl->scene->Update(deltaTime_ms);
 
-		if (CheckHitKey(KEY_INPUT_SPACE))
-		{
-			m_impl->scene = std::make_unique<GameScene>();
-			m_impl->scene->Init();
-		}
+		if (m_impl->scene->enableChangeScene)
+			m_impl->scene = std::move(m_impl->scene->ChangeScene(std::move(m_impl->scene)));
 
 		ClearDrawScreen();
 
 		m_impl->scene->Render();
 
+		// Show FPS
 		DxLib::DrawFormatString(20, 10, GetColor(255, 255, 255), "FPS : %.2f", deltaTime_ms / MathHelper::kMsToSecond);
 
 		_dbgDraw();
