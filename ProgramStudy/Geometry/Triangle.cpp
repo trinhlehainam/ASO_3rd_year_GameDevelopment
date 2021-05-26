@@ -37,26 +37,34 @@ bool Triangle::ConstrainPosition(float width, float height)
 	vec2f maxVec{ std::max({ P[0].x,P[1].x,P[2].x }),std::max({ P[0].y,P[1].y,P[2].y }) };
 	vec2f minVec{ std::min({ P[0].x,P[1].x,P[2].x }),std::min({ P[0].y,P[1].y,P[2].y }) };
 
-	vec2f n;
+	vec2f n{};
+	vec2f offset{};
 	if (minVec.x <= 0.0f)
 	{
 		n = vec2f{ 1.0f,0.0f };
+		offset.x = 0.0f - minVec.x;
 	}
 	else if (minVec.y <= 0.0f)
 	{
 		n = vec2f(0.0f, 1.0f);
+		offset.y = 0.0f - minVec.y;
 	}
 	else if (maxVec.x >= width)
 	{
 		n = vec2f(-1.0f, 0.0f);
+		offset.x = width - maxVec.x;
 	}
 	else if (maxVec.y >= height)
 	{
 		n = vec2f(0.0f, -1.0f);
+		offset.y = height - maxVec.y;
 	}
 
 	if (n == 0.0f) return false;
 	Speed = reflectionVec(Speed, n);
+
+	for (auto& point : P)
+		point += offset;
 
 	return true;
 }

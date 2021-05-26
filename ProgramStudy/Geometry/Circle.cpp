@@ -68,12 +68,12 @@ void Circle::Update(float deltaTime_ms)
 
 void Circle::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)
 {
-	if (container.size() < 10)
+	if (container.size() < 20)
 	{
 		container.push_back(std::make_unique<AABB>(
 			vec2f{ MathHelper::randf(150.0f,850.0f),MathHelper::randf(150.0f,550.0f) },
-			vec2f{ MathHelper::randf(-100.0f,100.0f),MathHelper::randf(-100.0f,100.0f) },
-			vec2f{ MathHelper::randf(150.0f),MathHelper::randf(150.0f) },
+			vec2f{ MathHelper::randf(-150.0f,150.0f),MathHelper::randf(-150.0f,150.0f) },
+			vec2f{ MathHelper::randf(60.0f),MathHelper::randf(60.0f) },
 			0x2389da));
 	}
 	
