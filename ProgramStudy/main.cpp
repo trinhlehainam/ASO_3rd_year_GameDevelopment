@@ -6,7 +6,7 @@ int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine
 {
 
 	auto& sceneMng = SceneMng::Instance();
-	sceneMng.SysInit();
+	sceneMng.Init();
 	sceneMng.Run();
 	sceneMng.Exit();
 

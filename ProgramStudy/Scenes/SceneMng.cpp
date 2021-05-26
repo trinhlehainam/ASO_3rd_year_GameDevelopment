@@ -15,23 +15,35 @@ namespace
 	constexpr int kScreenHeight = 768;
 }
 
+#pragma region MyRegion
+class SceneMng::Impl
+{
+public:
+	Impl();
+	~Impl() = default;
+
+	std::unique_ptr<IScene> scene;
+	std::chrono::steady_clock::time_point lastTime;
+};
+
+SceneMng::Impl::Impl() :scene(std::make_unique<TitleScene>()), lastTime(std::chrono::high_resolution_clock::now())
+{
+}
+#pragma endregion
+
 SceneMng& SceneMng::Instance()
 {
     static SceneMng sceneMng;
     return sceneMng;
 }
 
-SceneMng::SceneMng():
-	m_scene(std::make_unique<TitleScene>()), 
-	m_lastTime(std::chrono::high_resolution_clock::now())
-{
-}
+SceneMng::SceneMng():m_impl(std::make_unique<Impl>()) {}
 
 SceneMng::~SceneMng()
 {
 }
 
-bool SceneMng::SysInit()
+bool SceneMng::Init()
 {
     SetMainWindowText("1916021_TRINH LE HAI NAM");
     ChangeWindowMode(true);
@@ -43,7 +55,7 @@ bool SceneMng::SysInit()
 
     _dbgSetup(kScreenWidth, kScreenHeight, 255);
 
-	m_scene->Init();
+	m_impl->scene->Init();
 
     return true;
 }
@@ -60,20 +72,20 @@ void SceneMng::Run()
 	{
 		_dbgStartDraw();
 
-		float deltaTime_ms = std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - m_lastTime).count();
-		m_lastTime = std::chrono::high_resolution_clock::now();
+		float deltaTime_ms = std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - m_impl->lastTime).count();
+		m_impl->lastTime = std::chrono::high_resolution_clock::now();
 
-		m_scene->Update(deltaTime_ms);
+		m_impl->scene->Update(deltaTime_ms);
 
 		if (CheckHitKey(KEY_INPUT_SPACE))
 		{
-			m_scene = std::make_unique<GameScene>();
-			m_scene->Init();
+			m_impl->scene = std::make_unique<GameScene>();
+			m_impl->scene->Init();
 		}
 
 		ClearDrawScreen();
 
-		m_scene->Render();
+		m_impl->scene->Render();
 
 		DxLib::DrawFormatString(20, 10, GetColor(255, 255, 255), "FPS : %.2f", deltaTime_ms / MathHelper::kMsToSecond);
 
