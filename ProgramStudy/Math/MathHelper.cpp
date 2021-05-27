@@ -62,6 +62,9 @@ namespace MathHelper
 	template bool isEqual(int, int);
 	template bool isEqual(unsigned int, unsigned int);
 	template bool isEqual(short, short);
+
+	template float clamp(float, float, float);
+	template double clamp(double, double, double);
 	
 #pragma endregion
 };
@@ -103,9 +106,7 @@ namespace MathHelper
 
 	bool isOverlap(const Circle& cir, const AABB& rect)
 	{
-		auto clamped_x = clamp(cir.Pos.x, rect.Pos.x, rect.Pos.x + rect.Size.x);
-		auto clamped_y = clamp(cir.Pos.y, rect.Pos.y, rect.Pos.y + rect.Size.y);
-		vec2f closet_point{ clamped_x,clamped_y };
+		auto closet_point = clampVec(cir.Pos, rect.Pos, rect.Pos + rect.Size);
 		auto d = closet_point - cir.Pos;
 		return d * d <= cir.Radius * cir.Radius;
 	}

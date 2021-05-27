@@ -219,6 +219,14 @@ bool isParallelVec(const vec2<T>& a, const vec2<T>& b)
 	return dot(orthogonalVec(a), b) == 0;
 }
 
+template<typename T>
+vec2<T> clampVec(const vec2<T>& value, const vec2<T>& min, const vec2<T>& max)
+{
+	auto clamped_x = MathHelper::clamp(value.x, min.x, max.x);
+	auto clamped_y = MathHelper::clamp(value.y, min.y, max.y);
+	return vec2<T>{clamped_x, clamped_y};
+}
+
 #pragma region Specialization
 template <>
 vec2u vec2u::operator - () const
@@ -306,6 +314,7 @@ template float dot(const vec2f& a, const vec2f& b);
 template vec2f reflectionVec(const vec2f& i, const vec2f& n);
 template vec2f projectVec(const vec2f& v, const vec2f& n);
 template vec2f orthogonalVec(const vec2f& v);
+template vec2f clampVec(const vec2f& value, const vec2f& min, const vec2f& max);
 
 #pragma endregion
 
@@ -328,6 +337,7 @@ template double dot(const vec2d& a, const vec2d& b);
 template vec2d reflectionVec(const vec2d& i, const vec2d& n);
 template vec2d projectVec(const vec2d& vi, const vec2d& onto);
 template vec2d orthogonalVec(const vec2d& v);
+template vec2d clampVec(const vec2d& value, const vec2d& min, const vec2d& max);
 #pragma endregion
 
 #pragma endregion

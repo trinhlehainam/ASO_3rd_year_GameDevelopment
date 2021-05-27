@@ -2,9 +2,8 @@
 
 #include "Scenes/SceneMng.h"
 
-int WINAPI WinMain(HINSTANCE hInstance, HINSTANCE hPrevInstance, LPSTR lpCmdLine, int nCmdShow)
+int WINAPI WinMain(HINSTANCE, HINSTANCE, LPSTR, int)
 {
-
 	auto& sceneMng = SceneMng::Instance();
 	sceneMng.Init();
 	sceneMng.Run();
