@@ -160,6 +160,7 @@
     <ClCompile Include="Math\vec2.cpp" />
     <ClCompile Include="Geometry\Triangle.cpp" />
     <ClCompile Include="Scenes\TitleScene.cpp" />
+    <ClCompile Include="Scenes\TransitionScene.cpp" />
     <ClCompile Include="Utilities\ScopedTimer.cpp" />
     <ClCompile Include="_debug\_DebugConOut.cpp" />
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
@@ -179,6 +180,7 @@
     <ClInclude Include="Math\vec2.h" />
     <ClInclude Include="Geometry\Triangle.h" />
     <ClInclude Include="Scenes\TitleScene.h" />
+    <ClInclude Include="Scenes\TransitionScene.h" />
     <ClInclude Include="Utilities\ScopedTimer.h" />
     <ClInclude Include="_debug\_DebugConOut.h" />
     <ClInclude Include="_debug\_DebugDispOut.h" />

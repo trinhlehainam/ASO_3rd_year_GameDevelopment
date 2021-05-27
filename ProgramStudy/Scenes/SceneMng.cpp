@@ -85,7 +85,7 @@ void SceneMng::Run()
 
 		m_impl->scene->Update(deltaTime_ms);
 
-		if (m_impl->scene->enableChangeScene)
+		if (m_impl->scene->EnableChangeScene)
 			m_impl->scene = std::move(m_impl->scene->ChangeScene(std::move(m_impl->scene)));
 
 		ClearDrawScreen();

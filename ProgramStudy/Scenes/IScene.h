@@ -12,6 +12,6 @@ public:
 	virtual void Render() = 0;
 	virtual std::unique_ptr<IScene> ChangeScene(std::unique_ptr<IScene>) = 0;
 
-	bool enableChangeScene;
+	bool EnableChangeScene;
 };
 

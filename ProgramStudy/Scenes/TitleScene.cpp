@@ -2,6 +2,7 @@
 
 #include <DxLib.h>
 
+#include "TransitionScene.h"
 #include "GameScene.h"
 
 TitleScene::TitleScene()
@@ -22,7 +23,7 @@ bool TitleScene::Init()
 void TitleScene::Update(float deltaTime_ms)
 {
 	if (DxLib::CheckHitKey(KEY_INPUT_SPACE))
-		enableChangeScene = true;
+		EnableChangeScene = true;
 }
 
 void TitleScene::Render()
@@ -34,8 +35,8 @@ void TitleScene::Render()
 
 std::unique_ptr<IScene> TitleScene::ChangeScene(std::unique_ptr<IScene> scene)
 {
-	enableChangeScene = false;
-	scene = std::make_unique<GameScene>();
+	EnableChangeScene = false;
+	scene = std::make_unique<TransitionScene>(std::move(scene), std::make_unique<GameScene>());
 	scene->Init();
 	return scene;
 }
