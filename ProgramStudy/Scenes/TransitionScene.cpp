@@ -22,7 +22,7 @@ TransitionScene::TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr
     m_timer_s(kTransitionTime),
     m_renderAfter(&TransitionScene::RenderSleep)
 {
-    SetUpBeforeScene();
+    SetUpStageBefore();
      m_after->Init();
 }
 
@@ -32,13 +32,11 @@ TransitionScene::TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr
     m_timer_s(kTransitionTime),
     m_renderAfter(&TransitionScene::RenderSleep)
 {
-    SetUpBeforeScene();
+    SetUpStageBefore();
     m_after->Init();
 }
 
-TransitionScene::~TransitionScene()
-{
-}
+TransitionScene::~TransitionScene() {}
 
 bool TransitionScene::Init()
 {
@@ -63,7 +61,7 @@ std::unique_ptr<IScene> TransitionScene::ChangeScene(std::unique_ptr<IScene> sce
     return std::move(m_after);
 }
 
-void TransitionScene::SetUpBeforeScene()
+void TransitionScene::SetUpStageBefore()
 {
     switch (m_stageBefore)
     {
@@ -85,7 +83,7 @@ void TransitionScene::SetUpBeforeScene()
     }
 }
 
-void TransitionScene::SetUpAfterScene()
+void TransitionScene::SetUpStageAfter()
 {
     switch (m_stageAfter)
     {
@@ -110,15 +108,13 @@ void TransitionScene::ChangeStage()
     {
         m_timer_s = kTransitionTime;
         m_stageBefore = STAGE::DONE;
-        SetUpBeforeScene();
-        SetUpAfterScene();
+        SetUpStageBefore();
+        SetUpStageAfter();
         m_stageAfter = STAGE::DONE;
     }
 }
 
-void TransitionScene::RenderSleep(const std::unique_ptr<IScene>& pScene)
-{
-}
+void TransitionScene::RenderSleep(const std::unique_ptr<IScene>& pScene) {}
 
 void TransitionScene::RenderFadeOut(const std::unique_ptr<IScene>& pScene)
 {

@@ -26,8 +26,8 @@ private:
 private:
    using RenderFunc_t = void (TransitionScene::*)(const std::unique_ptr<IScene>&);
    
-   void SetUpBeforeScene();
-   void SetUpAfterScene();
+   void SetUpStageBefore();
+   void SetUpStageAfter();
    void ChangeStage();
 
    void RenderSleep(const std::unique_ptr<IScene>& pScene);
