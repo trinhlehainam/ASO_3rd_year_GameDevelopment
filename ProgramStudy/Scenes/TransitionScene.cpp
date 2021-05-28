@@ -8,11 +8,10 @@ namespace
 }
 
 TransitionScene::TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr<IScene> after):
-    m_before(std::move(before)), m_after(std::move(after)), 
-    m_stageBefore(STAGE::CROSS_OVER), m_stageAfter(STAGE::CROSS_OVER),
+    m_before(std::move(before)), m_after(std::move(after)),
+    m_stageBefore(STAGE::CROSS_OVER), m_stageAfter(STAGE::DONE),
     m_timer_s(kTransitionTime),
-    m_updateFunc(&TransitionScene::UpdateCrossOverScene),
-    m_renderFunc(&TransitionScene::RenderCrossOverScene)
+    m_renderBefore(&TransitionScene::RenderCrossOver), m_renderAfter(&TransitionScene::RenderSleep)
 {
     m_after->Init();
 }
@@ -21,9 +20,9 @@ TransitionScene::TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr
     m_before(std::move(before)), m_after(std::move(after)),
     m_stageBefore(stage), m_stageAfter(stage),
     m_timer_s(kTransitionTime),
-    m_updateFunc(&TransitionScene::UpdateBeforeScene),
-    m_renderFunc(&TransitionScene::RenderBeforeScene)
+    m_renderAfter(&TransitionScene::RenderSleep)
 {
+    SetUpBeforeScene();
      m_after->Init();
 }
 
@@ -31,9 +30,9 @@ TransitionScene::TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr
     m_before(std::move(before)), m_after(std::move(after)),
     m_stageBefore(stageBefore), m_stageAfter(stageAfter),
     m_timer_s(kTransitionTime),
-    m_updateFunc(&TransitionScene::UpdateBeforeScene),
-    m_renderFunc(&TransitionScene::RenderBeforeScene)
+    m_renderAfter(&TransitionScene::RenderSleep)
 {
+    SetUpBeforeScene();
     m_after->Init();
 }
 
@@ -48,13 +47,14 @@ bool TransitionScene::Init()
 
 void TransitionScene::Update(float deltaTime_s)
 {
-    (this->*m_updateFunc)(deltaTime_s);
     m_timer_s -= deltaTime_s;
+    ChangeStage();
 }
 
 void TransitionScene::Render()
 {
-    (this->*m_renderFunc)();
+    (this->*m_renderBefore)(m_before);
+    (this->*m_renderAfter)(m_after);
 }
 
 std::unique_ptr<IScene> TransitionScene::ChangeScene(std::unique_ptr<IScene> scene)
@@ -63,51 +63,80 @@ std::unique_ptr<IScene> TransitionScene::ChangeScene(std::unique_ptr<IScene> sce
     return std::move(m_after);
 }
 
-void TransitionScene::UpdateBeforeScene(float deltaTime_s)
+void TransitionScene::SetUpBeforeScene()
 {
-    if (m_timer_s < 0.0f)
+    switch (m_stageBefore)
     {
-        m_timer_s = kTransitionTime;
-        m_updateFunc = &TransitionScene::UpdateAfterScene;
-        m_renderFunc = &TransitionScene::RenderAfterScene;
+    case STAGE::CROSS_OVER:
+        m_stageAfter = STAGE::DONE;
+        m_renderBefore = &TransitionScene::RenderCrossOver;
+        break;
+    case STAGE::FADE_IN:
+        m_renderBefore = &TransitionScene::RenderFadeIn;
+        break;
+    case STAGE::FADE_OUT:
+        m_renderBefore = &TransitionScene::RenderFadeOut;
+        break;
+    case STAGE::DONE:
+        m_renderBefore = &TransitionScene::RenderSleep;
+        break;
+    default:
+        break;
     }
 }
 
-void TransitionScene::UpdateAfterScene(float deltaTime_s)
+void TransitionScene::SetUpAfterScene()
 {
-    if (m_timer_s < 0.0f)
+    switch (m_stageAfter)
     {
-        m_timer_s = kTransitionTime;
+    case STAGE::FADE_IN:
+        m_renderAfter = &TransitionScene::RenderFadeIn;
+        break;
+    case STAGE::FADE_OUT:
+        m_renderAfter = &TransitionScene::RenderFadeOut;
+        break;
+    case STAGE::DONE:
         EnableChangeScene = true;
+        m_renderAfter = &TransitionScene::RenderSleep;
+        break;
+    default:
+        break;
     }
 }
 
-void TransitionScene::UpdateCrossOverScene(float deltaTime_s)
+void TransitionScene::ChangeStage()
 {
     if (m_timer_s < 0.0f)
     {
         m_timer_s = kTransitionTime;
-        EnableChangeScene = true;
+        m_stageBefore = STAGE::DONE;
+        SetUpBeforeScene();
+        SetUpAfterScene();
+        m_stageAfter = STAGE::DONE;
     }
 }
 
-void TransitionScene::RenderBeforeScene()
+void TransitionScene::RenderSleep(const std::unique_ptr<IScene>& pScene)
+{
+}
+
+void TransitionScene::RenderFadeOut(const std::unique_ptr<IScene>& pScene)
 {
     int alpha = static_cast<int>((m_timer_s * 255) / kTransitionTime);
     DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, alpha);
-    m_before->Render();
+    pScene->Render();
     DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
-void TransitionScene::RenderAfterScene()
+void TransitionScene::RenderFadeIn(const std::unique_ptr<IScene>& pScene)
 {
     int alpha = static_cast<int>((m_timer_s * 255) / kTransitionTime);
     DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, 255 - alpha);
-    m_after->Render();
+    pScene->Render();
     DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
-void TransitionScene::RenderCrossOverScene()
+void TransitionScene::RenderCrossOver(const std::unique_ptr<IScene>& pScene)
 {
     int alpha = static_cast<int>((m_timer_s * 255) / kTransitionTime);
     DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, alpha);

@@ -36,7 +36,7 @@ void TitleScene::Render()
 std::unique_ptr<IScene> TitleScene::ChangeScene(std::unique_ptr<IScene> scene)
 {
 	EnableChangeScene = false;
-	scene = std::make_unique<TransitionScene>(std::move(scene), std::make_unique<GameScene>());
+	scene = std::make_unique<TransitionScene>(std::move(scene), std::make_unique<GameScene>(), TransitionScene::STAGE::FADE_OUT, TransitionScene::STAGE::FADE_IN);
 	scene->Init();
 	return scene;
 }

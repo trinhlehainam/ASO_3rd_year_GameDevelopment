@@ -9,7 +9,8 @@ public:
     {
         FADE_IN,
         FADE_OUT,
-        CROSS_OVER
+        CROSS_OVER,
+        DONE
     };
 public:
     TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr<IScene> after);
@@ -23,24 +24,24 @@ private:
    std::unique_ptr<IScene> ChangeScene(std::unique_ptr<IScene> scene) override;
 
 private:
-   using UpdateFunc_t = void (TransitionScene::*)(float);
-   using RenderFunc_t = void (TransitionScene::*)();
+   using RenderFunc_t = void (TransitionScene::*)(const std::unique_ptr<IScene>&);
    
-   void UpdateBeforeScene(float deltaTime_s);
-   void UpdateAfterScene(float deltaTime_s);
-   void UpdateCrossOverScene(float deltaTime_s);
+   void SetUpBeforeScene();
+   void SetUpAfterScene();
+   void ChangeStage();
 
-   void RenderBeforeScene();
-   void RenderAfterScene();
-   void RenderCrossOverScene();
+   void RenderSleep(const std::unique_ptr<IScene>& pScene);
+   void RenderFadeOut(const std::unique_ptr<IScene>& pScene);
+   void RenderFadeIn(const std::unique_ptr<IScene>& pScene);
+   void RenderCrossOver(const std::unique_ptr<IScene>& pScene);
 private:
     std::unique_ptr<IScene> m_before;
     std::unique_ptr<IScene> m_after;
     STAGE m_stageBefore;
     STAGE m_stageAfter;
 
-    RenderFunc_t m_renderFunc;
-    UpdateFunc_t m_updateFunc;
+    RenderFunc_t m_renderBefore;
+    RenderFunc_t m_renderAfter;
 
     float m_timer_s;
 };
