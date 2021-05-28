@@ -20,7 +20,7 @@ bool TitleScene::Init()
 	return true;
 }
 
-void TitleScene::Update(float deltaTime_ms)
+void TitleScene::Update(float deltaTime_s)
 {
 	if (DxLib::CheckHitKey(KEY_INPUT_SPACE))
 		EnableChangeScene = true;

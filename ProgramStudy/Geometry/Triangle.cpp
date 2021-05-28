@@ -69,10 +69,10 @@ bool Triangle::ConstrainPosition(float width, float height)
 	return true;
 }
 
-void Triangle::Update(float deltaTime_ms)
+void Triangle::Update(float deltaTime_s)
 {
 	for (auto& point : P)
-		point += Speed * deltaTime_ms;
+		point += Speed * deltaTime_s;
 }
 
 void Triangle::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)

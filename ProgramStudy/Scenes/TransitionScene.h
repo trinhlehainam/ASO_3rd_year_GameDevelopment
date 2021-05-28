@@ -15,7 +15,7 @@ public:
     ~TransitionScene();
 private:
    bool Init() override;
-   void Update(float deltaTime_ms) override;
+   void Update(float deltaTime_s) override;
    void Render() override;
    std::unique_ptr<IScene> ChangeScene(std::unique_ptr<IScene> scene) override;
 
@@ -34,6 +34,6 @@ private:
     RenderFunc_t m_renderFunc;
     UpdateFunc_t m_updateFunc;
 
-    int m_count;
+    float m_timer_s;
 };
 

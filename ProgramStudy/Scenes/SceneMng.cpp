@@ -25,11 +25,11 @@ public:
 	void Update();
 	void Render();
 
-	float GetDeltaTime_ms();
+	float GetDeltaTime_s();
 
 	std::unique_ptr<IScene> scene;
 	std::chrono::steady_clock::time_point lastTime;
-	float m_deltaTime_ms;
+	float m_deltaTime_s;
 };
 
 SceneMng::Impl::Impl() :scene(std::make_unique<TitleScene>()), lastTime(std::chrono::high_resolution_clock::now()) {}
@@ -37,9 +37,9 @@ SceneMng::Impl::Impl() :scene(std::make_unique<TitleScene>()), lastTime(std::chr
 void SceneMng::Impl::Update()
 {
 	// Update
-	m_deltaTime_ms = GetDeltaTime_ms();
+	m_deltaTime_s = GetDeltaTime_s();
 	lastTime = std::chrono::high_resolution_clock::now();
-	scene->Update(m_deltaTime_ms);
+	scene->Update(m_deltaTime_s);
 	//
 
 	// Change/Move scene
@@ -50,16 +50,16 @@ void SceneMng::Impl::Update()
 
 void SceneMng::Impl::Render()
 {
-	ClearDrawScreen();
 	_dbgStartDraw();
+	ClearDrawScreen();
 	scene->Render();
 	// Show FPS
-	DxLib::DrawFormatString(20, 10, GetColor(255, 255, 255), "FPS : %.2f", m_deltaTime_ms / MathHelper::kMsToSecond);
+	DxLib::DrawFormatString(20, 10, GetColor(255, 255, 255), "FPS : %.2f", m_deltaTime_s / MathHelper::kMsToSecond);
 	_dbgDraw();
 	ScreenFlip();
 }
 
-float SceneMng::Impl::GetDeltaTime_ms()
+float SceneMng::Impl::GetDeltaTime_s()
 {
 	return std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - lastTime).count();;
 }
@@ -102,7 +102,6 @@ void SceneMng::Run()
 	while (ProcessMessage() != -1 && CheckHitKey(KEY_INPUT_ESCAPE) == 0)
 	{
 		m_impl->Update();
-
 		m_impl->Render();
 	}
 }

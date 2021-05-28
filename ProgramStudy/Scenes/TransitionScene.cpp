@@ -4,7 +4,7 @@
 
 TransitionScene::TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr<IScene> after):
     m_before(std::move(before)), m_after(std::move(after)), 
-    m_count(255),
+    m_timer_s(1.0f),
     m_updateFunc(&TransitionScene::UpdateBeforeScene),
     m_renderFunc(&TransitionScene::RenderBeforeScene)
 {
@@ -36,35 +36,36 @@ std::unique_ptr<IScene> TransitionScene::ChangeScene(std::unique_ptr<IScene> sce
     return std::move(m_after);
 }
 
-void TransitionScene::UpdateBeforeScene(float deltaTime)
+void TransitionScene::UpdateBeforeScene(float deltaTime_ms)
 {
-    if (--m_count < 0)
+    if (m_timer_s < 0.0f)
     {
-        m_count = 0;
+        m_timer_s = 3.0f;
         m_updateFunc = &TransitionScene::UpdateAfterScene;
         m_renderFunc = &TransitionScene::RenderAfterScene;
     }
+    m_timer_s -= deltaTime_ms;
 }
 
-void TransitionScene::UpdateAfterScene(float deltaTime)
+void TransitionScene::UpdateAfterScene(float deltaTime_ms)
 {
-    if (++m_count > 255)
+    if (m_timer_s < 0.0f)
     {
-        m_count = 255;
+        m_timer_s = 255;
         EnableChangeScene = true;
     }
 }
 
 void TransitionScene::RenderBeforeScene()
 {
-    DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, m_count);
+    DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, m_timer_s);
     m_before->Render();
     DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }
 
 void TransitionScene::RenderAfterScene()
 {
-    DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, m_count);
+    DxLib::SetDrawBlendMode(DX_BLENDMODE_ADD, m_timer_s);
     m_after->Render();
     DxLib::SetDrawBlendMode(DX_BLENDMODE_NOBLEND, 255);
 }

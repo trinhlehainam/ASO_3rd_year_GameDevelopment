@@ -61,9 +61,9 @@ bool Circle::ConstrainPosition(float width, float height)
 	return true;
 }
 
-void Circle::Update(float deltaTime_ms)
+void Circle::Update(float deltaTime_s)
 {
-	Pos += Speed * deltaTime_ms;
+	Pos += Speed * deltaTime_s;
 }
 
 void Circle::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)

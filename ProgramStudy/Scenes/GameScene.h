@@ -15,7 +15,7 @@ public:
 private:
 
     bool Init() override;
-    void Update(float deltaTime_ms) override;
+    void Update(float deltaTime_s) override;
     void Render() override;
     std::unique_ptr<IScene> ChangeScene(std::unique_ptr<IScene>) override;
 

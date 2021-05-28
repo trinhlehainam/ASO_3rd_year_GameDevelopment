@@ -40,13 +40,13 @@ bool ChristmasTree::ConstrainPosition(float width, float height)
 	return false;
 }
 
-void ChristmasTree::Update(float deltaTime_ms)
+void ChristmasTree::Update(float deltaTime_s)
 {
 	for (const auto& element : Elements)
 		element->Speed = Speed;
 
 	for (const auto& element : Elements)
-		element->Update(deltaTime_ms);
+		element->Update(deltaTime_s);
 }
 
 void ChristmasTree::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)

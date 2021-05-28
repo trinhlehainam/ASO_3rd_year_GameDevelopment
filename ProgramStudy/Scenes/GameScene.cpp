@@ -37,9 +37,9 @@ bool GameScene::Init()
     return true;
 }
 
-void GameScene::Update(float deltaTime_ms)
+void GameScene::Update(float deltaTime_s)
 {
-	m_geoMng->Update(deltaTime_ms);
+	m_geoMng->Update(deltaTime_s);
 }
 
 void GameScene::Render()

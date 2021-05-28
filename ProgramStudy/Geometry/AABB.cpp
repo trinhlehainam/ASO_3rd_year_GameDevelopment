@@ -67,9 +67,9 @@ bool AABB::ConstrainPosition(float width, float height)
 	return true;
 }
 
-void AABB::Update(float deltaTime_ms)
+void AABB::Update(float deltaTime_s)
 {
-	Pos += Speed * deltaTime_ms;
+	Pos += Speed * deltaTime_s;
 }
 
 void AABB::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)

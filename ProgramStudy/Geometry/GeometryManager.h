@@ -12,7 +12,7 @@ public:
 
 	void AddShape(std::unique_ptr<IShape> shape);
 
-	void Update(float deltaTime_ms);
+	void Update(float deltaTime_s);
 	void Render();
 
 private:

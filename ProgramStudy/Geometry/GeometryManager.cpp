@@ -90,10 +90,10 @@ void GeometryManager::AddShape(std::unique_ptr<IShape> shape)
 	m_shapes.push_back(std::move(shape));
 }
 
-void GeometryManager::Update(float deltaTime_ms)
+void GeometryManager::Update(float deltaTime_s)
 {
 	for (const auto& shape : m_shapes)
-		shape->Update(deltaTime_ms);
+		shape->Update(deltaTime_s);
 
 	for (const auto& shape : m_shapes)
 		shape->ConstrainPosition(m_screenWidth, m_screenHeight);
