@@ -61,6 +61,11 @@ std::unique_ptr<IScene> TransitionScene::ChangeScene(std::unique_ptr<IScene> sce
     return std::move(m_after);
 }
 
+SCENE_ID TransitionScene::GetSceneID()
+{
+    return SCENE_ID::TRANSITION;
+}
+
 void TransitionScene::SetUpStageBefore()
 {
     switch (m_stageBefore)

@@ -5,7 +5,7 @@
 #include "TransitionScene.h"
 #include "GameScene.h"
 
-TitleScene::TitleScene()
+TitleScene::TitleScene():m_hBgImage(-1)
 {
 }
 
@@ -39,4 +39,9 @@ std::unique_ptr<IScene> TitleScene::ChangeScene(std::unique_ptr<IScene> scene)
 	scene = std::make_unique<TransitionScene>(std::move(scene), std::make_unique<GameScene>(), TransitionScene::STAGE::FADE_OUT, TransitionScene::STAGE::FADE_IN);
 	scene->Init();
 	return scene;
+}
+
+SCENE_ID TitleScene::GetSceneID()
+{
+	return SCENE_ID::TITLE;
 }

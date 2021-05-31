@@ -32,7 +32,7 @@ public:
 	float m_deltaTime_s;
 };
 
-SceneMng::Impl::Impl() :scene(std::make_unique<TitleScene>()), lastTime(std::chrono::high_resolution_clock::now()) {}
+SceneMng::Impl::Impl() :scene(std::make_unique<TitleScene>()), lastTime(std::chrono::high_resolution_clock::now()), m_deltaTime_s(0.0f){}
 
 void SceneMng::Impl::Update()
 {
@@ -51,10 +51,11 @@ void SceneMng::Impl::Update()
 void SceneMng::Impl::Render()
 {
 	_dbgStartDraw();
+	SetDrawScreen(DX_SCREEN_BACK);
 	ClearDrawScreen();
 	scene->Render();
 	// Show FPS
-	DxLib::DrawFormatString(20, 10, GetColor(255, 255, 255), "FPS : %.2f", m_deltaTime_s / MathHelper::kMsToSecond);
+	DrawFormatString(20, 10, GetColor(255, 255, 255), "Deltatime_ms : %.2f", m_deltaTime_s / MathHelper::kMsToSecond);
 	_dbgDraw();
 	ScreenFlip();
 }

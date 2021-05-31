@@ -22,6 +22,7 @@ private:
    void Update(float deltaTime_s) override;
    void Render() override;
    std::unique_ptr<IScene> ChangeScene(std::unique_ptr<IScene> scene) override;
+   SCENE_ID GetSceneID() override;
 
 private:
    using RenderFunc_t = void (TransitionScene::*)(const std::unique_ptr<IScene>&);

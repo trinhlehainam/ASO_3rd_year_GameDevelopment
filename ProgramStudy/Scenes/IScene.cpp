@@ -1,6 +1,11 @@
 #include "IScene.h"
 
-IScene::IScene() :EnableChangeScene(false)
+#include <DxLib.h>
+
+IScene::IScene() :
+	EnableChangeScene(false), 
+	m_screenWidth(1024), m_screenHeight(768),
+	m_screenID(DxLib::MakeScreen(m_screenWidth, m_screenHeight))
 {
 }
 

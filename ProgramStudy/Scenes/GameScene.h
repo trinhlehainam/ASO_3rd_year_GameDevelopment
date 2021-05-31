@@ -18,6 +18,7 @@ private:
     void Update(float deltaTime_s) override;
     void Render() override;
     std::unique_ptr<IScene> ChangeScene(std::unique_ptr<IScene>) override;
+    SCENE_ID GetSceneID() override;
 
 private:
     std::unique_ptr<GeometryManager> m_geoMng;

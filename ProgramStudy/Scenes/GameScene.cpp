@@ -51,3 +51,8 @@ std::unique_ptr<IScene> GameScene::ChangeScene(std::unique_ptr<IScene>)
 {
 	return std::unique_ptr<IScene>();
 }
+
+SCENE_ID GameScene::GetSceneID()
+{
+	return SCENE_ID::GAME;
+}
