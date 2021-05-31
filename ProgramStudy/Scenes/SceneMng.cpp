@@ -32,7 +32,7 @@ public:
 	float m_deltaTime_s;
 };
 
-SceneMng::Impl::Impl() :scene(std::make_unique<TitleScene>()), lastTime(std::chrono::high_resolution_clock::now()), m_deltaTime_s(0.0f){}
+SceneMng::Impl::Impl() : lastTime(std::chrono::high_resolution_clock::now()), m_deltaTime_s(0.0f){}
 
 void SceneMng::Impl::Update()
 {
@@ -51,6 +51,7 @@ void SceneMng::Impl::Update()
 void SceneMng::Impl::Render()
 {
 	_dbgStartDraw();
+	scene->RenderOwnScreen();
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClearDrawScreen();
 	scene->Render();
@@ -88,6 +89,7 @@ bool SceneMng::Init()
 
     _dbgSetup(kScreenWidth, kScreenHeight, 255);
 
+	m_impl->scene = std::make_unique<TitleScene>();
 	m_impl->scene->Init();
 
     return true;
