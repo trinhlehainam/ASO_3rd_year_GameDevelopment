@@ -34,8 +34,8 @@ bool GameScene::Init()
 	m_geoMng->AddShape(std::make_unique<Triangle>(vec2f{ 900.0f,40.0f }, vec2f{ 600.0f,150.0f }, vec2f{ 1000.0f,70.0f }, vec2f{ -150.0f,150.0f }, 0x0000FF));
 	m_geoMng->AddShape(std::make_unique<ChristmasTree>(vec2f{ 100.0f,100.0f }, vec2f{ 50.0f,50.0f }));
 
-	// Init draw screen
-	RenderOwnScreen();
+	// Screen is empty -> Init draw screen
+	RenderToOwnScreen();
 
     return true;
 }
@@ -50,7 +50,7 @@ void GameScene::Render()
 	IScene::Render();
 }
 
-void GameScene::RenderOwnScreen()
+void GameScene::RenderToOwnScreen()
 {
 	DxLib::SetDrawScreen(m_screenID);
 	DxLib::ClearDrawScreen();

@@ -5,7 +5,8 @@
 #include <DxLib.h>
 
 IScene::IScene() :
-	EnableChangeScene(false)
+	EnableChangeScene(false),
+	m_screenOffsetX(0.0f), m_screenOffsetY(0.0f)
 {
 	SetDrawScreen(DX_SCREEN_BACK);
 	GetDrawScreenSize(&m_screenWidth, &m_screenHeight);
@@ -21,5 +22,5 @@ IScene::~IScene()
 
 void IScene::Render()
 {
-	DxLib::DrawGraph(0, 0, m_screenID, 0);
+	DxLib::DrawGraph(m_screenOffsetX, m_screenOffsetY, m_screenID, 0);
 }

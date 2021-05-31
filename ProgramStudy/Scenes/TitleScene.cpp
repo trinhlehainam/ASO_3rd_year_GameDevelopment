@@ -26,7 +26,7 @@ void TitleScene::Update(float deltaTime_s)
 		EnableChangeScene = true;
 }
 
-void TitleScene::RenderOwnScreen()
+void TitleScene::RenderToOwnScreen()
 {
 	DxLib::SetDrawScreen(m_screenID);
 	DxLib::ClearDrawScreen();

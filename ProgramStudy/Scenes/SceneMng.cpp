@@ -51,14 +51,20 @@ void SceneMng::Impl::Update()
 void SceneMng::Impl::Render()
 {
 	_dbgStartDraw();
-	scene->RenderOwnScreen();
+	scene->RenderToOwnScreen();
+
+	// Render to screen back
 	SetDrawScreen(DX_SCREEN_BACK);
 	ClearDrawScreen();
 	scene->Render();
 	// Show FPS
-	DrawFormatString(20, 10, GetColor(255, 255, 255), "Deltatime_ms : %.2f", m_deltaTime_s / MathHelper::kMsToSecond);
+#ifdef _DEBUG || DEBUG
+	DrawFormatString(20, 10, GetColor(255, 255, 255), "FPS : %.f", 1.0f / m_deltaTime_s);
+	DrawFormatString(20, 30, GetColor(255, 255, 255), "Deltatime_ms : %.2f", m_deltaTime_s / MathHelper::kMsToSecond);
 	_dbgDraw();
+#endif
 	ScreenFlip();
+	//
 }
 
 float SceneMng::Impl::GetDeltaTime_s()

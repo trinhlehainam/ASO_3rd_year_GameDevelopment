@@ -49,7 +49,7 @@ void TransitionScene::Update(float deltaTime_s)
     ChangeStage();
 }
 
-void TransitionScene::RenderOwnScreen()
+void TransitionScene::RenderToOwnScreen()
 {
     DxLib::SetDrawScreen(m_screenID);
     DxLib::ClearDrawScreen();
