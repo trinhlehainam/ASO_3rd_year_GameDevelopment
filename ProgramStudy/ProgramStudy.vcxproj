@@ -164,6 +164,7 @@
     <ClCompile Include="Scenes\TitleScene.cpp" />
     <ClCompile Include="Scenes\TransitionScene.cpp" />
     <ClCompile Include="Utilities\ScopedTimer.cpp" />
+    <ClCompile Include="Utilities\TileMapData.cpp" />
     <ClCompile Include="_debug\_DebugConOut.cpp" />
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
@@ -184,6 +185,7 @@
     <ClInclude Include="Scenes\TitleScene.h" />
     <ClInclude Include="Scenes\TransitionScene.h" />
     <ClInclude Include="Utilities\ScopedTimer.h" />
+    <ClInclude Include="Utilities\TileMapData.h" />
     <ClInclude Include="_debug\_DebugConOut.h" />
     <ClInclude Include="_debug\_DebugDispOut.h" />
   </ItemGroup>

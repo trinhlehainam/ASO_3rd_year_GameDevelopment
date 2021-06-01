@@ -13,9 +13,9 @@ public:
         DONE
     };
 public:
-    TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr<IScene> after);
-    TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr<IScene> after, STAGE stage);
-    TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr<IScene> after, STAGE stageBefore, STAGE stageAfter );
+    explicit TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr<IScene> after);
+    explicit TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr<IScene> after, STAGE stage);
+    explicit TransitionScene(std::unique_ptr<IScene> before, std::unique_ptr<IScene> after, STAGE stageBefore, STAGE stageAfter );
     ~TransitionScene();
 private:
    bool Init() override;

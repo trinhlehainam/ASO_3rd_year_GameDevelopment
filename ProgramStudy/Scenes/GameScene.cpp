@@ -1,6 +1,8 @@
 #include "GameScene.h"
 
 #include <DxLib.h>
+#include <rapidxml.hpp>
+
 #include "../Math/MathHelper.h"
 
 #include "../Geometry/GeometryManager.h"
