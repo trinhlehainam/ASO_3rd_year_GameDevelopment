@@ -1,6 +1,13 @@
 #pragma once
 #include <string>
 #include <vector>
+#include <unordered_map>
+
+struct Tile
+{
+	int Pos;
+	int ID;
+};
 
 class TileMapData
 {
@@ -13,5 +20,7 @@ private:
 	int m_numTileX, m_numTileY;
 	int m_tileWidth, m_tileHeight;
 	int m_mapImageID;
+
+	std::unordered_map<std::string, std::vector<Tile>> m_layers;
 };
 

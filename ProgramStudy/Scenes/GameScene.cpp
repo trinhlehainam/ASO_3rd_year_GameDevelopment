@@ -10,6 +10,7 @@
 #include "../Geometry/Circle.h"
 #include "../Geometry/Triangle.h"
 #include "../Geometry/ChristmasTree.h"
+#include "../Utilities/TileMapData.h"
 
 namespace
 {
@@ -38,6 +39,8 @@ bool GameScene::Init()
 
 	// Screen is empty -> Init draw screen
 	RenderToOwnScreen();
+
+ 	auto map = TileMapData("Assets/Map/map.xml");
 
     return true;
 }

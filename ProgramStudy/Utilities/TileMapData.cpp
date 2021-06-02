@@ -36,24 +36,23 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 	rapidxml::xml_node<>* pMap = doc.first_node();
 
 	// Tile info
-	int tileWidth, tileHeight, numTileX, numTileY;
 	for (auto* pAttr = pMap->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
 		if (strcmp(pAttr->name(), "width") == 0)
 		{
-			numTileX = std::atoi(pAttr->value());
+			m_numTileX = std::atoi(pAttr->value());
 		}
 		else if (strcmp(pAttr->name(), "height") == 0)
 		{
-			numTileY = std::atoi(pAttr->value());
+			m_numTileY = std::atoi(pAttr->value());
 		}
 		else if (strcmp(pAttr->name(), "tileheight") == 0)
 		{
-			tileHeight = std::atoi(pAttr->value());
+			m_tileHeight = std::atoi(pAttr->value());
 		}
 		else if (strcmp(pAttr->name(), "tilewidth") == 0)
 		{
-			tileWidth = std::atoi(pAttr->value());
+			m_tileWidth = std::atoi(pAttr->value());
 		}
 	}
 	//
@@ -85,6 +84,35 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 	}
 	m_mapImageID = DxLib::LoadGraph(imageFile.c_str());
 	imageDoc.clear();
+	//
+
+	// Read tile's data (image ID and tile's position) to each layer
+	for (auto* pLayer = pMap->first_node("layer"); pLayer; pLayer = pLayer->next_sibling())
+	{
+		auto* pData = pLayer->first_node("data");
+		std::string layerName{ pLayer->first_attribute("name")->value() };
+		std::stringstream data{ pData->value() };
+		int tilePos = 0;
+		while (!data.eof())
+		{
+			std::string temp;
+			data >> temp;
+			int found = 0;
+			std::stringstream ssTemp{ temp };
+			while (ssTemp >> found)
+			{
+				if (!(found == 0))
+				{
+					m_layers[layerName].emplace_back(tilePos, found);
+				}
+
+				if (ssTemp.peek() == ',')
+					ssTemp.ignore();
+
+				++tilePos;
+			}
+		}
+	}
 	//
 
 	doc.clear();
