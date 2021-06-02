@@ -11,6 +11,7 @@
 #include "../Geometry/Triangle.h"
 #include "../Geometry/ChristmasTree.h"
 #include "../Utilities/TileMapData.h"
+#include "../Utilities/ImageMng.h"
 
 namespace
 {

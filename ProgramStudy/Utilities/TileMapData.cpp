@@ -6,6 +6,8 @@
 #include <rapidxml.hpp>
 #include <DxLib.h>
 
+#include "ImageMng.h"
+
 namespace
 {
 	std::string LoadXMLToStringBuffer(const std::string& fileName)
@@ -82,7 +84,9 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 			imageFile = pAttr->value();
 		}
 	}
-	m_mapImageID = DxLib::LoadGraph(imageFile.c_str());
+	auto& imageMng = ImageMng::Instance();
+	imageMng.AddImage("map", imageFile);
+	m_mapImageID = imageMng.GetID("map");
 	imageDoc.clear();
 	//
 
