@@ -78,19 +78,21 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 	auto* pImageTileset = imageDoc.first_node();
 	auto* pImageNode = pImageTileset->first_node("image");
 
-	std::string imageFile;
 	for (auto* pAttr = pImageNode->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
 		if (strcmp(pAttr->name(), "source") == 0)
 		{
-			imageFile = pAttr->value();
+			std::string imageFile{ pAttr->value() };
+
+			// Load source image to ImageMng and take image info
+			auto& imageMng = ImageMng::Instance();
+			imageMng.AddImage("map", imageFile);
+			m_mapImageID = imageMng.GetID("map");
+			DxLib::GetGraphSize(m_mapImageID, &m_mapImageSize.x, &m_mapImageSize.y);
+			//
+			imageDoc.clear();
 		}
 	}
-	auto& imageMng = ImageMng::Instance();
-	imageMng.AddImage("map", imageFile);
-	m_mapImageID = imageMng.GetID("map");
-	DxLib::GetGraphSize(m_mapImageID, &m_mapImageSize.x, &m_mapImageSize.y);
-	imageDoc.clear();
 	//
 
 	// Read tile's data (image ID and tile's position) to each layer
@@ -98,14 +100,14 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 	{
 		auto* pData = pLayer->first_node("data");
 		std::string layerName{ pLayer->first_attribute("name")->value() };
-		std::stringstream data{ pData->value() };
+		std::stringstream data{ std::move(pData->value()) };
 		int tilePos = 0;
 		while (!data.eof())
 		{
-			std::string temp;
-			data >> temp;
+			std::string line;
+			data >> line;
 			int sourceID = 0;
-			std::stringstream ssTemp{ temp };
+			std::stringstream ssTemp{ line };
 			while (ssTemp >> sourceID)
 			{
 				if (!(sourceID == 0))
@@ -129,7 +131,6 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 
 void TileMapData::Update(float deltaTime_s)
 {
-	
 			
 }
 
@@ -153,7 +154,8 @@ vec2f TileMapData::GetTileWorldPos(int tilePos)
 
 vec2i TileMapData::GetTileSourcePos(int sourceID)
 {
-	int x = (sourceID % (m_mapImageSize.x / m_tileSize.x)) * m_tileSize.x;
-	int y = (sourceID / (m_mapImageSize.x / m_tileSize.x)) * m_tileSize.y;
+	const int kNumImageTileX = m_mapImageSize.x / m_tileSize.x;
+	int x = (sourceID % kNumImageTileX) * m_tileSize.x;
+	int y = (sourceID / kNumImageTileX) * m_tileSize.y;
 	return vec2i{ x,y };
 }

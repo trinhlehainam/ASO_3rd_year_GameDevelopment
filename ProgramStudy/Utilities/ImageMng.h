@@ -7,8 +7,8 @@ class ImageMng
 public:
 	static ImageMng& Instance();
 
-	bool AddImage(const std::string& imageName, const std::string& fileName);
-	int GetID(const std::string& imageName);
+	bool AddImage(const std::string& key, const std::string& fileName);
+	int GetID(const std::string& key);
 	
 private:
 	ImageMng();
