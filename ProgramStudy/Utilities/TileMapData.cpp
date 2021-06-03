@@ -20,6 +20,8 @@ namespace
 	}
 }
 
+TileMapData::TileMapData():m_mapImageID(0) {}
+
 TileMapData::TileMapData(const std::string& xmlFile)
 {
 	LoadMapDataFromXML(xmlFile);
@@ -42,19 +44,19 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 	{
 		if (strcmp(pAttr->name(), "width") == 0)
 		{
-			m_numTileX = std::atoi(pAttr->value());
+			m_numTile.x = std::atoi(pAttr->value());
 		}
 		else if (strcmp(pAttr->name(), "height") == 0)
 		{
-			m_numTileY = std::atoi(pAttr->value());
+			m_numTile.y = std::atoi(pAttr->value());
 		}
 		else if (strcmp(pAttr->name(), "tileheight") == 0)
 		{
-			m_tileHeight = std::atoi(pAttr->value());
+			m_tileSize.x = std::atoi(pAttr->value());
 		}
 		else if (strcmp(pAttr->name(), "tilewidth") == 0)
 		{
-			m_tileWidth = std::atoi(pAttr->value());
+			m_tileSize.y = std::atoi(pAttr->value());
 		}
 	}
 	//
@@ -87,6 +89,7 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 	auto& imageMng = ImageMng::Instance();
 	imageMng.AddImage("map", imageFile);
 	m_mapImageID = imageMng.GetID("map");
+	DxLib::GetGraphSize(m_mapImageID, &m_mapImageSize.x, &m_mapImageSize.y);
 	imageDoc.clear();
 	//
 
@@ -101,13 +104,15 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 		{
 			std::string temp;
 			data >> temp;
-			int found = 0;
+			int sourceID = 0;
 			std::stringstream ssTemp{ temp };
-			while (ssTemp >> found)
+			while (ssTemp >> sourceID)
 			{
-				if (!(found == 0))
+				if (!(sourceID == 0))
 				{
-					m_layers[layerName].emplace_back(tilePos, found);
+					// SourceID is added 1 by Tile tool to separate with empty (0)
+					// --> Minus 1 to move back to right ID
+					m_layerMap[layerName].emplace_back(tilePos, sourceID - 1);
 				}
 
 				if (ssTemp.peek() == ',')
@@ -120,4 +125,35 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 	//
 
 	doc.clear();
+}
+
+void TileMapData::Update(float deltaTime_s)
+{
+	
+			
+}
+
+void TileMapData::Render()
+{
+	for (const auto& layer : m_layerMap)
+		for (const auto& tile : layer.second)
+		{
+			auto tileWorldPos = GetTileWorldPos(tile.TilePos);
+			auto sourcePos = GetTileSourcePos(tile.ID);
+			DxLib::DrawRectGraphF(tileWorldPos.x, tileWorldPos.y, sourcePos.x, sourcePos.y, m_tileSize.x, m_tileSize.y, m_mapImageID, 1);
+		}
+}
+
+vec2f TileMapData::GetTileWorldPos(int tilePos)
+{
+	float x = (tilePos % m_numTile.x) * static_cast<float>(m_tileSize.x);
+	float y = (tilePos / m_numTile.x) * static_cast<float>(m_tileSize.y);
+	return vec2f{m_worldPos.x + x , m_worldPos.y + y};
+}
+
+vec2i TileMapData::GetTileSourcePos(int sourceID)
+{
+	int x = (sourceID % (m_mapImageSize.x / m_tileSize.x)) * m_tileSize.x;
+	int y = (sourceID / (m_mapImageSize.x / m_tileSize.x)) * m_tileSize.y;
+	return vec2i{ x,y };
 }

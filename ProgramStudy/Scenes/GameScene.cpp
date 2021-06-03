@@ -29,6 +29,8 @@ GameScene::~GameScene()
 
 bool GameScene::Init()
 {
+	m_map = std::make_unique<TileMapData>("Assets/Map/map.xml");
+
 	m_geoMng->AddShape(std::make_unique<AABB>(vec2f{ 100.0f,50.0f }, vec2f{ 50.0f,50.0f }, vec2f{ 100.0f,100.0f }, 0xFF0000));
 	m_geoMng->AddShape(std::make_unique<Circle>(vec2f{ 50.0f,50.0f }, vec2f{ -100.0f,100.0f }, 50.0f, 0x00FF00));
 	m_geoMng->AddShape(std::make_unique<Circle>(vec2f{ 600.0f,100.0f }, vec2f{ -100.0f,100.0f }, 100.0f, 0x00FF00));
@@ -40,8 +42,6 @@ bool GameScene::Init()
 
 	// Screen is empty -> Init draw screen
 	RenderToOwnScreen();
-
- 	auto map = TileMapData("Assets/Map/map.xml");
 
     return true;
 }
@@ -60,6 +60,8 @@ void GameScene::RenderToOwnScreen()
 {
 	DxLib::SetDrawScreen(m_screenID);
 	DxLib::ClearDrawScreen();
+
+	m_map->Render();
 	m_geoMng->Render();
 }
 

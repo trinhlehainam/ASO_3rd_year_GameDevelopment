@@ -4,6 +4,7 @@
 #include <memory>
 
 class GeometryManager;
+class TileMapData;
 
 class GameScene :
     public IScene
@@ -23,5 +24,6 @@ private:
 
 private:
     std::unique_ptr<GeometryManager> m_geoMng;
+    std::unique_ptr<TileMapData> m_map;
 };
 
