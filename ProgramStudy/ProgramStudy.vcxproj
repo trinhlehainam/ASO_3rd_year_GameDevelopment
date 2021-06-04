@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Geometry\Cloud.cpp" />
     <ClCompile Include="Utilities\ImageMng.cpp" />
     <ClCompile Include="Scenes\GameScene.cpp" />
     <ClCompile Include="Scenes\SceneMng.cpp" />
@@ -170,6 +171,7 @@
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Geometry\Cloud.h" />
     <ClInclude Include="Utilities\ImageMng.h" />
     <ClInclude Include="Scenes\GameScene.h" />
     <ClInclude Include="Scenes\SceneMng.h" />

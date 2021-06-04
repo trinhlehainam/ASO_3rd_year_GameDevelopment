@@ -12,16 +12,23 @@ ImageMng& ImageMng::Instance()
 
 bool ImageMng::AddImage(const std::string& key, const std::string& fileName)
 {
-    if (m_imageIDs.count(key)) return false;
-    m_imageIDs[key] = DxLib::LoadGraph(fileName.c_str());
-    if (m_imageIDs[key] == -1) return false;
+    if (m_handleMap.count(key)) return false;
+    m_handleMap[key] = DxLib::LoadGraph(fileName.c_str());
+    if (m_handleMap[key] == -1) return false;
 
     return true;
 }
 
+void ImageMng::DeleteImage(const std::string& key)
+{
+    if (!m_handleMap.count(key)) return;
+    DxLib::DeleteGraph(m_handleMap.at(key));
+    m_handleMap.erase(key);
+}
+
 int ImageMng::GetID(const std::string& key)
 {
-    return m_imageIDs.at(key);
+    return m_handleMap.at(key);
 }
 
 ImageMng::ImageMng() {}

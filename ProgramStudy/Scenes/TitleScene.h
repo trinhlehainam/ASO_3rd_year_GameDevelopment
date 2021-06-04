@@ -14,8 +14,5 @@ private:
     void RenderToOwnScreen() override;
     std::unique_ptr<IScene> ChangeScene(std::unique_ptr<IScene> scene) override;
     SCENE_ID GetSceneID() override;
-
-private:
-    int m_hBgImage;
 };
 

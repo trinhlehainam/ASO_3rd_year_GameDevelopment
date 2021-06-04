@@ -13,6 +13,7 @@ public:
 		CIRCLE,
 		TRIANGLE,
 		CHRISTMAS_TREE,
+		CLOUD,
 	};
 public:
 	IShape();

@@ -2,21 +2,22 @@
 
 #include <DxLib.h>
 
+#include "../Utilities/ImageMng.h"
+
 #include "TransitionScene.h"
 #include "GameScene.h"
 
-TitleScene::TitleScene():m_hBgImage(-1)
+TitleScene::TitleScene()
 {
 }
 
 TitleScene::~TitleScene()
 {
-	DxLib::DeleteGraph(m_hBgImage);
+
 }
 
 bool TitleScene::Init()
 {
-	m_hBgImage = DxLib::LoadGraph("Assets/Textures/statue.jpg");
 	return true;
 }
 
@@ -30,9 +31,12 @@ void TitleScene::RenderToOwnScreen()
 {
 	DxLib::SetDrawScreen(m_screenID);
 	DxLib::ClearDrawScreen();
+
+	auto& imageMng = ImageMng::Instance();
+	auto imageId = imageMng.GetID("title");
 	int x, y;
-	DxLib::GetGraphSize(m_hBgImage, &x, &y);
-	DxLib::DrawGraph(0, 0, m_hBgImage, 0);
+	DxLib::GetGraphSize(imageId, &x, &y);
+	DxLib::DrawGraph(0, 0, imageId, 0);
 }
 
 std::unique_ptr<IScene> TitleScene::ChangeScene(std::unique_ptr<IScene> scene)

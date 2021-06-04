@@ -1,7 +1,5 @@
 #include "ChristmasTree.h"
 
-#include <algorithm>
-
 #include "AABB.h"
 #include "Triangle.h"
 
@@ -51,6 +49,7 @@ void ChristmasTree::Update(float deltaTime_s)
 
 void ChristmasTree::SpecialAction(std::vector<std::unique_ptr<IShape>>& container)
 {
+
 }
 
 void ChristmasTree::Draw()

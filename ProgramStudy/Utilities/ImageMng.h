@@ -8,6 +8,7 @@ public:
 	static ImageMng& Instance();
 
 	bool AddImage(const std::string& key, const std::string& fileName);
+	void DeleteImage(const std::string& key);
 	int GetID(const std::string& key);
 	
 private:
@@ -23,6 +24,6 @@ private:
 	//
 
 private:
-	std::unordered_map<std::string, int> m_imageIDs;
+	std::unordered_map<std::string, int> m_handleMap;
 };
 

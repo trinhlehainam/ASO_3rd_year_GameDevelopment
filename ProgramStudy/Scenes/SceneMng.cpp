@@ -3,8 +3,10 @@
 #include <chrono>
 
 #include <DxLib.h>
+
 #include "../_debug/_DebugDispOut.h"
 #include "../Math/MathHelper.h"
+#include "../Utilities/ImageMng.h"
 
 #include "TitleScene.h"
 #include "GameScene.h"
@@ -94,6 +96,9 @@ bool SceneMng::Init()
         return false;
 
     _dbgSetup(kScreenWidth, kScreenHeight, 255);
+
+	auto& imageMng = ImageMng::Instance();
+	imageMng.AddImage("title", "Assets/Textures/statue.jpg");
 
 	m_impl->scene = std::make_unique<TitleScene>();
 	m_impl->scene->Init();
