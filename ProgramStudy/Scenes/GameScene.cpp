@@ -39,8 +39,12 @@ bool GameScene::Init()
 	m_geoMng->AddShape(std::make_unique<Circle>(vec2f{ 600.0f,500.0f }, vec2f{ 150.0f,150.0f }, 30.0f, 0x00FF00));
 	m_geoMng->AddShape(std::make_unique<Triangle>(vec2f{ 30.0f,40.0f }, vec2f{ 10.0f,80.0f }, vec2f{ 100.0f,70.0f }, vec2f{ 150.0f,150.0f }, 0x0000FF));
 	m_geoMng->AddShape(std::make_unique<Triangle>(vec2f{ 900.0f,40.0f }, vec2f{ 600.0f,150.0f }, vec2f{ 1000.0f,70.0f }, vec2f{ -150.0f,150.0f }, 0x0000FF));
+	m_geoMng->AddShape(std::make_unique<Triangle>(vec2f{ 600.0f,350.0f }, vec2f{ 600.0f,550.0f }, vec2f{ 700.0f,400.0f }, vec2f{ -150.0f,-150.0f }, 0x0000FF));
+	m_geoMng->AddShape(std::make_unique<Triangle>(vec2f{ 50.0f,400.0f }, vec2f{ 150.0f,600.0f }, vec2f{ 350.0f,400.0f }, vec2f{ 150.0f,-150.0f }, 0x0000FF));
 	m_geoMng->AddShape(std::make_unique<ChristmasTree>(vec2f{ 100.0f,100.0f }, vec2f{ 50.0f,50.0f }));
 	m_geoMng->AddShape(std::make_unique<Cloud>(vec2f{ 300.0f,300.0f }, vec2f{ 50.0f,0.0f }));
+	m_geoMng->AddShape(std::make_unique<Cloud>(vec2f{ 350.0f,400.0f }, vec2f{ -50.0f,0.0f }));
+	m_geoMng->AddShape(std::make_unique<Cloud>(vec2f{ 700.0f,200.0f }, vec2f{ -50.0f,0.0f }));
 
 	// Screen is empty -> Init draw screen
 	RenderToOwnScreen();
