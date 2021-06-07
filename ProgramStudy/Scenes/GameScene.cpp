@@ -11,7 +11,7 @@
 #include "../Geometry/Triangle.h"
 #include "../Geometry/ChristmasTree.h"
 #include "../Geometry/Cloud.h"
-#include "../Utilities/TileMapData.h"
+#include "../Utilities/TileMap.h"
 #include "../Utilities/ImageMng.h"
 
 namespace
@@ -30,7 +30,7 @@ GameScene::~GameScene()
 
 bool GameScene::Init()
 {
-	m_map = std::make_unique<TileMapData>("Assets/Map/map.xml");
+	m_map = std::make_unique<TileMap>("Assets/Map/map.xml");
 
 	m_geoMng->AddShape(std::make_unique<AABB>(vec2f{ 100.0f,50.0f }, vec2f{ 50.0f,50.0f }, vec2f{ 100.0f,100.0f }, 0xFF0000));
 	m_geoMng->AddShape(std::make_unique<Circle>(vec2f{ 50.0f,50.0f }, vec2f{ -100.0f,100.0f }, 50.0f, 0x00FF00));

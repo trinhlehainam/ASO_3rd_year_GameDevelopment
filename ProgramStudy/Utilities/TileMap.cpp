@@ -1,4 +1,4 @@
-#include "TileMapData.h"
+#include "TileMap.h"
 
 #include <fstream>
 #include <sstream>
@@ -20,18 +20,18 @@ namespace
 	}
 }
 
-TileMapData::TileMapData():m_mapImageID(0) {}
+TileMap::TileMap():m_mapImageID(0) {}
 
-TileMapData::TileMapData(const std::string& xmlFile)
+TileMap::TileMap(const std::string& xmlFile)
 {
 	LoadMapDataFromXML(xmlFile);
 }
 
-TileMapData::~TileMapData()
+TileMap::~TileMap()
 {
 }
 
-void TileMapData::LoadMapDataFromXML(const std::string& fileName)
+void TileMap::LoadMapDataFromXML(const std::string& fileName)
 {
 	rapidxml::xml_document<> doc;
 	auto content = LoadXMLToStringBuffer(fileName);
@@ -129,12 +129,12 @@ void TileMapData::LoadMapDataFromXML(const std::string& fileName)
 	doc.clear();
 }
 
-void TileMapData::Update(float deltaTime_s)
+void TileMap::Update(float deltaTime_s)
 {
 			
 }
 
-void TileMapData::Render()
+void TileMap::Render()
 {
 	for (const auto& layer : m_layerMap)
 		for (const auto& tile : layer.second)
@@ -145,14 +145,14 @@ void TileMapData::Render()
 		}
 }
 
-vec2f TileMapData::GetTileWorldPos(int tilePos)
+vec2f TileMap::GetTileWorldPos(int tilePos)
 {
 	float x = (tilePos % m_numTile.x) * static_cast<float>(m_tileSize.x);
 	float y = (tilePos / m_numTile.x) * static_cast<float>(m_tileSize.y);
 	return vec2f{m_worldPos.x + x , m_worldPos.y + y};
 }
 
-vec2i TileMapData::GetTileSourcePos(int sourceID)
+vec2i TileMap::GetTileSourcePos(int sourceID)
 {
 	const int kNumImageTileX = m_mapImageSize.x / m_tileSize.x;
 	int x = (sourceID % kNumImageTileX) * m_tileSize.x;

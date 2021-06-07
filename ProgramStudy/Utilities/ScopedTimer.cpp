@@ -2,7 +2,7 @@
 
 #include "../_debug/_DebugConOut.h"
 
-ScopedTimer::ScopedTimer(const char* func_name) :m_funcName(func_name), m_start(ClockType::now()) {}
+ScopedTimer::ScopedTimer(const char* func_name) :m_funcName(std::move(func_name)), m_start(ClockType::now()) {}
 
 ScopedTimer::~ScopedTimer()
 {

@@ -72,7 +72,7 @@
     <ClCompile Include="Scenes\TransitionScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\TileMapData.cpp">
+    <ClCompile Include="Utilities\TileMap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Utilities\ImageMng.cpp">
@@ -137,7 +137,7 @@
     <ClInclude Include="Scenes\TransitionScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\TileMapData.h">
+    <ClInclude Include="Utilities\TileMap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Utilities\ImageMng.h">

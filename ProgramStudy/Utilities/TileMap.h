@@ -11,12 +11,12 @@ struct Tile
 	int ID;
 };
 
-class TileMapData
+class TileMap
 {
 public:
-	TileMapData();
-	explicit TileMapData(const std::string& xmlFile);
-	~TileMapData();
+	TileMap();
+	explicit TileMap(const std::string& xmlFile);
+	~TileMap();
 public:
 	void LoadMapDataFromXML(const std::string& fileName);
 
