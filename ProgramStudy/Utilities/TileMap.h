@@ -30,6 +30,7 @@ private:
 	vec2i m_numTile;
 	vec2i m_tileSize;
 	vec2i m_mapImageSize;
+	int m_numColumns;
 	int m_mapImageID;
 
 	std::unordered_map<std::string, std::vector<Tile>> m_layerMap;

@@ -61,7 +61,7 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName)
 	}
 	//
 
-	// Map Image Info
+	// Source Image Info
 	auto pTileSet = pMap->first_node("tileset");
 	std::string imageSource;
 	for (auto* pAttr = pTileSet->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
@@ -77,7 +77,6 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName)
 	imageDoc.parse<0>(&imageContent[0]);
 	auto* pImageTileset = imageDoc.first_node();
 	auto* pImageNode = pImageTileset->first_node("image");
-
 	for (auto* pAttr = pImageNode->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
 		if (strcmp(pAttr->name(), "source") == 0)
@@ -89,8 +88,11 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName)
 			imageMng.AddImage("map", imageFile);
 			m_mapImageID = imageMng.GetID("map");
 			DxLib::GetGraphSize(m_mapImageID, &m_mapImageSize.x, &m_mapImageSize.y);
+			m_numColumns = m_mapImageSize.x / m_tileSize.x;
 			//
 			imageDoc.clear();
+
+			break;
 		}
 	}
 	//
@@ -154,8 +156,7 @@ vec2f TileMap::GetTileWorldPos(int tilePos)
 
 vec2i TileMap::GetTileSourcePos(int sourceID)
 {
-	const int kNumImageTileX = m_mapImageSize.x / m_tileSize.x;
-	int x = (sourceID % kNumImageTileX) * m_tileSize.x;
-	int y = (sourceID / kNumImageTileX) * m_tileSize.y;
+	int x = (sourceID % m_numColumns) * m_tileSize.x;
+	int y = (sourceID / m_numColumns) * m_tileSize.y;
 	return vec2i{ x,y };
 }
