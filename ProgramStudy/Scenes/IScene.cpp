@@ -22,5 +22,5 @@ IScene::~IScene()
 
 void IScene::Render()
 {
-	DxLib::DrawGraph(m_screenOffsetX, m_screenOffsetY, m_screenID, 0);
+	DxLib::DrawGraphF(m_screenOffsetX, m_screenOffsetY, m_screenID, 0);
 }

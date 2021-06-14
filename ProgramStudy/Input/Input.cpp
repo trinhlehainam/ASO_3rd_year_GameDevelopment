@@ -31,10 +31,10 @@ void Input::Update()
 {
 	DxLib::GetHitKeyStateAll(gKeyStates.data());
 
-	m_currentState = (m_currentState + 1) % 2;
+	m_currentState = (m_currentState + 1) % kMaxInputStates;
 
 	for (auto id : INPUT_ID())
-		m_inputStates[m_currentState][static_cast<size_t>(id)] = gKeyStates[m_inputs[static_cast<size_t>(id)]];
+		m_inputStates[m_currentState].set(static_cast<size_t>(id), gKeyStates[m_inputs[static_cast<size_t>(id)]]);
 }
 
 bool Input::IsPressed(INPUT_ID btn) const
@@ -61,5 +61,5 @@ bool Input::IsJustReleased(INPUT_ID btn) const
 
 int Input::PreviousState() const
 {
-	return ((m_currentState - 1 ) + 2) % 2;
+	return ((m_currentState - 1 ) + kMaxInputStates) % kMaxInputStates;
 }

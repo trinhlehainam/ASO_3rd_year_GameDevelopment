@@ -4,6 +4,11 @@
 
 #include "InputID.h"
 
+namespace
+{
+	constexpr int kMaxInputStates = 2;
+}
+
 class Input
 {
 public:
@@ -25,8 +30,7 @@ private:
 	using InputState_t = std::bitset<static_cast<size_t>(INPUT_ID::MAX)>;
 
 	ArrayInputs_t m_inputs;
-	std::array<InputState_t, 2> m_inputStates;
+	std::array<InputState_t, kMaxInputStates> m_inputStates;
 	int m_currentState;
-
 };
 

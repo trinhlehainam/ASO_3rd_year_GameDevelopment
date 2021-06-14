@@ -26,7 +26,7 @@ GameScene::~GameScene()
 bool GameScene::Init()
 {
 	m_map = std::make_unique<TileMap>("Assets/Map/map.xml");
-	m_entity = std::make_unique<Entity>(vec2f{ 100.0f,100.0f }, vec2f{ 50.0f,50.0f });
+	m_entity = std::make_unique<Entity>(vec2f{ 100.0f,100.0f }, vec2f{ 100.0f,100.0f });
 	// Screen is empty -> Init draw screen
 	RenderToOwnScreen();
 
