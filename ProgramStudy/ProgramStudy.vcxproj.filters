@@ -18,147 +18,147 @@
     <ClCompile Include="main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Math\vec2.cpp">
+    <ClCompile Include="Source\Math\vec2.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="_debug\_DebugConOut.cpp">
+    <ClCompile Include="Source\_debug\_DebugConOut.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="_debug\_DebugDispOut.cpp">
+    <ClCompile Include="Source\_debug\_DebugDispOut.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\ScopedTimer.cpp">
+    <ClCompile Include="Source\Utilities\ScopedTimer.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Math\MathHelper.cpp">
+    <ClCompile Include="Source\Math\MathHelper.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Math\line2.cpp">
+    <ClCompile Include="Source\Math\line2.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Math\segment2.cpp">
+    <ClCompile Include="Source\Math\segment2.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\IScene.cpp">
+    <ClCompile Include="Source\Scenes\IScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\TitleScene.cpp">
+    <ClCompile Include="Source\Scenes\TitleScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\SceneMng.cpp">
+    <ClCompile Include="Source\Scenes\SceneMng.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\GameScene.cpp">
+    <ClCompile Include="Source\Scenes\GameScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Scenes\TransitionScene.cpp">
+    <ClCompile Include="Source\Scenes\TransitionScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\TileMap.cpp">
+    <ClCompile Include="Source\Utilities\TileMap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Utilities\ImageMng.cpp">
+    <ClCompile Include="Source\Utilities\ImageMng.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\AABB.cpp">
+    <ClCompile Include="Source\Geometry\AABB.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\ChristmasTree.cpp">
+    <ClCompile Include="Source\Geometry\ChristmasTree.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Circle.cpp">
+    <ClCompile Include="Source\Geometry\Circle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Cloud.cpp">
+    <ClCompile Include="Source\Geometry\Cloud.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\GeometryManager.cpp">
+    <ClCompile Include="Source\Geometry\GeometryManager.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\IShape.cpp">
+    <ClCompile Include="Source\Geometry\IShape.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Geometry\Triangle.cpp">
+    <ClCompile Include="Source\Geometry\Triangle.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Common\Entity.cpp">
+    <ClCompile Include="Source\Common\Entity.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Input\Input.cpp">
+    <ClCompile Include="Source\Input\Input.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>
-    <ClInclude Include="Math\vec2.h">
+    <ClInclude Include="Source\Math\vec2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="_debug\_DebugConOut.h">
+    <ClInclude Include="Source\_debug\_DebugConOut.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="_debug\_DebugDispOut.h">
+    <ClInclude Include="Source\_debug\_DebugDispOut.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\ScopedTimer.h">
+    <ClInclude Include="Source\Utilities\ScopedTimer.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Math\MathHelper.h">
+    <ClInclude Include="Source\Math\MathHelper.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Math\line2.h">
+    <ClInclude Include="Source\Math\line2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Math\segment2.h">
+    <ClInclude Include="Source\Math\segment2.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\IScene.h">
+    <ClInclude Include="Source\Scenes\IScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\TitleScene.h">
+    <ClInclude Include="Source\Scenes\TitleScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\SceneMng.h">
+    <ClInclude Include="Source\Scenes\SceneMng.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\GameScene.h">
+    <ClInclude Include="Source\Scenes\GameScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Scenes\TransitionScene.h">
+    <ClInclude Include="Source\Scenes\TransitionScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\TileMap.h">
+    <ClInclude Include="Source\Utilities\TileMap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Utilities\ImageMng.h">
+    <ClInclude Include="Source\Utilities\ImageMng.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\AABB.h">
+    <ClInclude Include="Source\Geometry\AABB.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\ChristmasTree.h">
+    <ClInclude Include="Source\Geometry\ChristmasTree.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Circle.h">
+    <ClInclude Include="Source\Geometry\Circle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Cloud.h">
+    <ClInclude Include="Source\Geometry\Cloud.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\GeometryManager.h">
+    <ClInclude Include="Source\Geometry\GeometryManager.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\IShape.h">
+    <ClInclude Include="Source\Geometry\IShape.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Geometry\Triangle.h">
+    <ClInclude Include="Source\Geometry\Triangle.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Common\Entity.h">
+    <ClInclude Include="Source\Common\Entity.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Input\Input.h">
+    <ClInclude Include="Source\Input\Input.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Input\InputID.h">
+    <ClInclude Include="Source\Input\InputID.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
