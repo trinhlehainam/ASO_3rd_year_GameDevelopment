@@ -3,17 +3,29 @@
 #include <DxLib.h>
 
 #include "../Utilities/ImageMng.h"
+#include "../Input/KeyboardInput.h"
+#include "../Input/JoypadXInput.h"
 
-Entity::Entity()
+Entity::Entity(INPUT_DEVICE_ID deviceID)
 {
 	auto& imageMng =  ImageMng::Instance();
 	imageMng.AddImage("knight", "Assets/Textures/knight 1 axe.png");
 }
 
-Entity::Entity(const vec2f& pos, const vec2f& speed):m_pos(pos),m_speed(speed)
+Entity::Entity(INPUT_DEVICE_ID deviceID, const vec2f& pos, const vec2f& speed):m_pos(pos),m_speed(speed)
 {
 	auto& imageMng = ImageMng::Instance();
 	imageMng.AddImage("knight", "Assets/Textures/knight 1 axe.png");
+	
+	switch (deviceID)
+	{
+	case INPUT_DEVICE_ID::KEYBOARD:
+		m_input = std::make_unique<KeyboardInput>();
+		break;
+	case INPUT_DEVICE_ID::JOYPAD:
+		m_input = std::make_unique<JoypadXInput>();
+		break;
+	}
 }
 
 Entity::~Entity()
@@ -22,15 +34,15 @@ Entity::~Entity()
 
 void Entity::Update(float deltaTime_s)
 {
-	m_input.Update();
+	m_input->Update();
 
-	if (m_input.IsJustPressed(INPUT_ID::DOWN))
+	if (m_input->IsJustPressed(INPUT_ID::DOWN))
 		m_pos.y += m_speed.y* deltaTime_s;
-	else if(m_input.IsJustPressed(INPUT_ID::UP))
+	else if(m_input->IsJustPressed(INPUT_ID::UP))
 		m_pos.y -= m_speed.y * deltaTime_s;
-	else if(m_input.IsJustPressed(INPUT_ID::LEFT))
+	else if(m_input->IsJustPressed(INPUT_ID::LEFT))
 		m_pos.x -= m_speed.x * deltaTime_s;
-	else if(m_input.IsJustPressed(INPUT_ID::RIGHT))
+	else if(m_input->IsJustPressed(INPUT_ID::RIGHT))
 		m_pos.x += m_speed.x * deltaTime_s;
 }
 

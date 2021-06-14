@@ -147,6 +147,8 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Input\KeyboardInput.cpp" />
+    <ClCompile Include="Source\Input\JoypadXInput.cpp" />
     <ClCompile Include="Source\Common\Entity.cpp" />
     <ClCompile Include="Source\Geometry\AABB.cpp" />
     <ClCompile Include="Source\Geometry\ChristmasTree.cpp" />
@@ -173,6 +175,8 @@
     <ClCompile Include="Source\_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Input\KeyboardInput.h" />
+    <ClInclude Include="Source\Input\JoypadXInput.h" />
     <ClInclude Include="Source\Common\Entity.h" />
     <ClInclude Include="Source\Geometry\AABB.h" />
     <ClInclude Include="Source\Geometry\ChristmasTree.h" />

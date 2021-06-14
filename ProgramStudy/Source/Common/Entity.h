@@ -1,12 +1,14 @@
 #pragma once
+#include <memory>
+
 #include "../Math/vec2.h"
 #include "../Input/Input.h"
 
 class Entity
 {
 public:
-	Entity();
-	explicit Entity(const vec2f& pos, const vec2f& speed);
+	Entity(INPUT_DEVICE_ID deviceID);
+	explicit Entity(INPUT_DEVICE_ID deviceID, const vec2f& pos, const vec2f& speed);
 	~Entity();
 
 	void Update(float deltaTime_s);
@@ -15,6 +17,6 @@ private:
 	vec2f m_pos;
 	vec2f m_speed;
 
-	Input m_input;
+	std::unique_ptr<Input> m_input;
 };
 

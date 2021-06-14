@@ -8,6 +8,7 @@
 #include "../Utilities/TileMap.h"
 #include "../Utilities/ImageMng.h"
 #include "../Common/Entity.h"
+#include "../Input/Input.h"
 
 namespace
 {
@@ -26,7 +27,8 @@ GameScene::~GameScene()
 bool GameScene::Init()
 {
 	m_map = std::make_unique<TileMap>("Assets/Map/map.xml");
-	m_entity = std::make_unique<Entity>(vec2f{ 100.0f,100.0f }, vec2f{ 100.0f,100.0f });
+	m_entityKeyboard = std::make_unique<Entity>(INPUT_DEVICE_ID::KEYBOARD, vec2f{ 100.0f,100.0f }, vec2f{ 100.0f,100.0f });
+	m_entityJoypad = std::make_unique<Entity>(INPUT_DEVICE_ID::JOYPAD, vec2f{ 200.0f,200.0f }, vec2f{ 100.0f,100.0f });
 	// Screen is empty -> Init draw screen
 	RenderToOwnScreen();
 
@@ -35,7 +37,8 @@ bool GameScene::Init()
 
 void GameScene::Update(float deltaTime_s)
 {
-	m_entity->Update(deltaTime_s);
+	m_entityKeyboard->Update(deltaTime_s);
+	m_entityJoypad->Update(deltaTime_s);
 }
 
 void GameScene::Render()
@@ -49,7 +52,8 @@ void GameScene::RenderToOwnScreen()
 	DxLib::ClearDrawScreen();
 
 	m_map->Render();
-	m_entity->Render();
+	m_entityKeyboard->Render();
+	m_entityJoypad->Render();
 }
 
 std::unique_ptr<IScene> GameScene::ChangeScene(std::unique_ptr<IScene>)

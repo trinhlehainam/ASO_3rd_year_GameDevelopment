@@ -2,24 +2,13 @@
 
 #include <DxLib.h>
 
-namespace
-{
-	constexpr int kMaxKeyNum = 256;
-	std::array<char, kMaxKeyNum> gKeyStates;
-}
 
 Input::Input():
-	m_currentState(0),
-	m_inputs{
-	KEY_INPUT_UP,
-	KEY_INPUT_DOWN,
-	KEY_INPUT_LEFT,
-	KEY_INPUT_RIGHT,
-	KEY_INPUT_Z,
-	KEY_INPUT_X,
-	KEY_INPUT_C,
-	KEY_INPUT_P
-	}
+	m_currentState(0)
+{
+}
+
+Input::Input(ArrayInputs_t inputs):m_inputs(std::move(inputs)), m_currentState(0)
 {
 }
 
@@ -27,36 +16,36 @@ Input::~Input()
 {
 }
 
-void Input::Update()
+void Input::SetInput(INPUT_ID id, int DX_KEY_INPUT)
 {
-	DxLib::GetHitKeyStateAll(gKeyStates.data());
-
-	m_currentState = (m_currentState + 1) % kMaxInputStates;
-
-	for (auto id : INPUT_ID())
-		m_inputStates[m_currentState].set(static_cast<size_t>(id), gKeyStates[m_inputs[static_cast<size_t>(id)]]);
+	m_inputs[static_cast<size_t>(id)] = DX_KEY_INPUT;
 }
 
-bool Input::IsPressed(INPUT_ID btn) const
+void Input::SetInputState(INPUT_ID id, bool state)
 {
-	return m_inputStates[m_currentState][static_cast<size_t>(btn)] == 1;
+	m_inputStates[m_currentState].set(static_cast<size_t>(id), state);
 }
 
-bool Input::IsJustPressed(INPUT_ID btn) const
+bool Input::IsPressed(INPUT_ID id) const
 {
-	return m_inputStates[m_currentState][static_cast<size_t>(btn)] == 1 &&
-		m_inputStates[PreviousState()][static_cast<size_t>(btn)] == 0;
+	return m_inputStates[m_currentState][static_cast<size_t>(id)] == 1;
 }
 
-bool Input::IsReleased(INPUT_ID btn) const
+bool Input::IsJustPressed(INPUT_ID id) const
 {
-	return m_inputStates[m_currentState][static_cast<size_t>(btn)] == 0;
+	return m_inputStates[m_currentState][static_cast<size_t>(id)] == 1 &&
+		m_inputStates[PreviousState()][static_cast<size_t>(id)] == 0;
 }
 
-bool Input::IsJustReleased(INPUT_ID btn) const
+bool Input::IsReleased(INPUT_ID id) const
 {
-	return m_inputStates[m_currentState][static_cast<size_t>(btn)] == 0 && 
-		m_inputStates[PreviousState()][static_cast<size_t>(btn)] == 1;
+	return m_inputStates[m_currentState][static_cast<size_t>(id)] == 0;
+}
+
+bool Input::IsJustReleased(INPUT_ID id) const
+{
+	return m_inputStates[m_currentState][static_cast<size_t>(id)] == 0 &&
+		m_inputStates[PreviousState()][static_cast<size_t>(id)] == 1;
 }
 
 int Input::PreviousState() const
