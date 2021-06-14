@@ -3,8 +3,8 @@
 
 #include <memory>
 
-class GeometryManager;
 class TileMap;
+class Entity;
 
 class GameScene :
     public IScene
@@ -23,7 +23,7 @@ private:
     SCENE_ID GetSceneID() override;
 
 private:
-    std::unique_ptr<GeometryManager> m_geoMng;
+    std::unique_ptr<Entity> m_entity;
     std::unique_ptr<TileMap> m_map;
 };
 

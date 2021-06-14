@@ -147,22 +147,24 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Common\Entity.cpp" />
+    <ClCompile Include="Geometry\AABB.cpp" />
+    <ClCompile Include="Geometry\ChristmasTree.cpp" />
+    <ClCompile Include="Geometry\Circle.cpp" />
     <ClCompile Include="Geometry\Cloud.cpp" />
+    <ClCompile Include="Geometry\GeometryManager.cpp" />
+    <ClCompile Include="Geometry\IShape.cpp" />
+    <ClCompile Include="Geometry\Triangle.cpp" />
+    <ClCompile Include="Input\Input.cpp" />
     <ClCompile Include="Utilities\ImageMng.cpp" />
     <ClCompile Include="Scenes\GameScene.cpp" />
     <ClCompile Include="Scenes\SceneMng.cpp" />
     <ClCompile Include="Scenes\IScene.cpp" />
     <ClCompile Include="Math\line2.cpp" />
     <ClCompile Include="Math\segment2.cpp" />
-    <ClCompile Include="Geometry\ChristmasTree.cpp" />
-    <ClCompile Include="Geometry\Circle.cpp" />
-    <ClCompile Include="Geometry\GeometryManager.cpp" />
     <ClCompile Include="main.cpp" />
-    <ClCompile Include="Geometry\IShape.cpp" />
-    <ClCompile Include="Geometry\AABB.cpp" />
     <ClCompile Include="Math\MathHelper.cpp" />
     <ClCompile Include="Math\vec2.cpp" />
-    <ClCompile Include="Geometry\Triangle.cpp" />
     <ClCompile Include="Scenes\TitleScene.cpp" />
     <ClCompile Include="Scenes\TransitionScene.cpp" />
     <ClCompile Include="Utilities\ScopedTimer.cpp" />
@@ -171,21 +173,24 @@
     <ClCompile Include="_debug\_DebugDispOut.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Common\Entity.h" />
+    <ClInclude Include="Geometry\AABB.h" />
+    <ClInclude Include="Geometry\ChristmasTree.h" />
+    <ClInclude Include="Geometry\Circle.h" />
     <ClInclude Include="Geometry\Cloud.h" />
+    <ClInclude Include="Geometry\GeometryManager.h" />
+    <ClInclude Include="Geometry\IShape.h" />
+    <ClInclude Include="Geometry\Triangle.h" />
+    <ClInclude Include="Input\Input.h" />
+    <ClInclude Include="Input\InputID.h" />
     <ClInclude Include="Utilities\ImageMng.h" />
     <ClInclude Include="Scenes\GameScene.h" />
     <ClInclude Include="Scenes\SceneMng.h" />
     <ClInclude Include="Scenes\IScene.h" />
     <ClInclude Include="Math\line2.h" />
     <ClInclude Include="Math\segment2.h" />
-    <ClInclude Include="Geometry\ChristmasTree.h" />
-    <ClInclude Include="Geometry\Circle.h" />
-    <ClInclude Include="Geometry\GeometryManager.h" />
-    <ClInclude Include="Geometry\IShape.h" />
-    <ClInclude Include="Geometry\AABB.h" />
     <ClInclude Include="Math\MathHelper.h" />
     <ClInclude Include="Math\vec2.h" />
-    <ClInclude Include="Geometry\Triangle.h" />
     <ClInclude Include="Scenes\TitleScene.h" />
     <ClInclude Include="Scenes\TransitionScene.h" />
     <ClInclude Include="Utilities\ScopedTimer.h" />
