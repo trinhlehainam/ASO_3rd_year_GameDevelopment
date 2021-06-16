@@ -36,13 +36,13 @@ void Entity::Update(float deltaTime_s)
 {
 	m_input->Update();
 
-	if (m_input->IsJustPressed(INPUT_ID::DOWN))
+	if (m_input->IsPressed(INPUT_ID::DOWN))
 		m_pos.y += m_speed.y* deltaTime_s;
-	else if(m_input->IsJustPressed(INPUT_ID::UP))
+	else if(m_input->IsPressed(INPUT_ID::UP))
 		m_pos.y -= m_speed.y * deltaTime_s;
-	else if(m_input->IsJustPressed(INPUT_ID::LEFT))
+	else if(m_input->IsPressed(INPUT_ID::LEFT))
 		m_pos.x -= m_speed.x * deltaTime_s;
-	else if(m_input->IsJustPressed(INPUT_ID::RIGHT))
+	else if(m_input->IsPressed(INPUT_ID::RIGHT))
 		m_pos.x += m_speed.x * deltaTime_s;
 }
 

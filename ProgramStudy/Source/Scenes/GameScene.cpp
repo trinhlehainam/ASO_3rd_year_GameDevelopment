@@ -7,7 +7,7 @@
 
 #include "../Utilities/TileMap.h"
 #include "../Utilities/ImageMng.h"
-#include "../Common/Entity.h"
+#include "../GameObject/Entity.h"
 #include "../Input/Input.h"
 
 namespace

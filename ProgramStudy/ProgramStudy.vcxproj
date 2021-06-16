@@ -147,9 +147,10 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Component\IComponent.cpp" />
     <ClCompile Include="Source\Input\KeyboardInput.cpp" />
     <ClCompile Include="Source\Input\JoypadXInput.cpp" />
-    <ClCompile Include="Source\Common\Entity.cpp" />
+    <ClCompile Include="Source\GameObject\Entity.cpp" />
     <ClCompile Include="Source\Geometry\AABB.cpp" />
     <ClCompile Include="Source\Geometry\ChristmasTree.cpp" />
     <ClCompile Include="Source\Geometry\Circle.cpp" />
@@ -173,11 +174,14 @@
     <ClCompile Include="Source\Utilities\TileMap.cpp" />
     <ClCompile Include="Source\_debug\_DebugConOut.cpp" />
     <ClCompile Include="Source\_debug\_DebugDispOut.cpp" />
+    <ClCompile Include="Source\Component\TransformComponent.cpp" />
+    <ClCompile Include="Source\Component\SpriteComponent.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Component\IComponent.h" />
     <ClInclude Include="Source\Input\KeyboardInput.h" />
     <ClInclude Include="Source\Input\JoypadXInput.h" />
-    <ClInclude Include="Source\Common\Entity.h" />
+    <ClInclude Include="Source\GameObject\Entity.h" />
     <ClInclude Include="Source\Geometry\AABB.h" />
     <ClInclude Include="Source\Geometry\ChristmasTree.h" />
     <ClInclude Include="Source\Geometry\Circle.h" />
@@ -201,6 +205,8 @@
     <ClInclude Include="Source\Utilities\TileMap.h" />
     <ClInclude Include="Source\_debug\_DebugConOut.h" />
     <ClInclude Include="Source\_debug\_DebugDispOut.h" />
+    <ClInclude Include="Source\Component\TransformComponent.h" />
+    <ClInclude Include="Source\Component\SpriteComponent.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />
   <ImportGroup Label="ExtensionTargets">
