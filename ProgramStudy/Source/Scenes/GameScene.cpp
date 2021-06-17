@@ -5,8 +5,8 @@
 
 #include "../Math/MathHelper.h"
 
-#include "../Utilities/TileMap.h"
-#include "../Utilities/ImageMng.h"
+#include "../TileMap.h"
+#include "../ImageMng.h"
 #include "../GameObject/Entity.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/SpriteComponent.h"

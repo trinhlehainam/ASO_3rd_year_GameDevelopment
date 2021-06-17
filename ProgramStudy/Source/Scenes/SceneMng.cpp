@@ -6,7 +6,7 @@
 
 #include "../_debug/_DebugDispOut.h"
 #include "../Math/MathHelper.h"
-#include "../Utilities/ImageMng.h"
+#include "../ImageMng.h"
 
 #include "TitleScene.h"
 #include "GameScene.h"

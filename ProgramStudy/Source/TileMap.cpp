@@ -6,7 +6,7 @@
 #include <rapidxml.hpp>
 #include <DxLib.h>
 
-#include "StringHelper.h"
+#include "Utilities/StringHelper.h"
 
 #include "ImageMng.h"
 

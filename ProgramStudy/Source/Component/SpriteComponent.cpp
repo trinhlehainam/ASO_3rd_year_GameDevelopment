@@ -4,7 +4,7 @@
 #include <rapidxml.hpp>
 
 #include "../Utilities/StringHelper.h"
-#include "../Utilities/ImageMng.h"
+#include "../ImageMng.h"
 
 #include "../GameObject/Entity.h"
 #include "TransformComponent.h"

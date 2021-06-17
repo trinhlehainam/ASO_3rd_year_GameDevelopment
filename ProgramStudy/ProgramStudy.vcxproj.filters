@@ -15,7 +15,7 @@
     </Filter>
   </ItemGroup>
   <ItemGroup>
-    <ClCompile Include="main.cpp">
+    <ClCompile Include="Source\main.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\Math\vec2.cpp">
@@ -54,10 +54,10 @@
     <ClCompile Include="Source\Scenes\TransitionScene.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utilities\TileMap.cpp">
+    <ClCompile Include="Source\TileMap.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="Source\Utilities\ImageMng.cpp">
+    <ClCompile Include="Source\ImageMng.cpp">
       <Filter>ソース ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Source\Geometry\AABB.cpp">
@@ -143,10 +143,10 @@
     <ClInclude Include="Source\Scenes\TransitionScene.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utilities\TileMap.h">
+    <ClInclude Include="Source\TileMap.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utilities\ImageMng.h">
+    <ClInclude Include="Source\ImageMng.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\Geometry\AABB.h">

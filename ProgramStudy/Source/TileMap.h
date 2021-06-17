@@ -3,7 +3,7 @@
 #include <vector>
 #include <unordered_map>
 
-#include "../Math/vec2.h"
+#include "Math/vec2.h"
 
 struct Tile
 {

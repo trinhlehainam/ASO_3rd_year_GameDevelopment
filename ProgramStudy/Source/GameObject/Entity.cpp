@@ -2,7 +2,7 @@
 
 #include <DxLib.h>
 
-#include "../Utilities/ImageMng.h"
+#include "../ImageMng.h"
 #include "../Input/KeyboardInput.h"
 #include "../Input/JoypadXInput.h"
 
