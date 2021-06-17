@@ -15,10 +15,10 @@ class TileMap
 {
 public:
 	TileMap();
-	explicit TileMap(const std::string& xmlFile);
+	explicit TileMap(const std::string& xmlFile, const std::string& key);
 	~TileMap();
 public:
-	void LoadMapDataFromXML(const std::string& fileName);
+	void LoadMapDataFromXML(const std::string& fileName, const std::string& key);
 
 	void Update(float deltaTime_s);
 	void Render();

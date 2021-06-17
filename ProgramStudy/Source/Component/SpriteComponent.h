@@ -13,7 +13,7 @@ public:
     ~SpriteComponent();
 
 public:
-    bool LoadAnimationFromXML(const std::string& file);
+    bool LoadAnimationFromXML(const std::string& file, const std::string& animationKey);
 
 public:
     void Init() override;

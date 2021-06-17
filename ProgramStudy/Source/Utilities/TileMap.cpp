@@ -13,16 +13,16 @@
 
 TileMap::TileMap():m_mapImageID(0) {}
 
-TileMap::TileMap(const std::string& xmlFile)
+TileMap::TileMap(const std::string& xmlFile, const std::string& key)
 {
-	LoadMapDataFromXML(xmlFile);
+	LoadMapDataFromXML(xmlFile, key);
 }
 
 TileMap::~TileMap()
 {
 }
 
-void TileMap::LoadMapDataFromXML(const std::string& fileName)
+void TileMap::LoadMapDataFromXML(const std::string& fileName, const std::string& key)
 {
 	rapidxml::xml_document<> doc;
 	auto content = StringHelper::LoadFileToStringBuffer(fileName);
@@ -76,7 +76,7 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName)
 
 			// Load source image to ImageMng and take image info
 			auto& imageMng = ImageMng::Instance();
-			imageMng.AddImage("map", imageFile);
+			imageMng.AddImage(imageFile, key);
 			m_mapImageID = imageMng.GetID("map");
 			DxLib::GetGraphSize(m_mapImageID, &m_mapImageSize.x, &m_mapImageSize.y);
 			m_numColumns = m_mapImageSize.x / m_tileSize.x;

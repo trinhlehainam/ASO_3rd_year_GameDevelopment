@@ -10,7 +10,7 @@ ImageMng& ImageMng::Instance()
     return instance;
 }
 
-bool ImageMng::AddImage(const std::string& key, const std::string& fileName)
+bool ImageMng::AddImage(const std::string& fileName, const std::string& key)
 {
     if (m_handleMap.count(key)) return false;
     m_handleMap[key] = DxLib::LoadGraph(fileName.c_str());

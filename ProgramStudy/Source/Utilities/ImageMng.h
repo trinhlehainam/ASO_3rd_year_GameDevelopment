@@ -7,7 +7,7 @@ class ImageMng
 public:
 	static ImageMng& Instance();
 
-	bool AddImage(const std::string& key, const std::string& fileName);
+	bool AddImage(const std::string& fileName, const std::string& key);
 	void DeleteImage(const std::string& key);
 	int GetID(const std::string& key);
 	

@@ -4,6 +4,7 @@
 #include <rapidxml.hpp>
 
 #include "../Utilities/StringHelper.h"
+#include "../Utilities/ImageMng.h"
 
 #include "../GameObject/Entity.h"
 #include "TransformComponent.h"
@@ -18,7 +19,7 @@ SpriteComponent::~SpriteComponent()
 {
 }
 
-bool SpriteComponent::LoadAnimationFromXML(const std::string& file)
+bool SpriteComponent::LoadAnimationFromXML(const std::string& file, const std::string& key)
 {
 	rapidxml::xml_document<> doc;
 	auto content = StringHelper::LoadFileToStringBuffer(file);
@@ -29,7 +30,12 @@ bool SpriteComponent::LoadAnimationFromXML(const std::string& file)
 	for (auto pAttr = pImage->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
 		if (strcmp(pAttr->name(), "source") == 0)
-			m_textureId = DxLib::LoadGraph(pAttr->value());
+		{
+			auto& imgMng = ImageMng::Instance();
+			imgMng.AddImage(pAttr->value(), key);
+			m_textureId = imgMng.GetID(key);
+			return true;
+		}
 	}
 
 	doc.clear();

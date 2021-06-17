@@ -98,7 +98,7 @@ bool SceneMng::Init()
     _dbgSetup(kScreenWidth, kScreenHeight, 255);
 
 	auto& imageMng = ImageMng::Instance();
-	imageMng.AddImage("title", "Assets/Textures/statue.jpg");
+	imageMng.AddImage("Assets/Textures/statue.jpg", "title");
 
 	m_impl->scene = std::make_unique<TitleScene>();
 	m_impl->scene->Init();

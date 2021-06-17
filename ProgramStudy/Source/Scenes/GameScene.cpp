@@ -28,13 +28,13 @@ GameScene::~GameScene()
 
 bool GameScene::Init()
 {
-	m_map = std::make_unique<TileMap>("Assets/Map/map.xml");
+	m_map = std::make_unique<TileMap>("Assets/Map/map.xml", "map");
 	m_entity = std::make_shared<Entity>(INPUT_DEVICE_ID::KEYBOARD);
 	// Screen is empty -> Init draw screen
 	m_entity->AddComponent<TransformComponent>(m_entity, vec2f{ 100.0f,100.0f }, vec2f{ 100.0f,100.0f }, 1.0f);
 	m_entity->AddComponent<SpriteComponent>(m_entity);
 	auto sprite = m_entity->GetComponent<SpriteComponent>();
-	sprite->LoadAnimationFromXML("Assets/Animations/animation.xml");
+	sprite->LoadAnimationFromXML("Assets/Animations/animation.xml", "knight");
 	RenderToOwnScreen();
 
     return true;
