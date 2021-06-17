@@ -8,6 +8,8 @@
 #include "../Utilities/TileMap.h"
 #include "../Utilities/ImageMng.h"
 #include "../GameObject/Entity.h"
+#include "../Component/TransformComponent.h"
+#include "../Component/SpriteComponent.h"
 #include "../Input/Input.h"
 
 namespace
@@ -27,9 +29,12 @@ GameScene::~GameScene()
 bool GameScene::Init()
 {
 	m_map = std::make_unique<TileMap>("Assets/Map/map.xml");
-	m_entityKeyboard = std::make_unique<Entity>(INPUT_DEVICE_ID::KEYBOARD, vec2f{ 100.0f,100.0f }, vec2f{ 100.0f,100.0f });
-	m_entityJoypad = std::make_unique<Entity>(INPUT_DEVICE_ID::JOYPAD, vec2f{ 200.0f,200.0f }, vec2f{ 100.0f,100.0f });
+	m_entity = std::make_shared<Entity>(INPUT_DEVICE_ID::KEYBOARD);
 	// Screen is empty -> Init draw screen
+	m_entity->AddComponent<TransformComponent>(m_entity, vec2f{ 100.0f,100.0f }, vec2f{ 100.0f,100.0f }, 1.0f);
+	m_entity->AddComponent<SpriteComponent>(m_entity);
+	auto sprite = m_entity->GetComponent<SpriteComponent>();
+	sprite->LoadAnimationFromXML("Assets/Animations/animation.xml");
 	RenderToOwnScreen();
 
     return true;
@@ -37,8 +42,7 @@ bool GameScene::Init()
 
 void GameScene::Update(float deltaTime_s)
 {
-	m_entityKeyboard->Update(deltaTime_s);
-	m_entityJoypad->Update(deltaTime_s);
+	m_entity->Update(deltaTime_s);
 }
 
 void GameScene::Render()
@@ -52,8 +56,7 @@ void GameScene::RenderToOwnScreen()
 	DxLib::ClearDrawScreen();
 
 	m_map->Render();
-	m_entityKeyboard->Render();
-	m_entityJoypad->Render();
+	m_entity->Render();
 }
 
 std::unique_ptr<IScene> GameScene::ChangeScene(std::unique_ptr<IScene>)

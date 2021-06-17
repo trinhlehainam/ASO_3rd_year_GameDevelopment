@@ -11,8 +11,7 @@
 class Entity
 {
 public:
-	Entity(INPUT_DEVICE_ID deviceID);
-	explicit Entity(INPUT_DEVICE_ID deviceID, const vec2f& pos, const vec2f& speed);
+	explicit Entity(INPUT_DEVICE_ID deviceID);
 	~Entity();
 
 	void Update(float deltaTime_s);
@@ -41,9 +40,6 @@ public:
 	}
 
 private:
-	vec2f m_pos;
-	vec2f m_speed;
-
 	std::unique_ptr<Input> m_input;
 	std::vector<std::shared_ptr<IComponent>> m_components;
 	std::unordered_map<const type_info*, std::shared_ptr<IComponent>> m_componentMap;

@@ -23,8 +23,7 @@ private:
     SCENE_ID GetSceneID() override;
 
 private:
-    std::unique_ptr<Entity> m_entityKeyboard;
-    std::unique_ptr<Entity> m_entityJoypad;
+    std::shared_ptr<Entity> m_entity;
     std::unique_ptr<TileMap> m_map;
 };
 

@@ -6,19 +6,10 @@
 #include <rapidxml.hpp>
 #include <DxLib.h>
 
+#include "StringHelper.h"
+
 #include "ImageMng.h"
 
-namespace
-{
-	std::string LoadXMLToStringBuffer(const std::string& fileName)
-	{
-		std::ifstream file(fileName);
-		std::stringstream buffer;
-		buffer << file.rdbuf();
-		file.close();
-		return buffer.str();
-	}
-}
 
 TileMap::TileMap():m_mapImageID(0) {}
 
@@ -34,7 +25,7 @@ TileMap::~TileMap()
 void TileMap::LoadMapDataFromXML(const std::string& fileName)
 {
 	rapidxml::xml_document<> doc;
-	auto content = LoadXMLToStringBuffer(fileName);
+	auto content = StringHelper::LoadFileToStringBuffer(fileName);
 	doc.parse<0>(&content[0]);
 
 	rapidxml::xml_node<>* pMap = doc.first_node();
@@ -72,7 +63,7 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName)
 		}
 	}
 
-	auto imageContent = LoadXMLToStringBuffer(imageSource.c_str());
+	auto imageContent = StringHelper::LoadFileToStringBuffer(imageSource.c_str());
 	rapidxml::xml_document imageDoc;
 	imageDoc.parse<0>(&imageContent[0]);
 	auto* pImageTileset = imageDoc.first_node();
