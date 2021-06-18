@@ -26,6 +26,17 @@ bool SpriteComponent::LoadAnimationFromXML(const std::string& file, const std::s
 	doc.parse<0>(&content[0]);
 
 	auto pAminationList = doc.first_node();
+	int columns = 0;
+	for (auto pAttr = pAminationList->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+	{
+		if (strcmp(pAttr->name(), "celwidth") == 0)
+			m_animations[key].srcRect.size.x = static_cast<float>(std::atoi(pAttr->value()));
+		else if (strcmp(pAttr->name(), "celheight") == 0)
+			m_animations[key].srcRect.size.y = static_cast<float>(std::atoi(pAttr->value()));
+		else if (strcmp(pAttr->name(), "columns") == 0)
+			columns = std::atoi(pAttr->value());
+	}
+
 	auto pImage = pAminationList->first_node();
 	for (auto pAttr = pImage->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
@@ -34,7 +45,6 @@ bool SpriteComponent::LoadAnimationFromXML(const std::string& file, const std::s
 			auto& imgMng = ImageMng::Instance();
 			imgMng.AddImage(pAttr->value(), key);
 			m_textureId = imgMng.GetID(key);
-			return true;
 		}
 	}
 

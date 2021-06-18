@@ -2,8 +2,24 @@
 #include "IComponent.h"
 
 #include <string>
+#include <unordered_map>
+
+#include "../Math/rect.h"
 
 class TransformComponent;
+
+struct Animation
+{
+    // Source Info
+    int texId;
+    rect srcRect;
+    vec2f texSize;
+
+    // Animation Info
+    unsigned int index;
+    unsigned int celCount;
+    int loop;
+};
 
 class SpriteComponent :
     public IComponent
@@ -22,6 +38,7 @@ public:
 
 private:
     std::weak_ptr<TransformComponent> m_transform;
+    std::unordered_map<std::string, Animation> m_animations;
     int m_textureId;
 };
 

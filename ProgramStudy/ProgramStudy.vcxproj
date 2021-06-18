@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Math\rect.cpp" />
     <ClCompile Include="Source\Component\IComponent.cpp" />
     <ClCompile Include="Source\Input\KeyboardInput.cpp" />
     <ClCompile Include="Source\Input\JoypadXInput.cpp" />
@@ -179,6 +180,7 @@
     <ClCompile Include="Source\Utilities\StringHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Math\rect.h" />
     <ClInclude Include="Source\Component\IComponent.h" />
     <ClInclude Include="Source\Input\KeyboardInput.h" />
     <ClInclude Include="Source\Input\JoypadXInput.h" />

@@ -18,26 +18,13 @@ public:
 	void Render();
 
 	template<typename T, typename...Arg>
-	void AddComponent(Arg&&...args)
-	{
-		auto component = std::make_shared<T>(std::forward<Arg>(args)...);
-		component->Init();
-		m_components.emplace_back(component);
-		m_componentMap.emplace(&typeid(T), component);
-	}
+	void AddComponent(Arg&&...args);
 
 	template<typename T>
-	inline bool HasComponent()
-	{
-		return m_componentMap.count(&typeid(T));
-	}
+	bool HasComponent();
 
 	template<typename T>
-	inline std::shared_ptr<T> GetComponent()
-	{
-		if (!HasComponent<T>()) return nullptr;
-		return std::static_pointer_cast<T>(m_componentMap.at(&typeid(T)));
-	}
+	std::shared_ptr<T> GetComponent();
 
 private:
 	std::unique_ptr<Input> m_input;
