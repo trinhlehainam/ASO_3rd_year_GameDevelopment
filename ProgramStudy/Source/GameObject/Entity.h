@@ -18,7 +18,13 @@ public:
 	void Render();
 
 	template<typename T, typename...Arg>
-	void AddComponent(Arg&&...args);
+	void AddComponent(Arg&&...args)
+	{
+		auto component = std::make_shared<T>(std::forward<Arg>(args)...);
+		component->Init();
+		m_components.emplace_back(component);
+		m_componentMap.emplace(&typeid(T), component);
+	}
 
 	template<typename T>
 	bool HasComponent();

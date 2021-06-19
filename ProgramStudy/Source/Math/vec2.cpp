@@ -256,83 +256,42 @@ bool isParallelVec(const vec2f& a, const vec2f& b)
 #pragma endregion
 
 
-#pragma region Instantiate
+#define InstantiateFuncTemplate(type)\
+template vec2<type> operator + (const vec2<type>& a, const vec2<type>& b);		\
+template vec2<type> operator - (const vec2<type>& a, const vec2<type>& b);		\
+template vec2<type> operator * (const vec2<type>& a, type scalar);				\
+template vec2<type> operator * (type scalar, const vec2<type>& a);				\
+template vec2<type> operator / (const vec2<type>& a, type scalar);				\
+template vec2<type> operator % (const vec2<type>& a, int scalar);				\
+																				\
+template bool operator == (const vec2<type>& a, const vec2<type>& b);			\
+template bool operator != (const vec2<type>& a, const vec2<type>& b);			\
+template bool operator >= (const vec2<type>& a, const vec2<type>& b);			\
+template bool operator >  (const vec2<type>& a, const vec2<type>& b);			\
+template bool operator <= (const vec2<type>& a, const vec2<type>& b);			\
+template bool operator <  (const vec2<type>& a, const vec2<type>& b);			\
+
+#pragma region InstantiateFuncTemplate
 
 template vec2<int>;
 template vec2<unsigned int>;
 template vec2<float>;
 template vec2<double>;
 
-#pragma region int
-template vec2i operator + (const vec2i& a, const vec2i& b);
-template vec2i operator - (const vec2i& a, const vec2i& b);
-template vec2i operator * (const vec2i& a, int scalar);
-template vec2i operator * (int scalar, const vec2i& a);
-template vec2i operator / (const vec2i& a, int scalar);
-template vec2i operator % (const vec2i& a, int scalar);
-
-template bool operator == (const vec2i& a, const vec2i& b);
-template bool operator != (const vec2i& a, const vec2i& b);
-template bool operator >= (const vec2i& a, const vec2i& b);
-template bool operator >  (const vec2i& a, const vec2i& b);
-template bool operator <= (const vec2i& a, const vec2i& b);
-template bool operator <  (const vec2i& a, const vec2i& b);
-#pragma endregion
-
-#pragma region unsigned int
-template vec2u operator + (const vec2u& a, const vec2u& b);
-template vec2u operator - (const vec2u& a, const vec2u& b);
-template vec2u operator * (const vec2u& a, unsigned int scalar);
-template vec2u operator * (unsigned int scalar, const vec2u& a);
-template vec2u operator / (const vec2u& a, unsigned int scalar);
-template vec2u operator % (const vec2u& a, int scalar);
-
-template bool operator == (const vec2u& a, const vec2u& b);
-template bool operator != (const vec2u& a, const vec2u& b);
-template bool operator >= (const vec2u& a, const vec2u& b);
-template bool operator >  (const vec2u& a, const vec2u& b);
-template bool operator <= (const vec2u& a, const vec2u& b);
-template bool operator <  (const vec2u& a, const vec2u& b);
-#pragma endregion
+InstantiateFuncTemplate(int);
+InstantiateFuncTemplate(unsigned int);
+InstantiateFuncTemplate(float);
+InstantiateFuncTemplate(double);
 
 #pragma region float
-template vec2f operator + (const vec2f& a, const vec2f& b);
-template vec2f operator - (const vec2f& a, const vec2f& b);
-template vec2f operator * (const vec2f& a, float scalar);
-template vec2f operator * (float scalar, const vec2f& a);
-template vec2f operator / (const vec2f& a, float scalar);
-template vec2f operator % (const vec2f& a, int scalar);
-
-template bool operator == (const vec2f& a, const vec2f& b);
-template bool operator != (const vec2f& a, const vec2f& b);
-template bool operator >= (const vec2f& a, const vec2f& b);
-template bool operator >  (const vec2f& a, const vec2f& b);
-template bool operator <= (const vec2f& a, const vec2f& b);
-template bool operator <  (const vec2f& a, const vec2f& b);
-
 template float dot(const vec2f& a, const vec2f& b);
 template vec2f reflectionVec(const vec2f& i, const vec2f& n);
 template vec2f projectVec(const vec2f& v, const vec2f& n);
 template vec2f orthogonalVec(const vec2f& v);
 template vec2f clampVec(const vec2f& value, const vec2f& min, const vec2f& max);
-
 #pragma endregion
 
 #pragma region double
-template vec2d operator + (const vec2d& a, const vec2d& b);
-template vec2d operator - (const vec2d& a, const vec2d& b);
-template vec2d operator * (const vec2d& a, double scalar);
-template vec2d operator * (double scalar, const vec2d& a);
-template vec2d operator / (const vec2d& a, double scalar);
-template vec2d operator % (const vec2d& a, int scalar);
-
-template bool operator == (const vec2d& a, const vec2d& b);
-template bool operator != (const vec2d& a, const vec2d& b);
-template bool operator >= (const vec2d& a, const vec2d& b);
-template bool operator >  (const vec2d& a, const vec2d& b);
-template bool operator <= (const vec2d& a, const vec2d& b);
-template bool operator <  (const vec2d& a, const vec2d& b);
-
 template double dot(const vec2d& a, const vec2d& b);
 template vec2d reflectionVec(const vec2d& i, const vec2d& n);
 template vec2d projectVec(const vec2d& vi, const vec2d& onto);

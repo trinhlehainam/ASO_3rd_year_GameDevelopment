@@ -58,7 +58,7 @@ namespace MathHelper
 #pragma endregion
 
 
-#pragma region Instantiate
+#pragma region InstantiateFuncTemplate
 	template bool isEqual(int, int);
 	template bool isEqual(unsigned int, unsigned int);
 	template bool isEqual(short, short);

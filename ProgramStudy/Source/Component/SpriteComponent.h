@@ -4,19 +4,17 @@
 #include <string>
 #include <unordered_map>
 
-#include "../Math/rect.h"
-
 class TransformComponent;
 
 struct Animation
 {
     // Source Info
     int texId;
-    rect srcRect;
-    vec2f texSize;
+    int celWidth, celHeight;
+    int texWidth, texHeight;
 
     // Animation Info
-    unsigned int index;
+    unsigned int celId;
     unsigned int celCount;
     int loop;
 };
@@ -39,6 +37,6 @@ public:
 private:
     std::weak_ptr<TransformComponent> m_transform;
     std::unordered_map<std::string, Animation> m_animations;
-    int m_textureId;
+    std::string m_currentAnim;
 };
 

@@ -30,23 +30,33 @@ bool SpriteComponent::LoadAnimationFromXML(const std::string& file, const std::s
 	for (auto pAttr = pAminationList->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
 		if (strcmp(pAttr->name(), "celwidth") == 0)
-			m_animations[key].srcRect.size.x = static_cast<float>(std::atoi(pAttr->value()));
+			m_animations[key].celWidth = std::atoi(pAttr->value());
 		else if (strcmp(pAttr->name(), "celheight") == 0)
-			m_animations[key].srcRect.size.y = static_cast<float>(std::atoi(pAttr->value()));
+			m_animations[key].celHeight = std::atoi(pAttr->value());
 		else if (strcmp(pAttr->name(), "columns") == 0)
 			columns = std::atoi(pAttr->value());
 	}
 
-	auto pImage = pAminationList->first_node();
+	auto pImage = pAminationList->first_node("image");
 	for (auto pAttr = pImage->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
 		if (strcmp(pAttr->name(), "source") == 0)
 		{
 			auto& imgMng = ImageMng::Instance();
 			imgMng.AddImage(pAttr->value(), key);
-			m_textureId = imgMng.GetID(key);
+			m_animations[key].texId = imgMng.GetID(key);
+		}
+		else if (strcmp(pAttr->name(), "width") == 0)
+		{
+			m_animations[key].texWidth = std::atoi(pAttr->value());
+		}
+		else if (strcmp(pAttr->name(), "height") == 0)
+		{
+			m_animations[key].texHeight = std::atoi(pAttr->value());
 		}
 	}
+
+	m_currentAnim = key;
 
 	doc.clear();
 
@@ -64,5 +74,5 @@ void SpriteComponent::Update(float deltaTime_s)
 void SpriteComponent::Render()
 {
 	const auto& transform = m_transform.lock();
-	DxLib::DrawRectGraphF(transform->Pos.x, transform->Pos.y, 0, 0, 64, 64, m_textureId, 1);
+	DxLib::DrawRectGraphF(transform->Pos.x, transform->Pos.y, 0, 0, 64, 64, m_animations[m_currentAnim].texId, 1);
 }
