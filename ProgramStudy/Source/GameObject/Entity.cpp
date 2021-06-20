@@ -3,26 +3,14 @@
 #include <DxLib.h>
 
 #include "../ImageMng.h"
-#include "../Input/KeyboardInput.h"
-#include "../Input/JoypadXInput.h"
 
 #include "../Component/TransformComponent.h"
 #include "../Component/SpriteComponent.h"
 
-Entity::Entity(INPUT_DEVICE_ID deviceID)
+Entity::Entity()
 {
 	auto& imageMng =  ImageMng::Instance();
 	imageMng.AddImage("knight", "Assets/Textures/knight 1 axe.png");
-
-	switch (deviceID)
-	{
-	case INPUT_DEVICE_ID::KEYBOARD:
-		m_input = std::make_unique<KeyboardInput>();
-		break;
-	case INPUT_DEVICE_ID::JOYPAD:
-		m_input = std::make_unique<JoypadXInput>();
-		break;
-	}
 
 }
 
@@ -32,8 +20,6 @@ Entity::~Entity()
 
 void Entity::Update(float deltaTime_s)
 {
-	m_input->Update();
-
 	for (const auto& component : m_components)
 		component->Update(deltaTime_s);
 }

@@ -103,11 +103,11 @@ void SpriteComponent::Init()
 
 void SpriteComponent::Update(float deltaTime_s)
 {
+	const auto& currentAnim = m_animations[m_currentAnimKey];
 	if (m_timer_ms <= 0)
 	{
 		++m_currentDurationId;
-		m_currentDurationId = m_currentDurationId > m_animations[m_currentAnimKey].celBaseId + m_animations[m_currentAnimKey].celCount - 1 ?
-			m_animations[m_currentAnimKey].celBaseId : m_currentDurationId;
+		m_currentDurationId = (m_currentDurationId - currentAnim.celBaseId + 1) % currentAnim.celCount + currentAnim.celBaseId;
 		m_timer_ms = m_durations[m_currentDurationId];
 	}
 	m_timer_ms -= static_cast<int>(deltaTime_s / MathHelper::kMsToSecond);

@@ -11,7 +11,7 @@
 class Entity
 {
 public:
-	explicit Entity(INPUT_DEVICE_ID deviceID);
+	explicit Entity();
 	~Entity();
 
 	void Update(float deltaTime_s);
@@ -33,7 +33,6 @@ public:
 	std::shared_ptr<T> GetComponent();
 
 private:
-	std::unique_ptr<Input> m_input;
 	std::vector<std::shared_ptr<IComponent>> m_components;
 	std::unordered_map<const type_info*, std::shared_ptr<IComponent>> m_componentMap;
 };
