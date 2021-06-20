@@ -35,6 +35,7 @@ bool GameScene::Init()
 	m_entity->AddComponent<SpriteComponent>(m_entity);
 	auto sprite = m_entity->GetComponent<SpriteComponent>();
 	sprite->LoadAnimationFromXML("Assets/Animations/animation.xml", "knight");
+	sprite->Play("knight", "Jump");
 	RenderToOwnScreen();
 
     return true;

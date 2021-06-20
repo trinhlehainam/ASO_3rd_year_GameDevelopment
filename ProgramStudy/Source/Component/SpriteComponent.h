@@ -27,6 +27,7 @@ public:
 
 public:
     bool LoadAnimationFromXML(const std::string& file, const std::string& animationKey);
+    bool Play(const std::string& animKey, const std::string& state);
 
 public:
     void Init() override;
@@ -38,6 +39,8 @@ private:
     std::unordered_map<std::string, Animation> m_animations;
     std::vector<int> m_durations;
 
-    std::string m_currentAnim;
+    std::string m_currentAnimKey;
+    int m_currentDurationId;
+    int m_timer_ms;
 };
 
