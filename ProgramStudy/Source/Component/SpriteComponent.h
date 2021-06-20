@@ -3,19 +3,18 @@
 
 #include <string>
 #include <unordered_map>
+#include <vector>
 
 class TransformComponent;
 
 struct Animation
 {
-    // Source Info
     int texId;
-    int celWidth, celHeight;
-    int texWidth, texHeight;
+    int texColumns;
 
-    // Animation Info
-    unsigned int celId;
-    unsigned int celCount;
+    int celWidth, celHeight;
+    int celBaseId;
+    int celCount;
     int loop;
 };
 
@@ -37,6 +36,8 @@ public:
 private:
     std::weak_ptr<TransformComponent> m_transform;
     std::unordered_map<std::string, Animation> m_animations;
+    std::vector<int> m_durations;
+
     std::string m_currentAnim;
 };
 

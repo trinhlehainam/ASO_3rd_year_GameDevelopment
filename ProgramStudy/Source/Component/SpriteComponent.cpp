@@ -21,20 +21,28 @@ SpriteComponent::~SpriteComponent()
 
 bool SpriteComponent::LoadAnimationFromXML(const std::string& file, const std::string& key)
 {
+	if (m_animations.count(key)) return false;
+	auto& animationInfo = m_animations[key];
+
 	rapidxml::xml_document<> doc;
 	auto content = StringHelper::LoadFileToStringBuffer(file);
 	doc.parse<0>(&content[0]);
 
 	auto pAminationList = doc.first_node();
-	int columns = 0;
+	int celWidth = 0;
+	int celHeight = 0;
+	int celCount = 0;
+	int texColumns = 0;
 	for (auto pAttr = pAminationList->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
 		if (strcmp(pAttr->name(), "celwidth") == 0)
-			m_animations[key].celWidth = std::atoi(pAttr->value());
+			celWidth = std::atoi(pAttr->value());
 		else if (strcmp(pAttr->name(), "celheight") == 0)
-			m_animations[key].celHeight = std::atoi(pAttr->value());
+			celHeight = std::atoi(pAttr->value());
+		else if (strcmp(pAttr->name(), "celcount") == 0)
+			celCount = std::atoi(pAttr->value());
 		else if (strcmp(pAttr->name(), "columns") == 0)
-			columns = std::atoi(pAttr->value());
+			texColumns = std::atoi(pAttr->value());
 	}
 
 	auto pImage = pAminationList->first_node("image");
@@ -44,17 +52,32 @@ bool SpriteComponent::LoadAnimationFromXML(const std::string& file, const std::s
 		{
 			auto& imgMng = ImageMng::Instance();
 			imgMng.AddImage(pAttr->value(), key);
-			m_animations[key].texId = imgMng.GetID(key);
-		}
-		else if (strcmp(pAttr->name(), "width") == 0)
-		{
-			m_animations[key].texWidth = std::atoi(pAttr->value());
-		}
-		else if (strcmp(pAttr->name(), "height") == 0)
-		{
-			m_animations[key].texHeight = std::atoi(pAttr->value());
+			animationInfo.texId = imgMng.GetID(key);
 		}
 	}
+	
+	for (auto pAnimation = pAminationList->first_node("animation"); pAnimation; pAnimation = pAnimation->next_sibling())
+	{
+		std::string animKey;
+		for (auto pAttr = pAnimation->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+		{
+			if (strcmp(pAttr->name(), "name") == 0)
+			{
+				animKey = key + "_" + pAttr->value();
+				m_animations[animKey].texId = ImageMng::Instance().GetID(key);
+				m_animations[animKey].texColumns = texColumns;
+				m_animations[animKey].celWidth = celWidth;
+				m_animations[animKey].celHeight = celHeight;
+			}
+			else if (strcmp(pAttr->name(), "id") == 0)
+				m_animations[animKey].celBaseId = std::atoi(pAttr->value());
+			else if (strcmp(pAttr->name(), "count") == 0)
+				m_animations[animKey].celCount = std::atoi(pAttr->value());
+			else if (strcmp(pAttr->name(), "loop") == 0)
+				m_animations[animKey].loop = std::atoi(pAttr->value());
+		}
+	}
+
 
 	m_currentAnim = key;
 
