@@ -7,7 +7,7 @@ class TransformComponent :
     public IComponent
 {
 public:
-    TransformComponent(const std::shared_ptr<Entity>& owner, const vec2f& pos, const vec2f& size, float scale = 1.0f);
+    explicit TransformComponent(const std::shared_ptr<Entity>& owner, const vec2f& pos, const vec2f& size, float scale = 1.0f);
     ~TransformComponent();
 
 public:

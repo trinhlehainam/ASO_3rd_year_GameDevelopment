@@ -12,7 +12,8 @@
 
 SpriteComponent::SpriteComponent(const std::shared_ptr<Entity>& owner):
 	IComponent(owner), m_transform(owner->GetComponent<TransformComponent>()),
-	m_currentDurationId(0), m_timer_ms(0)
+	m_currentDurationId(0), m_timer_ms(0), m_loopCount(0),
+	m_updateFunc(&SpriteComponent::UpdateSleep)
 {
 
 }
@@ -45,7 +46,7 @@ bool SpriteComponent::LoadAnimationFromXML(const std::string& file, const std::s
 		else if (strcmp(pAttr->name(), "columns") == 0)
 			texColumns = std::atoi(pAttr->value());
 	}
-	m_durations.reserve(celCount);
+	m_durations_ms.reserve(celCount);
 
 	auto pImage = pAminationList->first_node("image");
 	for (auto pAttr = pImage->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
@@ -80,7 +81,7 @@ bool SpriteComponent::LoadAnimationFromXML(const std::string& file, const std::s
 	}
 	
 	for (int i = 0; i < celCount; ++i)
-		m_durations.push_back(100);
+		m_durations_ms.push_back(100);
 
 	doc.clear();
 
@@ -91,10 +92,30 @@ bool SpriteComponent::Play(const std::string& animKey, const std::string& state)
 {
 	std::string key{ animKey + "_" + state };
 	if (!m_animations.count(key)) return false;
-	m_currentAnimKey = key;
+	if (IsPlaying(animKey, state)) return true;
+	m_currentAnimKey = std::move(key);
 	m_currentDurationId = m_animations[m_currentAnimKey].celBaseId;
-	m_timer_ms = m_durations[m_currentDurationId];
+	m_timer_ms = m_durations_ms[m_currentDurationId];
+	switch (m_animations[m_currentAnimKey].loop)
+	{
+	case -1:
+		m_updateFunc = &SpriteComponent::UpdateInfinite;
+		break;
+	case 0:
+		m_updateFunc = &SpriteComponent::UpdateOnce;
+		break;
+	default:
+		m_updateFunc = &SpriteComponent::UpdateLoop;
+		m_loopCount = m_animations[m_currentAnimKey].loop;
+		break;
+	}
 	return true;
+}
+
+bool SpriteComponent::IsPlaying(const std::string& animKey, const std::string& state)
+{
+	std::string key{ animKey + "_" + state };
+	return m_currentAnimKey == key;
 }
 
 void SpriteComponent::Init()
@@ -103,14 +124,67 @@ void SpriteComponent::Init()
 
 void SpriteComponent::Update(float deltaTime_s)
 {
-	const auto& currentAnim = m_animations[m_currentAnimKey];
+	(this->*m_updateFunc)(deltaTime_s);
+}
+
+void SpriteComponent::UpdateInfinite(float deltaTime_s)
+{
+	if (m_timer_ms <= 0)
+	{
+		const auto& currentAnim = m_animations[m_currentAnimKey];
+		m_currentDurationId = (m_currentDurationId - currentAnim.celBaseId + 1) % currentAnim.celCount + currentAnim.celBaseId;
+		m_timer_ms = m_durations_ms[m_currentDurationId];
+	}
+
+	m_timer_ms -= static_cast<int>(deltaTime_s / MathHelper::kMsToSecond);
+}
+
+void SpriteComponent::UpdateLoop(float deltaTime_s)
+{
 	if (m_timer_ms <= 0)
 	{
 		++m_currentDurationId;
-		m_currentDurationId = (m_currentDurationId - currentAnim.celBaseId + 1) % currentAnim.celCount + currentAnim.celBaseId;
-		m_timer_ms = m_durations[m_currentDurationId];
+		m_timer_ms = m_durations_ms[m_currentDurationId];
 	}
+
+	const auto& currentAnim = m_animations[m_currentAnimKey];
+	if (m_currentDurationId >= (currentAnim.celBaseId + currentAnim.celCount))
+	{
+		--m_loopCount;
+		m_currentDurationId = currentAnim.celBaseId;
+		m_timer_ms = m_durations_ms[m_currentDurationId];
+	}
+
+	if (m_loopCount < 0)
+	{
+		m_updateFunc = &SpriteComponent::UpdateSleep;
+		return;
+	}
+
 	m_timer_ms -= static_cast<int>(deltaTime_s / MathHelper::kMsToSecond);
+}
+
+void SpriteComponent::UpdateOnce(float deltaTime_s)
+{
+	if (m_timer_ms <= 0)
+	{
+		++m_currentDurationId;
+		m_timer_ms = m_durations_ms[m_currentDurationId];
+	}
+
+	const auto& currentAnim = m_animations[m_currentAnimKey];
+	if (m_currentDurationId >= (currentAnim.celBaseId + currentAnim.celCount))
+	{
+		m_updateFunc = &SpriteComponent::UpdateSleep;
+		return;
+	}
+
+	m_timer_ms -= static_cast<int>(deltaTime_s / MathHelper::kMsToSecond);
+}
+
+void SpriteComponent::UpdateSleep(float deltaTime_s)
+{
+
 }
 
 void SpriteComponent::Render()
@@ -119,5 +193,11 @@ void SpriteComponent::Render()
 	const auto& currentAnim = m_animations[m_currentAnimKey];
 	auto sourceX = (m_currentDurationId % currentAnim.texColumns) * currentAnim.celWidth;
 	auto sourceY = (m_currentDurationId / currentAnim.texColumns) * currentAnim.celHeight;
-	DxLib::DrawRectGraphF(transform->Pos.x, transform->Pos.y, sourceX, sourceY, currentAnim.celWidth, currentAnim.celHeight, m_animations[m_currentAnimKey].texId, 1);
+
+	DxLib::DrawRectExtendGraphF(transform->Pos.x, transform->Pos.y, 
+		(transform->Pos.x + transform->Size.x) * transform->Scale, 
+		(transform->Pos.y + transform->Size.y) * transform->Scale,
+		sourceX, sourceY, currentAnim.celWidth, currentAnim.celHeight, 
+		m_animations[m_currentAnimKey].texId, 1);
+
 }
