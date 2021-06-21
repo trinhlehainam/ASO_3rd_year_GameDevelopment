@@ -1,8 +1,11 @@
 #include "SpriteComponent.h"
 
+#include <sstream>
+
 #include <DxLib.h>
 #include <rapidxml.hpp>
 
+#include "../_debug/_DebugConOut.h"
 #include "../Math/MathHelper.h"
 #include "../Utilities/StringHelper.h"
 #include "../ImageMng.h"
@@ -78,10 +81,26 @@ bool SpriteComponent::LoadAnimationFromXML(const std::string& file, const std::s
 			else if (strcmp(pAttr->name(), "loop") == 0)
 				m_animations[animKey].loop = std::atoi(pAttr->value());
 		}
+
+		// Add data in duration node to duration container (m_durations_ms)
+		auto pDuration = pAnimation->first_node();
+		std::stringstream data{ std::move(pDuration->value()) };
+		while (!data.eof())
+		{
+			std::string line;
+			data >> line;
+			std::stringstream ssLine{ line };
+			int duration = 0;
+			while (ssLine >> duration)
+			{
+				m_durations_ms.push_back(duration);
+
+				if (ssLine.peek() == ',')
+					ssLine.ignore();
+			}
+
+		}
 	}
-	
-	for (int i = 0; i < celCount; ++i)
-		m_durations_ms.push_back(100);
 
 	doc.clear();
 
@@ -100,9 +119,6 @@ bool SpriteComponent::Play(const std::string& animKey, const std::string& state)
 	{
 	case -1:
 		m_updateFunc = &SpriteComponent::UpdateInfinite;
-		break;
-	case 0:
-		m_updateFunc = &SpriteComponent::UpdateOnce;
 		break;
 	default:
 		m_updateFunc = &SpriteComponent::UpdateLoop;
@@ -157,24 +173,8 @@ void SpriteComponent::UpdateLoop(float deltaTime_s)
 
 	if (m_loopCount < 0)
 	{
-		m_updateFunc = &SpriteComponent::UpdateSleep;
-		return;
-	}
-
-	m_timer_ms -= static_cast<int>(deltaTime_s / MathHelper::kMsToSecond);
-}
-
-void SpriteComponent::UpdateOnce(float deltaTime_s)
-{
-	if (m_timer_ms <= 0)
-	{
-		++m_currentDurationId;
-		m_timer_ms = m_durations_ms[m_currentDurationId];
-	}
-
-	const auto& currentAnim = m_animations[m_currentAnimKey];
-	if (m_currentDurationId >= (currentAnim.celBaseId + currentAnim.celCount))
-	{
+		// Last durationId of current animation
+		m_currentDurationId = currentAnim.celBaseId + currentAnim.celCount - 1;
 		m_updateFunc = &SpriteComponent::UpdateSleep;
 		return;
 	}
@@ -199,5 +199,4 @@ void SpriteComponent::Render()
 		(transform->Pos.y + transform->Size.y) * transform->Scale,
 		sourceX, sourceY, currentAnim.celWidth, currentAnim.celHeight, 
 		m_animations[m_currentAnimKey].texId, 1);
-
 }

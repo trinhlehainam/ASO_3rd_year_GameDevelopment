@@ -1,6 +1,5 @@
 #include "TileMap.h"
 
-#include <fstream>
 #include <sstream>
 
 #include <rapidxml.hpp>
@@ -100,8 +99,8 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName, const std::string&
 			std::string line;
 			data >> line;
 			int sourceID = 0;
-			std::stringstream ssTemp{ line };
-			while (ssTemp >> sourceID)
+			std::stringstream ssLine{ line };
+			while (ssLine >> sourceID)
 			{
 				if (!(sourceID == 0))
 				{
@@ -110,8 +109,8 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName, const std::string&
 					m_layerMap[layerName].emplace_back(tilePos, sourceID - 1);
 				}
 
-				if (ssTemp.peek() == ',')
-					ssTemp.ignore();
+				if (ssLine.peek() == ',')
+					ssLine.ignore();
 
 				++tilePos;
 			}

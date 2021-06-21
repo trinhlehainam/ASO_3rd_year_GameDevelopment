@@ -35,11 +35,9 @@ public:
     void Update(float deltaTime_s) override;
     void Render() override;
 
-
 private:
     void UpdateInfinite(float deltaTime_s);
     void UpdateLoop(float deltaTime_s);
-    void UpdateOnce(float deltaTime_s);
     void UpdateSleep(float deltaTime_s);
 
 private:
