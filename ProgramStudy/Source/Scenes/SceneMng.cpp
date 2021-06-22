@@ -98,8 +98,8 @@ bool SceneMng::Init()
 
     _dbgSetup(kScreenWidth, kScreenHeight, 255);
 
-	auto& imageMng = ImageMng::Instance();
-	auto& animMng = AnimationMng::Instance();
+	ImageMng::Create();
+	AnimationMng::Create();
 
 	m_impl->scene = std::make_unique<TitleScene>();
 	m_impl->scene->Init();
@@ -109,6 +109,8 @@ bool SceneMng::Init()
 
 void SceneMng::Exit()
 {
+	ImageMng::Destroy();
+	AnimationMng::Destroy();
     DxLib_End();
 }
 

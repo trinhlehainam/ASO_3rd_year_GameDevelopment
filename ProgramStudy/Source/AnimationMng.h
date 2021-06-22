@@ -14,12 +14,14 @@ struct Animation
     int loop;
 };
 
+// Singeton
 class AnimationMng
 {
 public:
+    static void Create();
+    static void Destroy();
     static AnimationMng& Instance();
 
-public:
     bool LoadAnimationFromXML(const std::string& file, const std::string& key);
     bool HasAnimation(const std::string& key);
     const Animation& GetAnimation(const std::string& key) const;
@@ -39,5 +41,6 @@ private:
 private:
     std::unordered_map<std::string, Animation> m_animations;
     std::vector<int> m_durations_ms;
+    static AnimationMng* m_instance;
 };
 

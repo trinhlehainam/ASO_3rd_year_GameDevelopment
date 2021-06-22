@@ -2,9 +2,12 @@
 #include <string>
 #include <unordered_map>
 
+// Singleton
 class ImageMng
 {
 public:
+	static void Create();
+	static void Destroy();
 	static ImageMng& Instance();
 
 	bool AddImage(const std::string& fileName, const std::string& key);
@@ -25,5 +28,7 @@ private:
 
 private:
 	std::unordered_map<std::string, int> m_handleMap;
+
+	static ImageMng* m_instance;
 };
 

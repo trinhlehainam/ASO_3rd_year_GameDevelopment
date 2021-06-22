@@ -7,10 +7,27 @@
 #include "Utilities/StringHelper.h"
 #include "ImageMng.h"
 
+AnimationMng* AnimationMng::m_instance = nullptr;
+
+void AnimationMng::Create()
+{
+	if (m_instance == nullptr)
+		m_instance = new AnimationMng();
+}
+void AnimationMng::Destroy()
+{
+	if (m_instance != nullptr)
+	{
+		delete m_instance;
+		m_instance = nullptr;
+	}
+}
+
 AnimationMng& AnimationMng::Instance()
 {
-	static AnimationMng instance;
-	return instance;
+	if (m_instance == nullptr)
+		Create();
+	return *m_instance;
 }
 
 bool AnimationMng::LoadAnimationFromXML(const std::string& file, const std::string& key)

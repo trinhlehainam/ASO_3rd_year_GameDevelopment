@@ -35,6 +35,8 @@ bool Cloud::ConstrainPosition(float width, float height)
 			return true;
 		}
 	}
+
+	return false;
 }
 
 void Cloud::Update(float deltaTime_s)

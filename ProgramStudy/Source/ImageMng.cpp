@@ -4,10 +4,28 @@
 
 #include <DxLib.h>
 
+ImageMng* ImageMng::m_instance = nullptr;
+
+void ImageMng::Create()
+{
+    if (m_instance == nullptr)
+        m_instance = new ImageMng();
+}
+
+void ImageMng::Destroy()
+{
+    if (m_instance != nullptr)
+    {
+        delete m_instance;
+        m_instance = nullptr;
+    }
+}
+
 ImageMng& ImageMng::Instance()
 {
-    static ImageMng instance;
-    return instance;
+    if (m_instance == nullptr)
+        Create();
+    return *m_instance;
 }
 
 bool ImageMng::AddImage(const std::string& fileName, const std::string& key)
