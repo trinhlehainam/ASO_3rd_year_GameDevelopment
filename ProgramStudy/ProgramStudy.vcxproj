@@ -147,6 +147,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\AnimationMng.cpp" />
     <ClCompile Include="Source\GameObject\Player.cpp" />
     <ClCompile Include="Source\Math\rect.cpp" />
     <ClCompile Include="Source\Component\IComponent.cpp" />
@@ -181,6 +182,7 @@
     <ClCompile Include="Source\Utilities\StringHelper.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\AnimationMng.h" />
     <ClInclude Include="Source\GameObject\Player.h" />
     <ClInclude Include="Source\Math\rect.h" />
     <ClInclude Include="Source\Component\IComponent.h" />

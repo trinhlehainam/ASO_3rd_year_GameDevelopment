@@ -13,11 +13,15 @@ TitleScene::TitleScene()
 
 TitleScene::~TitleScene()
 {
-
+	auto& imageMng = ImageMng::Instance();
+	imageMng.DeleteImage("title");
 }
 
 bool TitleScene::Init()
 {
+	auto& imageMng = ImageMng::Instance();
+	imageMng.AddImage("Assets/Textures/statue.jpg", "title");
+
 	return true;
 }
 

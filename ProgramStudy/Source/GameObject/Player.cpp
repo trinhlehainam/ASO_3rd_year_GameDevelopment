@@ -30,7 +30,6 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	m_entity->AddComponent<TransformComponent>(m_entity, vec2f{ 100.0f,100.0f }, vec2f{ 100.0f ,100.0f }, 1.0f);
 	m_entity->AddComponent<SpriteComponent>(m_entity);
 	auto sprite = m_entity->GetComponent<SpriteComponent>();
-	sprite->LoadAnimationFromXML("Assets/Animations/animation.xml", "knight");
 	sprite->Play("knight", "Jump");
 }
 

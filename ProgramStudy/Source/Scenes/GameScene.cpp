@@ -5,6 +5,7 @@
 
 #include "../Math/MathHelper.h"
 
+#include "../AnimationMng.h"
 #include "../TileMap.h"
 #include "../ImageMng.h"
 #include "../Input/Input.h"
@@ -26,6 +27,9 @@ GameScene::~GameScene()
 
 bool GameScene::Init()
 {
+	auto& animMng = AnimationMng::Instance();
+	animMng.LoadAnimationFromXML("Assets/Animations/animation.xml", "knight");
+
 	m_map = std::make_unique<TileMap>("Assets/Map/map.xml", "map");
 	m_player = std::make_unique<Player>();
 

@@ -7,6 +7,7 @@
 #include "../_debug/_DebugDispOut.h"
 #include "../Math/MathHelper.h"
 #include "../ImageMng.h"
+#include "../AnimationMng.h"
 
 #include "TitleScene.h"
 #include "GameScene.h"
@@ -98,7 +99,7 @@ bool SceneMng::Init()
     _dbgSetup(kScreenWidth, kScreenHeight, 255);
 
 	auto& imageMng = ImageMng::Instance();
-	imageMng.AddImage("Assets/Textures/statue.jpg", "title");
+	auto& animMng = AnimationMng::Instance();
 
 	m_impl->scene = std::make_unique<TitleScene>();
 	m_impl->scene->Init();
