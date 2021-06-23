@@ -23,11 +23,13 @@ SpriteComponent::~SpriteComponent()
 bool SpriteComponent::Play(const std::string& listKey, const std::string& state)
 {
 	auto& AnimMng = AnimationMng::Instance();
+	
+	// Check function's arguments before assign to member variables
+	if (!AnimMng.HasAnimation(listKey, state)) return false;
+	if (IsPlaying(listKey, state)) return true;
 	m_listKey = listKey;
 	m_state = state;
-
-	if (!AnimMng.HasAnimation(m_listKey, m_state)) return false;
-	if (IsPlaying(m_listKey, m_state)) return true;
+	//
 
 	auto& animation = AnimMng.GetAnimation(m_listKey, m_state);
 	m_currentDurationId = animation.celBaseId;
