@@ -22,7 +22,7 @@ public:
     static void Destroy();
     static AnimationMng& Instance();
 
-    bool LoadAnimationFromXML(const std::string& file, const std::string& key);
+    bool LoadAnimationFromXML(const std::string& file);
     bool HasAnimation(const std::string& key);
     const Animation& GetAnimation(const std::string& key) const;
     int GetDuration_ms(int durationIndex) const;

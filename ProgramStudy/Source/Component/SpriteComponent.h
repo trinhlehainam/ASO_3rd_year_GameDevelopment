@@ -13,8 +13,8 @@ public:
     ~SpriteComponent();
 
 public:
-    bool Play(const std::string& animKey, const std::string& state);
-    bool IsPlaying(const std::string& animKey, const std::string& state);
+    bool Play(const std::string& listKey, const std::string& state);
+    bool IsPlaying(const std::string& listKey, const std::string& state);
 
 public:
     void Init() override;

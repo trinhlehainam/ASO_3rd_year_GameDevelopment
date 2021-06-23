@@ -2,7 +2,7 @@
 
 #include <DxLib.h>
 
-#include "../ImageMng.h"
+#include "../Systems/ImageMng.h"
 
 #include "../Component/TransformComponent.h"
 #include "../Component/SpriteComponent.h"

@@ -6,11 +6,11 @@
 
 #include "../_debug/_DebugDispOut.h"
 #include "../Math/MathHelper.h"
-#include "../ImageMng.h"
-#include "../AnimationMng.h"
+#include "../Systems/ImageMng.h"
+#include "../Systems/AnimationMng.h"
 
-#include "TitleScene.h"
-#include "GameScene.h"
+#include "../Scenes/TitleScene.h"
+#include "../Scenes/GameScene.h"
 
 namespace
 {

@@ -5,7 +5,7 @@
 #include "../_debug/_DebugConOut.h"
 #include "../Math/MathHelper.h"
 
-#include "../AnimationMng.h"
+#include "../Systems/AnimationMng.h"
 #include "../GameObject/Entity.h"
 #include "TransformComponent.h"
 
@@ -20,13 +20,13 @@ SpriteComponent::~SpriteComponent()
 {
 }
 
-bool SpriteComponent::Play(const std::string& animKey, const std::string& state)
+bool SpriteComponent::Play(const std::string& listKey, const std::string& state)
 {
 	auto& AnimMng = AnimationMng::Instance();
-	std::string key{ animKey + "_" + state };
+	std::string key{ listKey + "_" + state };
 
 	if (!AnimMng.HasAnimation(key)) return false;
-	if (IsPlaying(animKey, state)) return true;
+	if (IsPlaying(listKey, state)) return true;
 
 	m_animKey = std::move(key);
 	auto& animation = AnimMng.GetAnimation(m_animKey);
@@ -46,9 +46,9 @@ bool SpriteComponent::Play(const std::string& animKey, const std::string& state)
 	return true;
 }
 
-bool SpriteComponent::IsPlaying(const std::string& animKey, const std::string& state)
+bool SpriteComponent::IsPlaying(const std::string& listKey, const std::string& state)
 {
-	std::string key{ animKey + "_" + state };
+	std::string key{ listKey + "_" + state };
 	return m_animKey == key;
 }
 

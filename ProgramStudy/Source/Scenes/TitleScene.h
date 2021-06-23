@@ -8,7 +8,6 @@ public:
     TitleScene();
     ~TitleScene();
 private:
-
     bool Init() override;
     void Update(float deltaTime_s) override;
     void RenderToOwnScreen() override;

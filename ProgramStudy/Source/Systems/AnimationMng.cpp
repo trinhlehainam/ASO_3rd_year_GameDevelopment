@@ -4,7 +4,7 @@
 
 #include <rapidxml.hpp>
 
-#include "Utilities/StringHelper.h"
+#include "../Utilities/StringHelper.h"
 #include "ImageMng.h"
 
 AnimationMng* AnimationMng::m_instance = nullptr;
@@ -30,22 +30,23 @@ AnimationMng& AnimationMng::Instance()
 	return *m_instance;
 }
 
-bool AnimationMng::LoadAnimationFromXML(const std::string& file, const std::string& key)
+bool AnimationMng::LoadAnimationFromXML(const std::string& file)
 {
-	if (m_animations.count(key)) return false;
-
 	rapidxml::xml_document<> doc;
 	auto content = StringHelper::LoadFileToStringBuffer(file);
 	doc.parse<0>(&content[0]);
 
 	auto pAminationList = doc.first_node();
+	std::string listName;
 	int celWidth = 0;
 	int celHeight = 0;
 	int celCount = 0;
 	int texColumns = 0;
 	for (auto pAttr = pAminationList->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
-		if (strcmp(pAttr->name(), "celwidth") == 0)
+		if (strcmp(pAttr->name(), "name") == 0)
+			listName = std::move(pAttr->value());
+		else if (strcmp(pAttr->name(), "celwidth") == 0)
 			celWidth = std::atoi(pAttr->value());
 		else if (strcmp(pAttr->name(), "celheight") == 0)
 			celHeight = std::atoi(pAttr->value());
@@ -56,13 +57,15 @@ bool AnimationMng::LoadAnimationFromXML(const std::string& file, const std::stri
 	}
 	m_durations_ms.reserve(m_durations_ms.size() + celCount);
 
+	if (m_animations.count(listName)) return false;
+
 	auto pImage = pAminationList->first_node("image");
 	for (auto pAttr = pImage->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 	{
 		if (strcmp(pAttr->name(), "source") == 0)
 		{
 			auto& imgMng = ImageMng::Instance();
-			imgMng.AddImage(pAttr->value(), key);
+			imgMng.AddImage(pAttr->value(), listName);
 		}
 	}
 
@@ -73,8 +76,8 @@ bool AnimationMng::LoadAnimationFromXML(const std::string& file, const std::stri
 		{
 			if (strcmp(pAttr->name(), "name") == 0)
 			{
-				animKey = key + "_" + pAttr->value();
-				m_animations[animKey].texId = ImageMng::Instance().GetID(key);
+				animKey = listName + "_" + pAttr->value();
+				m_animations[animKey].texId = ImageMng::Instance().GetID(listName);
 				m_animations[animKey].texColumns = texColumns;
 				m_animations[animKey].celWidth = celWidth;
 				m_animations[animKey].celHeight = celHeight;
