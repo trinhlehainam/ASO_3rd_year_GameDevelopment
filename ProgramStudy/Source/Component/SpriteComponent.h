@@ -33,7 +33,8 @@ private:
 private:
     std::weak_ptr<TransformComponent> m_transform;
 
-    std::string m_animKey;
+    std::string m_listKey;
+    std::string m_state;
     int m_currentDurationId;
     int m_timer_ms;
     int m_loopCount;

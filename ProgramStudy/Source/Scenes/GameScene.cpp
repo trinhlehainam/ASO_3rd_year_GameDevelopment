@@ -5,9 +5,9 @@
 
 #include "../Math/MathHelper.h"
 
-#include "../AnimationMng.h"
+#include "../Systems/AnimationMng.h"
 #include "../TileMap.h"
-#include "../ImageMng.h"
+#include "../Systems/ImageMng.h"
 #include "../Input/Input.h"
 #include "../GameObject/Player.h"
 

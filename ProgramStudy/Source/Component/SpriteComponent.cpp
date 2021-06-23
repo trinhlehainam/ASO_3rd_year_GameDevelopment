@@ -23,13 +23,13 @@ SpriteComponent::~SpriteComponent()
 bool SpriteComponent::Play(const std::string& listKey, const std::string& state)
 {
 	auto& AnimMng = AnimationMng::Instance();
-	std::string key{ listKey + "_" + state };
+	m_listKey = listKey;
+	m_state = state;
 
-	if (!AnimMng.HasAnimation(key)) return false;
-	if (IsPlaying(listKey, state)) return true;
+	if (!AnimMng.HasAnimation(m_listKey, m_state)) return false;
+	if (IsPlaying(m_listKey, m_state)) return true;
 
-	m_animKey = std::move(key);
-	auto& animation = AnimMng.GetAnimation(m_animKey);
+	auto& animation = AnimMng.GetAnimation(m_listKey, m_state);
 	m_currentDurationId = animation.celBaseId;
 	m_timer_ms = AnimMng.GetDuration_ms(m_currentDurationId);
 
@@ -48,8 +48,7 @@ bool SpriteComponent::Play(const std::string& listKey, const std::string& state)
 
 bool SpriteComponent::IsPlaying(const std::string& listKey, const std::string& state)
 {
-	std::string key{ listKey + "_" + state };
-	return m_animKey == key;
+	return m_listKey == listKey && m_state == state;
 }
 
 void SpriteComponent::Init()
@@ -66,7 +65,7 @@ void SpriteComponent::UpdateInfinite(float deltaTime_s)
 	if (m_timer_ms <= 0)
 	{
 		auto& animMng = AnimationMng::Instance();
-		const auto& animtion = animMng.GetAnimation(m_animKey);
+		const auto& animtion = animMng.GetAnimation(m_listKey, m_state);
 		m_currentDurationId = (m_currentDurationId - animtion.celBaseId + 1) % animtion.celCount + animtion.celBaseId;
 		m_timer_ms = animMng.GetDuration_ms(m_currentDurationId);
 	}
@@ -77,7 +76,7 @@ void SpriteComponent::UpdateInfinite(float deltaTime_s)
 void SpriteComponent::UpdateLoop(float deltaTime_s)
 {
 	auto& animMng = AnimationMng::Instance();
-	const auto& animation = animMng.GetAnimation(m_animKey);;
+	const auto& animation = animMng.GetAnimation(m_listKey, m_state);;
 
 	if (m_timer_ms <= 0)
 	{
@@ -112,7 +111,7 @@ void SpriteComponent::Render()
 {
 	auto& animMng = AnimationMng::Instance();
 	const auto& transform = m_transform.lock();
-	const auto& animation = animMng.GetAnimation(m_animKey);
+	const auto& animation = animMng.GetAnimation(m_listKey, m_state);
 	auto sourceX = (m_currentDurationId % animation.texColumns) * animation.celWidth;
 	auto sourceY = (m_currentDurationId / animation.texColumns) * animation.celHeight;
 

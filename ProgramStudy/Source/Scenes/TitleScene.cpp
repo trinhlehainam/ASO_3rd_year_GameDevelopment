@@ -2,7 +2,7 @@
 
 #include <DxLib.h>
 
-#include "../ImageMng.h"
+#include "../Systems/ImageMng.h"
 
 #include "TransitionScene.h"
 #include "GameScene.h"

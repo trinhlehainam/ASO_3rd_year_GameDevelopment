@@ -18,13 +18,15 @@ struct Animation
 class AnimationMng
 {
 public:
+    using AnimationMap_t = std::unordered_map<std::string, Animation>;
+public:
     static void Create();
     static void Destroy();
     static AnimationMng& Instance();
 
     bool LoadAnimationFromXML(const std::string& file);
-    bool HasAnimation(const std::string& key);
-    const Animation& GetAnimation(const std::string& key) const;
+    bool HasAnimation(const std::string& listKey, const std::string& state);
+    const Animation& GetAnimation(const std::string& listKey, const std::string& state) const;
     int GetDuration_ms(int durationIndex) const;
 private:
     AnimationMng();
@@ -39,7 +41,7 @@ private:
     void operator = (AnimationMng&&) noexcept;
 
 private:
-    std::unordered_map<std::string, Animation> m_animations;
+    std::unordered_map<std::string, AnimationMap_t> m_listMap;
     std::vector<int> m_durations_ms;
     static AnimationMng* m_instance;
 };

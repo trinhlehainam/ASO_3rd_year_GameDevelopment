@@ -7,7 +7,7 @@
 
 #include "Utilities/StringHelper.h"
 
-#include "ImageMng.h"
+#include "Systems/ImageMng.h"
 
 
 TileMap::TileMap():m_mapImageID(0) {}

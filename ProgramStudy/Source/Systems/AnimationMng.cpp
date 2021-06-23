@@ -7,6 +7,11 @@
 #include "../Utilities/StringHelper.h"
 #include "ImageMng.h"
 
+namespace
+{
+	const std::string kConnectTag = "_";
+}
+
 AnimationMng* AnimationMng::m_instance = nullptr;
 
 void AnimationMng::Create()
@@ -57,7 +62,8 @@ bool AnimationMng::LoadAnimationFromXML(const std::string& file)
 	}
 	m_durations_ms.reserve(m_durations_ms.size() + celCount);
 
-	if (m_animations.count(listName)) return false;
+	if (m_listMap.count(listName)) return false;
+	auto& animationMap = m_listMap[listName];
 
 	auto pImage = pAminationList->first_node("image");
 	for (auto pAttr = pImage->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
@@ -76,18 +82,18 @@ bool AnimationMng::LoadAnimationFromXML(const std::string& file)
 		{
 			if (strcmp(pAttr->name(), "name") == 0)
 			{
-				animKey = listName + "_" + pAttr->value();
-				m_animations[animKey].texId = ImageMng::Instance().GetID(listName);
-				m_animations[animKey].texColumns = texColumns;
-				m_animations[animKey].celWidth = celWidth;
-				m_animations[animKey].celHeight = celHeight;
+				animKey = listName + kConnectTag + pAttr->value();
+				animationMap[animKey].texId = ImageMng::Instance().GetID(listName);
+				animationMap[animKey].texColumns = texColumns;
+				animationMap[animKey].celWidth = celWidth;
+				animationMap[animKey].celHeight = celHeight;
 			}
 			else if (strcmp(pAttr->name(), "id") == 0)
-				m_animations[animKey].celBaseId = std::atoi(pAttr->value());
+				animationMap[animKey].celBaseId = std::atoi(pAttr->value());
 			else if (strcmp(pAttr->name(), "count") == 0)
-				m_animations[animKey].celCount = std::atoi(pAttr->value());
+				animationMap[animKey].celCount = std::atoi(pAttr->value());
 			else if (strcmp(pAttr->name(), "loop") == 0)
-				m_animations[animKey].loop = std::atoi(pAttr->value());
+				animationMap[animKey].loop = std::atoi(pAttr->value());
 		}
 
 		// Add data in duration node to duration container (m_durations_ms)
@@ -115,14 +121,16 @@ bool AnimationMng::LoadAnimationFromXML(const std::string& file)
 	return true;
 }
 
-bool AnimationMng::HasAnimation(const std::string& key)
+bool AnimationMng::HasAnimation(const std::string& listKey, const std::string& state)
 {
-	return m_animations.count(key);
+	if (!m_listMap.count(listKey)) return false;
+
+	return m_listMap[listKey].count(listKey + kConnectTag + state);
 }
 
-const Animation& AnimationMng::GetAnimation(const std::string& key) const
+const Animation& AnimationMng::GetAnimation(const std::string& listKey, const std::string& state) const
 {
-	return m_animations.at(key);
+	return m_listMap.at(listKey).at(listKey + kConnectTag + state);
 }
 
 int AnimationMng::GetDuration_ms(int durationIndex) const
