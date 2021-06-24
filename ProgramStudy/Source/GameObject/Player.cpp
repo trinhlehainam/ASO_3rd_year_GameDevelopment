@@ -27,10 +27,11 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 		break;
 	}
 
-	m_entity->AddComponent<TransformComponent>(m_entity, vec2f{ 100.0f,100.0f }, vec2f{ 100.0f ,100.0f }, 1.0f);
+	m_entity->AddComponent<TransformComponent>(m_entity, vec2f{ 100.0f,100.0f }, 1.5f, 0.0f);
 	m_entity->AddComponent<SpriteComponent>(m_entity);
 	auto sprite = m_entity->GetComponent<SpriteComponent>();
-	sprite->Play("knight", "Jump");
+	sprite->PickAnimationList("knight");
+	sprite->Play("Idle");
 }
 
 void Player::Update(float deltaTime_s)
@@ -52,9 +53,9 @@ void Player::Update(float deltaTime_s)
 	transform->Pos += speed * deltaTime_s;
 
 	if (speed.x != 0.0f || speed.y != 0.0f)
-		sprite->Play("knight", "Run");
+		sprite->Play("Run");
 	else
-		sprite->Play("knight", "Idle");
+		sprite->Play("Idle");
 
 	m_entity->Update(deltaTime_s);
 }

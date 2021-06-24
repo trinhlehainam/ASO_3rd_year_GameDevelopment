@@ -121,6 +121,11 @@ bool AnimationMng::LoadAnimationFromXML(const std::string& file)
 	return true;
 }
 
+bool AnimationMng::HasAnimationList(const std::string& listKey)
+{
+	return m_listMap.count(listKey);
+}
+
 bool AnimationMng::HasAnimation(const std::string& listKey, const std::string& state)
 {
 	if (!m_listMap.count(listKey)) return false;

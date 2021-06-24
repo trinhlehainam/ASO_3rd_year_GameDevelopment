@@ -1,10 +1,17 @@
 #include "TransformComponent.h"
 
-TransformComponent::TransformComponent(const std::shared_ptr<Entity>& owner, const vec2f& pos, const vec2f& size, float scale):
+TransformComponent::TransformComponent(const std::shared_ptr<Entity>& owner, const vec2f& pos):
 	IComponent(owner),
 	Pos(pos),
-	Size(size),
-	Scale(scale)
+	Scale(1.0f),
+	Angle(0.0f)
+{
+}
+
+TransformComponent::TransformComponent(const std::shared_ptr<Entity>& owner, const vec2f& pos, float scale, float angle):
+	IComponent(owner),
+	Pos(pos),
+	Scale(scale), Angle(angle)
 {
 }
 

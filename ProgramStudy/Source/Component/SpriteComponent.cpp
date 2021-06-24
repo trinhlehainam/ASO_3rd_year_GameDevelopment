@@ -20,6 +20,19 @@ SpriteComponent::~SpriteComponent()
 {
 }
 
+bool SpriteComponent::PickAnimationList(const std::string& listKey)
+{
+	auto& AnimMng = AnimationMng::Instance();
+	if (!AnimMng.HasAnimationList(listKey)) return false;
+	m_listKey = listKey;
+	return true;
+}
+
+bool SpriteComponent::Play(const std::string& state)
+{
+	return Play(m_listKey, state);
+}
+
 bool SpriteComponent::Play(const std::string& listKey, const std::string& state)
 {
 	auto& AnimMng = AnimationMng::Instance();
@@ -106,7 +119,6 @@ void SpriteComponent::UpdateLoop(float deltaTime_s)
 
 void SpriteComponent::UpdateSleep(float deltaTime_s)
 {
-
 }
 
 void SpriteComponent::Render()
@@ -117,9 +129,8 @@ void SpriteComponent::Render()
 	auto sourceX = (m_currentDurationId % animation.texColumns) * animation.celWidth;
 	auto sourceY = (m_currentDurationId / animation.texColumns) * animation.celHeight;
 
-	DxLib::DrawRectExtendGraphF(transform->Pos.x, transform->Pos.y, 
-		(transform->Pos.x + transform->Size.x) * transform->Scale, 
-		(transform->Pos.y + transform->Size.y) * transform->Scale,
-		sourceX, sourceY, animation.celWidth, animation.celHeight, 
-		animation.texId, 1);
+	DxLib::DrawRectRotaGraphF(transform->Pos.x, transform->Pos.y,
+		sourceX, sourceY, animation.celWidth, animation.celHeight,
+		transform->Scale, transform->Angle, animation.texId, 1);
+		
 }

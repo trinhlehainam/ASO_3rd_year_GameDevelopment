@@ -25,6 +25,7 @@ public:
     static AnimationMng& Instance();
 
     bool LoadAnimationFromXML(const std::string& file);
+    bool HasAnimationList(const std::string& listKey);
     bool HasAnimation(const std::string& listKey, const std::string& state);
     const Animation& GetAnimation(const std::string& listKey, const std::string& state) const;
     int GetDuration_ms(int durationIndex) const;

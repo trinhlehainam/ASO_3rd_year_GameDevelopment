@@ -13,6 +13,8 @@ public:
     ~SpriteComponent();
 
 public:
+    bool PickAnimationList(const std::string& listKey);
+    bool Play(const std::string& state);
     bool Play(const std::string& listKey, const std::string& state);
     bool IsPlaying(const std::string& listKey, const std::string& state);
 
