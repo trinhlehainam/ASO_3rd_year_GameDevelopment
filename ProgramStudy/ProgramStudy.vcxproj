@@ -158,7 +158,7 @@
     <ClCompile Include="Source\Geometry\ChristmasTree.cpp" />
     <ClCompile Include="Source\Geometry\Circle.cpp" />
     <ClCompile Include="Source\Geometry\Cloud.cpp" />
-    <ClCompile Include="Source\Geometry\GeometryManager.cpp" />
+    <ClCompile Include="Source\Systems\GeometryManager.cpp" />
     <ClCompile Include="Source\Geometry\IShape.cpp" />
     <ClCompile Include="Source\Geometry\Triangle.cpp" />
     <ClCompile Include="Source\Input\Input.cpp" />
@@ -193,7 +193,7 @@
     <ClInclude Include="Source\Geometry\ChristmasTree.h" />
     <ClInclude Include="Source\Geometry\Circle.h" />
     <ClInclude Include="Source\Geometry\Cloud.h" />
-    <ClInclude Include="Source\Geometry\GeometryManager.h" />
+    <ClInclude Include="Source\Systems\GeometryManager.h" />
     <ClInclude Include="Source\Geometry\IShape.h" />
     <ClInclude Include="Source\Geometry\Triangle.h" />
     <ClInclude Include="Source\Input\Input.h" />

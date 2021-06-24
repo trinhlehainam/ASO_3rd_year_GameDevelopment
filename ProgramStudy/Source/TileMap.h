@@ -7,6 +7,8 @@
 
 struct Tile
 {
+	explicit Tile(int tilePos, int id) :TilePos(tilePos), ID(id) {};
+
 	int TilePos;
 	int ID;
 };

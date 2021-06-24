@@ -2,10 +2,10 @@
 
 #include "../Math/MathHelper.h"
 
-#include "IShape.h"
-#include "AABB.h"
-#include "Circle.h"
-#include "Triangle.h"
+#include "../Geometry/IShape.h"
+#include "../Geometry/AABB.h"
+#include "../Geometry/Circle.h"
+#include "../Geometry/Triangle.h"
 
 namespace
 {
@@ -119,7 +119,7 @@ void GeometryManager::Update(float deltaTime_s)
 	if (m_activeDelete)
 	{
 		m_activeDelete = false;
-		std::erase_if(m_shapes, deleteFunc);
+		// std::erase_if(m_shapes, deleteFunc);
 	}	
 
 	if (m_activeAdd)
