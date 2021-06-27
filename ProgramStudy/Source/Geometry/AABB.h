@@ -1,21 +1,17 @@
 #pragma once
-#include "IShape.h"
-class AABB :
-    public IShape
+#include "../Math/vec2.h"
+
+struct AABB
 {
-public:
-    AABB();
-    explicit AABB(float x, float y, float width, float height, unsigned int color);
-    explicit AABB(vec2f pos, vec2f size, unsigned int color);
-    explicit AABB(vec2f pos, vec2f speed, vec2f size, unsigned int color);
-    ~AABB();
+	AABB();
+	AABB(const vec2f& pos, const vec2f& size);
+	AABB(const AABB&) = default;
+	AABB(AABB&&) noexcept = default;
+	void operator = (const AABB&);
+	void operator = (AABB&&) noexcept;
+	~AABB();
 
-    bool ConstrainPosition(float width, float height) override;
-    void Update(float deltaTime_s) override;
-    void SpecialAction(std::vector<std::unique_ptr<IShape>>& container) override;
-    void Draw() override;
-    void Draw(float scale) override;
-
-    vec2f Size;
+	vec2f Pos;
+	vec2f Size;
 };
 

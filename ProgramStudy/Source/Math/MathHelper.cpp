@@ -99,15 +99,15 @@ namespace MathHelper
 
 	bool isOverlap(const Circle& a, const Circle& b)
 	{
-		auto d = a.Pos - b.Pos;
+		auto d = a.Center - b.Center;
 		auto r = a.Radius + b.Radius;
 		return d * d <= r * r;
 	}
 
 	bool isOverlap(const Circle& cir, const AABB& rect)
 	{
-		auto closet_point = clampVec(cir.Pos, rect.Pos, rect.Pos + rect.Size);
-		auto d = closet_point - cir.Pos;
+		auto closet_point = clampVec(cir.Center, rect.Pos, rect.Pos + rect.Size);
+		auto d = closet_point - cir.Center;
 		return d * d <= cir.Radius * cir.Radius;
 	}
 
@@ -138,14 +138,14 @@ namespace MathHelper
 		for (int i = 0; i < 3; ++i)
 		{
 			auto i_next = (i + 1) % 3;
-			a_segments[i].a = a.P[i];
-			a_segments[i].b = a.P[i_next];
+			a_segments[i].a = a.Point[i];
+			a_segments[i].b = a.Point[i_next];
 		}
 		for (int i = 0; i < 3; ++i)
 		{
 			auto i_next = (i + 1) % 3;
-			b_segments[i].a = b.P[i];
-			b_segments[i].b = b.P[i_next];
+			b_segments[i].a = b.Point[i];
+			b_segments[i].b = b.Point[i_next];
 		}
 		//
 

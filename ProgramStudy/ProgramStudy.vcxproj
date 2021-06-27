@@ -94,6 +94,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;_DEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -108,6 +109,7 @@
       <SDLCheck>true</SDLCheck>
       <PreprocessorDefinitions>WIN32;NDEBUG;_CONSOLE;%(PreprocessorDefinitions)</PreprocessorDefinitions>
       <ConformanceMode>true</ConformanceMode>
+      <LanguageStandard>stdcpplatest</LanguageStandard>
     </ClCompile>
     <Link>
       <SubSystem>Console</SubSystem>
@@ -149,17 +151,12 @@
   <ItemGroup>
     <ClCompile Include="Source\Systems\AnimationMng.cpp" />
     <ClCompile Include="Source\GameObject\Player.cpp" />
-    <ClCompile Include="Source\Math\rect.cpp" />
     <ClCompile Include="Source\Component\IComponent.cpp" />
     <ClCompile Include="Source\Input\KeyboardInput.cpp" />
     <ClCompile Include="Source\Input\JoypadXInput.cpp" />
     <ClCompile Include="Source\GameObject\Entity.cpp" />
     <ClCompile Include="Source\Geometry\AABB.cpp" />
-    <ClCompile Include="Source\Geometry\ChristmasTree.cpp" />
     <ClCompile Include="Source\Geometry\Circle.cpp" />
-    <ClCompile Include="Source\Geometry\Cloud.cpp" />
-    <ClCompile Include="Source\Systems\GeometryManager.cpp" />
-    <ClCompile Include="Source\Geometry\IShape.cpp" />
     <ClCompile Include="Source\Geometry\Triangle.cpp" />
     <ClCompile Include="Source\Input\Input.cpp" />
     <ClCompile Include="Source\Systems\ImageMng.cpp" />
@@ -184,17 +181,12 @@
   <ItemGroup>
     <ClInclude Include="Source\Systems\AnimationMng.h" />
     <ClInclude Include="Source\GameObject\Player.h" />
-    <ClInclude Include="Source\Math\rect.h" />
     <ClInclude Include="Source\Component\IComponent.h" />
     <ClInclude Include="Source\Input\KeyboardInput.h" />
     <ClInclude Include="Source\Input\JoypadXInput.h" />
     <ClInclude Include="Source\GameObject\Entity.h" />
     <ClInclude Include="Source\Geometry\AABB.h" />
-    <ClInclude Include="Source\Geometry\ChristmasTree.h" />
     <ClInclude Include="Source\Geometry\Circle.h" />
-    <ClInclude Include="Source\Geometry\Cloud.h" />
-    <ClInclude Include="Source\Systems\GeometryManager.h" />
-    <ClInclude Include="Source\Geometry\IShape.h" />
     <ClInclude Include="Source\Geometry\Triangle.h" />
     <ClInclude Include="Source\Input\Input.h" />
     <ClInclude Include="Source\Input\InputID.h" />

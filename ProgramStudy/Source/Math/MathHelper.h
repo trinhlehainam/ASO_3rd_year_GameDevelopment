@@ -25,10 +25,9 @@ struct range
 	float min, max;
 };
 
-class IShape;
-class AABB;
-class Circle;
-class Triangle;
+struct AABB;
+struct Circle;
+struct Triangle;
 struct line2;
 struct segment2;
 
