@@ -1,5 +1,5 @@
 #pragma once
-#include "../Math/vec2.h"
+#include "../vec2.h"
 
 struct Circle
 {

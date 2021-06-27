@@ -2,8 +2,6 @@
 
 #include <algorithm>
 
-#include "../Math/MathHelper.h"
-
 Circle::Circle():Center(vec2f{}), Radius(0.0f) {}
 
 Circle::Circle(const vec2f& center, float radius) : Center(center), Radius(radius) {}

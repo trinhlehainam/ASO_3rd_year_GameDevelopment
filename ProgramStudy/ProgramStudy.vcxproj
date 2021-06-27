@@ -155,9 +155,9 @@
     <ClCompile Include="Source\Input\KeyboardInput.cpp" />
     <ClCompile Include="Source\Input\JoypadXInput.cpp" />
     <ClCompile Include="Source\GameObject\Entity.cpp" />
-    <ClCompile Include="Source\Geometry\AABB.cpp" />
-    <ClCompile Include="Source\Geometry\Circle.cpp" />
-    <ClCompile Include="Source\Geometry\Triangle.cpp" />
+    <ClCompile Include="Source\Math\Geometry\AABB.cpp" />
+    <ClCompile Include="Source\Math\Geometry\Circle.cpp" />
+    <ClCompile Include="Source\Math\Geometry\Triangle.cpp" />
     <ClCompile Include="Source\Input\Input.cpp" />
     <ClCompile Include="Source\Systems\ImageMng.cpp" />
     <ClCompile Include="Source\Scenes\GameScene.cpp" />
@@ -185,9 +185,9 @@
     <ClInclude Include="Source\Input\KeyboardInput.h" />
     <ClInclude Include="Source\Input\JoypadXInput.h" />
     <ClInclude Include="Source\GameObject\Entity.h" />
-    <ClInclude Include="Source\Geometry\AABB.h" />
-    <ClInclude Include="Source\Geometry\Circle.h" />
-    <ClInclude Include="Source\Geometry\Triangle.h" />
+    <ClInclude Include="Source\Math\Geometry\AABB.h" />
+    <ClInclude Include="Source\Math\Geometry\Circle.h" />
+    <ClInclude Include="Source\Math\Geometry\Triangle.h" />
     <ClInclude Include="Source\Input\Input.h" />
     <ClInclude Include="Source\Input\InputID.h" />
     <ClInclude Include="Source\Systems\ImageMng.h" />
