@@ -1,21 +1,34 @@
 #include "Entity.h"
 
-#include <DxLib.h>
-
-#include "../Systems/ImageMng.h"
-
 #include "../Component/TransformComponent.h"
 #include "../Component/SpriteComponent.h"
 
-Entity::Entity()
+Entity::Entity():m_isActive(true)
 {
-	auto& imageMng =  ImageMng::Instance();
-	imageMng.AddImage("knight", "Assets/Textures/knight 1 axe.png");
-
 }
 
 Entity::~Entity()
 {
+}
+
+void Entity::SetActive(bool activeFlag)
+{
+	m_isActive = activeFlag;
+}
+
+void Entity::SetTag(std::string tag)
+{
+	m_tag = std::move(tag);
+}
+
+std::string Entity::GetTag() const
+{
+	return m_tag;
+}
+
+bool Entity::IsActive() const
+{
+	return m_isActive;
 }
 
 void Entity::Update(float deltaTime_s)

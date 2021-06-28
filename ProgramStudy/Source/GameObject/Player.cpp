@@ -1,5 +1,7 @@
 #include "Player.h"
 
+#include "../Systems/ImageMng.h"
+
 #include "Entity.h"
 #include "../Input/KeyboardInput.h"
 #include "../Input/JoypadXInput.h"
@@ -16,6 +18,9 @@ Player::~Player()
 
 void Player::Init(INPUT_DEVICE_ID deviceId)
 {
+	auto& imageMng = ImageMng::Instance();
+	imageMng.AddImage("knight", "Assets/Textures/knight 1 axe.png");
+
 	m_entity = std::make_shared<Entity>();
 	switch (deviceId)
 	{
