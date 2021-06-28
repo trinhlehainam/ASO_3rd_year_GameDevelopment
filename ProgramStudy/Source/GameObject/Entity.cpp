@@ -2,8 +2,13 @@
 
 #include "../Component/TransformComponent.h"
 #include "../Component/SpriteComponent.h"
+#include "../Component/Collider/BoxCollider.h"
 
 Entity::Entity():m_isActive(true)
+{
+}
+
+Entity::Entity(std::string tag):m_isActive(true), m_tag(std::move(tag))
 {
 }
 
@@ -63,5 +68,7 @@ template std::shared_ptr<component> Entity::GetComponent<>();\
 #pragma region Instantiation
 InstantiateFuncTemplate(TransformComponent);
 InstantiateFuncTemplate(SpriteComponent);
+InstantiateFuncTemplate(ICollider);
+InstantiateFuncTemplate(BoxCollider);
 #pragma endregion
 

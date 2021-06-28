@@ -13,8 +13,9 @@ public:
 	virtual void Update(float deltaTime_s) = 0;
 	virtual void Render() = 0;
 
-	inline void SetOwner(const std::shared_ptr<Entity>& owner) { m_owner = owner; }
-	inline bool IsOwnerExist() { return !m_owner.expired(); }
+	void SetOwner(const std::shared_ptr<Entity>& owner); 
+	bool IsOwnerExist();
+	std::shared_ptr<Entity> GetOwner();
 
 private:
 	std::weak_ptr<Entity> m_owner;

@@ -12,6 +12,7 @@ class Entity
 {
 public:
 	Entity();
+	explicit Entity(std::string tag);
 	~Entity();
 
 	void SetActive(bool activeFlag);
@@ -27,13 +28,21 @@ public:
 	void AddComponent(Arg&&...args)
 	{
 		auto component = std::make_shared<T>(std::forward<Arg>(args)...);
-		component->Init();
 		m_components.emplace_back(component);
 		m_componentMap.emplace(&typeid(T), component);
+		component->Init();
 	}
 
 	template<typename T>
 	bool HasComponent();
+
+	template<typename T, typename Key>
+	bool AddKeyToComponent()
+	{
+		if (!HasComponent<T>()) return false;
+		m_componentMap.emplace(&typeid(T), m_componentMap.at(&typeid(T)));
+		return true;
+	}
 
 	template<typename T>
 	std::shared_ptr<T> GetComponent();
@@ -44,7 +53,7 @@ private:
 	// type_info can be only instantiated by typeid
 	// -> point to type_info after it's created
 	std::unordered_map<const type_info*, std::shared_ptr<IComponent>> m_componentMap;
-	std::string m_tag;
 	bool m_isActive;
+	std::string m_tag;
 };
 

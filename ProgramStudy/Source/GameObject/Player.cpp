@@ -7,6 +7,7 @@
 #include "../Input/JoypadXInput.h"
 #include "../Component/TransformComponent.h"
 #include "../Component/SpriteComponent.h"
+#include "../Component/Collider/BoxCollider.h"
 
 Player::Player()
 {
@@ -21,7 +22,7 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	auto& imageMng = ImageMng::Instance();
 	imageMng.AddImage("knight", "Assets/Textures/knight 1 axe.png");
 
-	m_entity = std::make_shared<Entity>();
+	m_entity = std::make_shared<Entity>("knight");
 	switch (deviceId)
 	{
 	case INPUT_DEVICE_ID::KEYBOARD:
@@ -37,6 +38,7 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	auto sprite = m_entity->GetComponent<SpriteComponent>();
 	sprite->PickAnimationList("knight");
 	sprite->Play("Idle");
+	m_entity->AddComponent<BoxCollider>(m_entity, AABBf{ vec2f{80.0f,80.0f},vec2f{48.0f,48.0f} });
 }
 
 void Player::Update(float deltaTime_s)
@@ -46,6 +48,7 @@ void Player::Update(float deltaTime_s)
 
 	const auto& transform = m_entity->GetComponent<TransformComponent>();
 	const auto& sprite = m_entity->GetComponent<SpriteComponent>();
+	m_entity->GetComponent<ICollider>();
 
 	if (m_input->IsPressed(INPUT_ID::UP))
 		speed.y = -100.0f;
@@ -61,11 +64,13 @@ void Player::Update(float deltaTime_s)
 		sprite->Play("Run");
 	else
 		sprite->Play("Idle");
-
-	m_entity->Update(deltaTime_s);
 }
 
 void Player::Render()
 {
-	m_entity->Render();
+}
+
+std::shared_ptr<Entity> Player::GetEntity() const
+{
+	return m_entity;
 }

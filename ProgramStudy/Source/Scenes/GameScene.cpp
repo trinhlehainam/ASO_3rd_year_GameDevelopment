@@ -6,6 +6,7 @@
 #include "../Math/MathHelper.h"
 
 #include "../Systems/AnimationMng.h"
+#include "../Systems/EntityMng.h"
 #include "../TileMap.h"
 #include "../Systems/ImageMng.h"
 #include "../Input/Input.h"
@@ -30,10 +31,12 @@ bool GameScene::Init()
 	auto& animMng = AnimationMng::Instance();
 	animMng.LoadAnimationFromXML("Assets/Animations/animation.xml");
 
+	m_entityMng = std::make_unique<EntityMng>();
 	m_map = std::make_unique<TileMap>("Assets/Map/map.xml", "map");
 	m_player = std::make_unique<Player>();
 
 	m_player->Init(INPUT_DEVICE_ID::KEYBOARD);
+	m_entityMng->AddEntity(m_player->GetEntity());
 	RenderToOwnScreen();
 
     return true;
@@ -42,6 +45,7 @@ bool GameScene::Init()
 void GameScene::Update(float deltaTime_s)
 {
 	m_player->Update(deltaTime_s);
+	m_entityMng->Update(deltaTime_s);
 }
 
 void GameScene::Render()
@@ -54,6 +58,7 @@ void GameScene::RenderToOwnScreen()
 	DxLib::SetDrawScreen(m_screenID);
 	DxLib::ClearDrawScreen();
 
+	m_entityMng->Render();
 	m_map->Render();
 	m_player->Render();
 }
