@@ -90,6 +90,9 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName, const std::string&
 	// Read tile's data (image ID and tile's position) to each layer
 	for (auto pLayer = pMap->first_node("layer"); pLayer; pLayer = pLayer->next_sibling())
 	{
+		if (strcmp(pLayer->name(), "objectgroup") == 0)
+			continue;
+
 		auto pData = pLayer->first_node("data");
 		std::string layerName{ pLayer->first_attribute("name")->value() };
 		std::stringstream data{ std::move(pData->value()) };
