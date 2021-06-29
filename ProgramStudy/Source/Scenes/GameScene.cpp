@@ -31,9 +31,9 @@ bool GameScene::Init()
 	auto& animMng = AnimationMng::Instance();
 	animMng.LoadAnimationFromXML("Assets/Animations/animation.xml");
 
-	m_entityMng = std::make_unique<EntityMng>();
-	m_map = std::make_unique<TileMap>("Assets/Map/map.xml", "map");
-	m_player = std::make_unique<Player>();
+	m_entityMng = std::make_shared<EntityMng>();
+	m_map = std::make_shared<TileMap>("Assets/Map/map.xml", "map");
+	m_player = std::make_shared<Player>();
 
 	m_player->Init(INPUT_DEVICE_ID::KEYBOARD);
 	m_entityMng->AddEntity(m_player->GetEntity());

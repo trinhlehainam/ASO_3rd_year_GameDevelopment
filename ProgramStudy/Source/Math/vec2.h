@@ -55,3 +55,8 @@ using vec2i = vec2<int>;
 using vec2u = vec2<unsigned int>;
 using vec2f = vec2<float>;
 using vec2d = vec2<double>;
+
+using position2i = vec2<int>;
+using position2u = vec2<unsigned int>;
+using position2f = vec2<float>;
+using position2d = vec2<double>;

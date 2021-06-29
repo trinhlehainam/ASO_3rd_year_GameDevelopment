@@ -111,6 +111,17 @@ namespace MathHelper
 		return isOverlap(a.min, a.max, b.min, b.max);
 	}
 
+	bool isOverlap(const position2f& p, const Circle& c)
+	{
+		vec2f distanceVec = c.Center - p;
+		return dot(distanceVec, distanceVec) <= c.Radius * c.Radius;
+	}
+
+	bool isOverlap(const Circle& c, const position2f& p)
+	{
+		return isOverlap(p,c);
+	}
+
 	bool isOverlap(const Circle& a, const Circle& b)
 	{
 		auto d = a.Center - b.Center;
@@ -182,6 +193,13 @@ namespace MathHelper
 		return isEquivalent(a, b);
 	}
 
+	bool isOverlap(const line2& line, const Circle& cir)
+	{
+		vec2f proj = projectVec(cir.Center - line.base, line.dir);
+		position2f nearest = line.base + proj;
+		return isOverlap(nearest, cir);
+	}
+
 	bool isOverlap(const segment2& a, const segment2& b)
 	{
 		line2 axisA{ a.a, a.b - a.a };
@@ -196,6 +214,27 @@ namespace MathHelper
 			return true;
 
 		return isOverlap(projectSegmentRange(a, axisA.dir), projectSegmentRange(b, axisA.dir));
+	}
+
+	bool isOverlap(const segment2& s, const Circle& c)
+	{
+		if (isOverlap(s.a, c)) return true;
+		if (isOverlap(s.b, c)) return true;
+
+		vec2f lc = c.Center - s.a;
+		vec2f d = s.b - s.a;
+		vec2f p = projectVec(lc, d);
+		position2f nearest = s.a + p;
+
+		if (!isOverlap(nearest, c)) return false;
+		if (dot(d, p) < 0) return false;
+
+		return true;
+	}
+
+	bool isOverlap(const segment2& s, const AABBf& r)
+	{
+		return false;
 	}
 
 	bool isOverlap(float minA, float maxA, float minB, float maxB)

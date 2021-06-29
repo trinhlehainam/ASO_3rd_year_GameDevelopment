@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Systems\Physics.cpp" />
     <ClCompile Include="Source\Systems\EntityMng.cpp" />
     <ClCompile Include="Source\Component\Collider\BoxCollider.cpp" />
     <ClCompile Include="Source\Component\Collider\ICollider.cpp" />
@@ -180,10 +181,11 @@
     <ClCompile Include="Source\Component\TransformComponent.cpp" />
     <ClCompile Include="Source\Component\SpriteComponent.cpp" />
     <ClCompile Include="Source\Utilities\StringHelper.cpp" />
-    <ClCompile Include="Source\Component\Collider\SphereCollider.cpp" />
+    <ClCompile Include="Source\Component\Collider\CircleCollider.cpp" />
     <ClCompile Include="Source\Component\Collider\TriangleCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Systems\Physics.h" />
     <ClInclude Include="Source\Systems\EntityMng.h" />
     <ClInclude Include="Source\Component\Collider\BoxCollider.h" />
     <ClInclude Include="Source\Component\Collider\ICollider.h" />
@@ -215,7 +217,7 @@
     <ClInclude Include="Source\Component\TransformComponent.h" />
     <ClInclude Include="Source\Component\SpriteComponent.h" />
     <ClInclude Include="Source\Utilities\StringHelper.h" />
-    <ClInclude Include="Source\Component\Collider\SphereCollider.h" />
+    <ClInclude Include="Source\Component\Collider\CircleCollider.h" />
     <ClInclude Include="Source\Component\Collider\TriangleCollider.h" />
   </ItemGroup>
   <Import Project="$(VCTargetsPath)\Microsoft.Cpp.targets" />

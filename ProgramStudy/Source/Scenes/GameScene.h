@@ -23,8 +23,8 @@ private:
     SCENE_ID GetSceneID() override;
 
 private:
-    std::unique_ptr<EntityMng> m_entityMng;
-    std::unique_ptr<Player> m_player;
-    std::unique_ptr<TileMap> m_map;
+    std::shared_ptr<EntityMng> m_entityMng;
+    std::shared_ptr<Player> m_player;
+    std::shared_ptr<TileMap> m_map;
 };
 

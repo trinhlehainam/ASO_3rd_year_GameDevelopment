@@ -42,6 +42,9 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	sprite->PickAnimationList("knight");
 	sprite->Play("Idle");
 	m_entity->AddComponent<BoxCollider>(m_entity);
+	auto collider = m_entity->GetComponent<BoxCollider>();
+	collider->SetPos(vec2f{ 68.0f, 68.0f });
+	collider->SetSize(vec2f{ 64.0f,64.0f });
 }
 
 void Player::Update(float deltaTime_s)
@@ -51,7 +54,7 @@ void Player::Update(float deltaTime_s)
 
 	const auto& transform = m_entity->GetComponent<TransformComponent>();
 	const auto& sprite = m_entity->GetComponent<SpriteComponent>();
-	m_entity->GetComponent<ICollider>();
+	auto collider = m_entity->GetComponent<ICollider>();
 
 	if (m_input->IsPressed(INPUT_ID::UP))
 		speed.y = -100.0f;
