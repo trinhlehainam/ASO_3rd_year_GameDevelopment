@@ -5,6 +5,7 @@
 
 #include "../Math/MathHelper.h"
 
+#include "../Systems/Physics.h"
 #include "../Systems/AnimationMng.h"
 #include "../Systems/EntityMng.h"
 #include "../TileMap.h"
@@ -37,6 +38,9 @@ bool GameScene::Init()
 
 	m_player->Init(INPUT_DEVICE_ID::KEYBOARD);
 	m_entityMng->AddEntity(m_player->GetEntity());
+
+
+
 	RenderToOwnScreen();
 
     return true;

@@ -8,6 +8,9 @@
 #include "Utilities/StringHelper.h"
 
 #include "Systems/ImageMng.h"
+#include "GameObject/Entity.h"
+#include "Component/TransformComponent.h"
+#include "Component/Collider/BoxCollider.h"
 
 
 TileMap::TileMap():m_mapImageID(0) {}
@@ -121,12 +124,62 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName, const std::string&
 	}
 	//
 
+	rapidxml::xml_node<char>* pObjectgroup = nullptr;
+	for (auto pLayer = pMap->first_node("layer"); pLayer; pLayer = pLayer->next_sibling())
+	{
+		if (strcmp(pLayer->name(), "objectgroup") == 0)
+		{
+			pObjectgroup = pLayer;
+			break;
+		}
+	}
+
+	for (auto pObject = pObjectgroup->first_node(); pObject; pObject = pObject->next_sibling())
+	{
+		vec2f origin;
+		vec2f size;
+		for (auto pAttr = pObject->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+		{
+			if (strcmp(pAttr->name(), "x") == 0)
+			{
+				std::string data{ std::move(pAttr->value()) };
+				origin.x = std::stof(data);
+			}
+			else if (strcmp(pAttr->name(), "y") == 0)
+			{
+				std::string data{ std::move(pAttr->value()) };
+				origin.y = std::stof(data);
+			}
+			else if (strcmp(pAttr->name(), "width") == 0)
+			{
+				std::string data{ std::move(pAttr->value()) };
+				size.x = std::stof(data);
+			}
+			else if (strcmp(pAttr->name(), "height") == 0)
+			{
+				std::string data{ std::move(pAttr->value()) };
+				size.y = std::stof(data);
+			}
+		}
+
+		auto entity = std::make_shared<Entity>("tile-collision");
+		entity->AddComponent<TransformComponent>(entity);
+		auto transform = entity->GetComponent<TransformComponent>();
+		transform->Pos = origin;
+		entity->AddComponent<BoxCollider>(entity);
+		auto collider = entity->GetComponent<BoxCollider>();
+		collider->SetOrigin(origin);
+		collider->SetSize(size);
+		m_colliderObjects.push_back(std::move(entity));
+	}
+
 	doc.clear();
 }
 
 void TileMap::Update(float deltaTime_s)
 {
-			
+	for (const auto& object : m_colliderObjects)
+		object->Update(deltaTime_s);
 }
 
 void TileMap::Render()
@@ -138,6 +191,8 @@ void TileMap::Render()
 			auto sourcePos = GetTileSourcePos(tile.ID);
 			DxLib::DrawRectGraphF(tileWorldPos.x, tileWorldPos.y, sourcePos.x, sourcePos.y, m_tileSize.x, m_tileSize.y, m_mapImageID, 1);
 		}
+	for (const auto& object : m_colliderObjects)
+		object->Render();
 }
 
 vec2f TileMap::GetTileWorldPos(int tilePos)

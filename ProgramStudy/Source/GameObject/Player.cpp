@@ -8,6 +8,7 @@
 #include "../Component/TransformComponent.h"
 #include "../Component/SpriteComponent.h"
 #include "../Component/Collider/BoxCollider.h"
+#include "../Component/Collider/CircleCollider.h"
 
 Player::Player()
 {
@@ -41,10 +42,10 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	auto sprite = m_entity->GetComponent<SpriteComponent>();
 	sprite->PickAnimationList("knight");
 	sprite->Play("Idle");
-	m_entity->AddComponent<BoxCollider>(m_entity);
-	auto collider = m_entity->GetComponent<BoxCollider>();
-	collider->SetPos(vec2f{ 68.0f, 68.0f });
-	collider->SetSize(vec2f{ 64.0f,64.0f });
+	m_entity->AddComponent<CircleCollider>(m_entity);
+	auto collider = m_entity->GetComponent<CircleCollider>();
+	collider->SetCenterPos(vec2f{ 100.0f, 100.0f });
+	collider->SetRadius(32.0f);
 }
 
 void Player::Update(float deltaTime_s)
@@ -54,7 +55,6 @@ void Player::Update(float deltaTime_s)
 
 	const auto& transform = m_entity->GetComponent<TransformComponent>();
 	const auto& sprite = m_entity->GetComponent<SpriteComponent>();
-	auto collider = m_entity->GetComponent<ICollider>();
 
 	if (m_input->IsPressed(INPUT_ID::UP))
 		speed.y = -100.0f;
@@ -74,6 +74,7 @@ void Player::Update(float deltaTime_s)
 
 void Player::Render()
 {
+
 }
 
 std::shared_ptr<Entity> Player::GetEntity() const

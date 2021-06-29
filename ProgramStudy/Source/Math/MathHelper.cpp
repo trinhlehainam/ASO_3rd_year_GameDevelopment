@@ -117,6 +117,17 @@ namespace MathHelper
 		return dot(distanceVec, distanceVec) <= c.Radius * c.Radius;
 	}
 
+	bool isOverlap(const position2f& p, const AABBf& r)
+	{
+		float left = r.Origin.x;
+		float right = r.Origin.x + r.Size.x;
+		float top = r.Origin.y;
+		float bottom = r.Origin.y + r.Size.y;
+
+		return left <= p.x && p.x <= right &&
+			   top <= p.y && p.y <= bottom;
+	}
+
 	bool isOverlap(const Circle& c, const position2f& p)
 	{
 		return isOverlap(p,c);
@@ -129,29 +140,29 @@ namespace MathHelper
 		return d * d <= r * r;
 	}
 
-	bool isOverlap(const Circle& cir, const AABBf& rect)
+	bool isOverlap(const Circle& c, const AABBf& r)
 	{
-		auto closet_point = clampVec(cir.Center, rect.Pos, rect.Pos + rect.Size);
-		auto d = closet_point - cir.Center;
-		return d * d <= cir.Radius * cir.Radius;
+		auto closet_point = clampVec(c.Center, r.Origin, r.Origin + r.Size);
+		auto d = closet_point - c.Center;
+		return d * d <= c.Radius * c.Radius;
 	}
 
-	bool isOverlap(const AABBf& rect, const Circle& cir)
+	bool isOverlap(const AABBf& r, const Circle& c)
 	{
-		return isOverlap(cir, rect);
+		return isOverlap(c, r);
 	}
 
 	bool isOverlap(const AABBf& a, const AABBf& b)
 	{
-		auto aLeft = a.Pos.x;
-		auto aRight = a.Pos.x + a.Size.x;
-		auto aTop = a.Pos.y;
-		auto aBottom = a.Pos.y + a.Size.y;
+		auto aLeft = a.Origin.x;
+		auto aRight = a.Origin.x + a.Size.x;
+		auto aTop = a.Origin.y;
+		auto aBottom = a.Origin.y + a.Size.y;
 
-		auto bLeft = b.Pos.x;
-		auto bRight = b.Pos.x + b.Size.x;
-		auto bTop = b.Pos.y;
-		auto bBottom = b.Pos.y + b.Size.y;
+		auto bLeft = b.Origin.x;
+		auto bRight = b.Origin.x + b.Size.x;
+		auto bTop = b.Origin.y;
+		auto bBottom = b.Origin.y + b.Size.y;
 
 		return isOverlap(aLeft, aRight, bLeft, bRight) && isOverlap(aTop, aBottom, bTop, bBottom);
 	}
@@ -200,6 +211,26 @@ namespace MathHelper
 		return isOverlap(nearest, cir);
 	}
 
+	bool isOverlap(const line2& l, const AABBf& r)
+	{
+		vec2f n = orthogonalVec(l.dir);
+
+		vec2f l1 = r.Origin - l.base;
+		vec2f l2 = vec2f{ r.Origin.x + r.Size.x, r.Origin.y } - l.base ;
+		vec2f l3 = (r.Origin + r.Size) - l.base ;
+		vec2f l4 = vec2f{ r.Origin.x, r.Origin.y + r.Size.y } - l.base ;
+
+		auto dot1 = dot(l1, n);
+		auto dot2 = dot(l2, n);
+		auto dot3 = dot(l3, n);
+		auto dot4 = dot(l4, n);
+
+		return dot1 * dot2 <= 0.0f ||
+			   dot2 * dot3 <= 0.0f ||
+			   dot3 * dot4 <= 0.0f ||
+			   dot4 * dot1 <= 0.0f;
+	}
+
 	bool isOverlap(const segment2& a, const segment2& b)
 	{
 		line2 axisA{ a.a, a.b - a.a };
@@ -229,7 +260,7 @@ namespace MathHelper
 		if (!isOverlap(nearest, c)) return false;
 		if (dot(d, p) < 0) return false;
 
-		return true;
+		return dot(p,p) <= dot(d,d);
 	}
 
 	bool isOverlap(const segment2& s, const AABBf& r)

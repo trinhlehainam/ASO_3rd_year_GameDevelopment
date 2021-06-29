@@ -12,18 +12,18 @@ BoxCollider::BoxCollider(const std::shared_ptr<Entity>& owner):ICollider(owner)
 BoxCollider::BoxCollider(const std::shared_ptr<Entity>& owner, const AABBf& boxInfo):ICollider(owner),m_collider(boxInfo)
 {
     const auto& transform = owner->GetComponent<TransformComponent>();
-    ICollider::SetOffset(m_collider.Pos - transform->Pos);
+    ICollider::SetOffset(m_collider.Origin - transform->Pos);
 }
 
 BoxCollider::~BoxCollider()
 {
 }
 
-void BoxCollider::SetPos(const vec2f& pos)
+void BoxCollider::SetOrigin(const vec2f& origin)
 {
-    m_collider.Pos = pos;
+    m_collider.Origin = origin;
     const auto& transform = GetOwner()->GetComponent<TransformComponent>();
-    ICollider::SetOffset(m_collider.Pos - transform->Pos);
+    ICollider::SetOffset(m_collider.Origin - transform->Pos);
 }
 
 void BoxCollider::SetSize(const vec2f& size)
@@ -31,9 +31,9 @@ void BoxCollider::SetSize(const vec2f& size)
     m_collider.Size = size;
 }
 
-vec2f BoxCollider::GetPos() const
+vec2f BoxCollider::GetOrigin() const
 {
-    return m_collider.Pos;
+    return m_collider.Origin;
 }
 
 vec2f BoxCollider::GetSize() const
@@ -53,14 +53,14 @@ void BoxCollider::Init()
 void BoxCollider::Update(float deltaTime_s)
 {
     const auto& transform = IComponent::GetOwner()->GetComponent<TransformComponent>();
-    m_collider.Pos = transform->Pos + m_offset;
+    m_collider.Origin = transform->Pos + m_offset;
 }
 
 void BoxCollider::Render()
 {
 #ifdef _DEBUG || DEBUG
     DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 100);
-    DxLib::DrawBoxAA(m_collider.Pos.x, m_collider.Pos.y, m_collider.Pos.x + m_collider.Size.x, m_collider.Pos.y + m_collider.Size.y, 0xff0000, 1);
+    DxLib::DrawBoxAA(m_collider.Origin.x, m_collider.Origin.y, m_collider.Origin.x + m_collider.Size.x, m_collider.Origin.y + m_collider.Size.y, 0xff0000, 1);
     DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 255);
 #endif
 }

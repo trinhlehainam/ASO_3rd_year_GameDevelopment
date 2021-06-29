@@ -10,10 +10,10 @@ public:
     explicit BoxCollider(const std::shared_ptr<Entity>& owner, const AABBf& boxInfo);
     ~BoxCollider();
 
-    void SetPos(const vec2f& pos);
+    void SetOrigin(const vec2f& origin);
     void SetSize(const vec2f& size);
 
-    vec2f GetPos() const;
+    vec2f GetOrigin() const;
     vec2f GetSize() const;
     AABBf GetCollider() const;
 public:

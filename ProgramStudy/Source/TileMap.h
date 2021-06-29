@@ -2,6 +2,7 @@
 #include <string>
 #include <vector>
 #include <unordered_map>
+#include <memory>
 
 #include "Math/vec2.h"
 
@@ -12,6 +13,8 @@ struct Tile
 	int TilePos;
 	int ID;
 };
+
+class Entity;
 
 class TileMap
 {
@@ -36,5 +39,6 @@ private:
 	int m_mapImageID;
 
 	std::unordered_map<std::string, std::vector<Tile>> m_layerMap;
+	std::vector<std::shared_ptr<Entity>> m_colliderObjects;
 };
 
