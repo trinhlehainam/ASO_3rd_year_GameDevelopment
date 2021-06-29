@@ -5,6 +5,10 @@
 #include "../../GameObject/Entity.h"
 #include "../TransformComponent.h"
 
+BoxCollider::BoxCollider(const std::shared_ptr<Entity>& owner):ICollider(owner)
+{
+}
+
 BoxCollider::BoxCollider(const std::shared_ptr<Entity>& owner, const AABBf& boxInfo):ICollider(owner),Collider(boxInfo)
 {
     const auto& transform = owner->GetComponent<TransformComponent>();
@@ -17,7 +21,6 @@ BoxCollider::~BoxCollider()
 
 void BoxCollider::Init()
 {
-    GetOwner()->AddKeyToComponent<BoxCollider, ICollider>();
 }
 
 void BoxCollider::Update(float deltaTime_s)

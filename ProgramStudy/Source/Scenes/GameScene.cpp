@@ -58,8 +58,8 @@ void GameScene::RenderToOwnScreen()
 	DxLib::SetDrawScreen(m_screenID);
 	DxLib::ClearDrawScreen();
 
-	m_entityMng->Render();
 	m_map->Render();
+	m_entityMng->Render();
 	m_player->Render();
 }
 

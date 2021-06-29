@@ -33,12 +33,15 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 		break;
 	}
 
-	m_entity->AddComponent<TransformComponent>(m_entity, vec2f{ 100.0f,100.0f }, 1.5f, 0.0f);
+	m_entity->AddComponent<TransformComponent>(m_entity);
+	auto transform = m_entity->GetComponent<TransformComponent>();
+	transform->Pos = vec2f{ 100.0f,100.0f };
+	transform->Scale = vec2f{ 1.5f,1.5f };
 	m_entity->AddComponent<SpriteComponent>(m_entity);
 	auto sprite = m_entity->GetComponent<SpriteComponent>();
 	sprite->PickAnimationList("knight");
 	sprite->Play("Idle");
-	m_entity->AddComponent<BoxCollider>(m_entity, AABBf{ vec2f{80.0f,80.0f},vec2f{48.0f,48.0f} });
+	m_entity->AddComponent<BoxCollider>(m_entity);
 }
 
 void Player::Update(float deltaTime_s)

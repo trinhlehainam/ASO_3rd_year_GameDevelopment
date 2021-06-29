@@ -6,6 +6,7 @@ class BoxCollider :
     public ICollider
 {
 public:
+    explicit BoxCollider(const std::shared_ptr<Entity>& owner);
     explicit BoxCollider(const std::shared_ptr<Entity>& owner, const AABBf& boxInfo);
     ~BoxCollider();
 public:
