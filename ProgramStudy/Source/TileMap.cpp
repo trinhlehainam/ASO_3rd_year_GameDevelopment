@@ -8,14 +8,13 @@
 #include "Utilities/StringHelper.h"
 
 #include "Systems/ImageMng.h"
-#include "GameObject/Entity.h"
+#include "Systems/EntityMng.h"
 #include "Component/TransformComponent.h"
 #include "Component/Collider/BoxCollider.h"
 
+TileMap::TileMap(const std::shared_ptr<EntityMng>& entityMng):m_mapImageID(0), m_entityMng(entityMng) {}
 
-TileMap::TileMap():m_mapImageID(0) {}
-
-TileMap::TileMap(const std::string& xmlFile, const std::string& key)
+TileMap::TileMap(const std::shared_ptr<EntityMng>& entityMng, const std::string& xmlFile, const std::string& key): m_entityMng(entityMng)
 {
 	LoadMapDataFromXML(xmlFile, key);
 }
@@ -26,6 +25,8 @@ TileMap::~TileMap()
 
 void TileMap::LoadMapDataFromXML(const std::string& fileName, const std::string& key)
 {
+	auto entityMng = m_entityMng.lock();
+
 	rapidxml::xml_document<> doc;
 	auto content = StringHelper::LoadFileToStringBuffer(fileName);
 	doc.parse<0>(&content[0]);
@@ -170,7 +171,7 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName, const std::string&
 		auto collider = entity->GetComponent<BoxCollider>();
 		collider->SetOrigin(origin);
 		collider->SetSize(size);
-		m_colliderObjects.push_back(std::move(entity));
+		entityMng->AddEntity(std::move(entity));
 	}
 
 	doc.clear();
@@ -178,8 +179,6 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName, const std::string&
 
 void TileMap::Update(float deltaTime_s)
 {
-	for (const auto& object : m_colliderObjects)
-		object->Update(deltaTime_s);
 }
 
 void TileMap::Render()
@@ -191,8 +190,6 @@ void TileMap::Render()
 			auto sourcePos = GetTileSourcePos(tile.ID);
 			DxLib::DrawRectGraphF(tileWorldPos.x, tileWorldPos.y, sourcePos.x, sourcePos.y, m_tileSize.x, m_tileSize.y, m_mapImageID, 1);
 		}
-	for (const auto& object : m_colliderObjects)
-		object->Render();
 }
 
 vec2f TileMap::GetTileWorldPos(int tilePos)

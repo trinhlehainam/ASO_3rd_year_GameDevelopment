@@ -4,9 +4,11 @@
 
 #include <DxLib.h>
 
+#include "../Systems/EntityMng.h"
+
 IScene::IScene() :
 	EnableChangeScene(false),
-	m_screenOffsetX(0.0f), m_screenOffsetY(0.0f)
+	m_screenOffsetX(0.0f), m_screenOffsetY(0.0f), m_entityMng(std::make_shared<EntityMng>())
 {
 	SetDrawScreen(DX_SCREEN_BACK);
 	GetDrawScreenSize(&m_screenWidth, &m_screenHeight);
@@ -18,6 +20,16 @@ IScene::IScene() :
 IScene::~IScene()
 {
 	DeleteGraph(m_screenID);
+}
+
+void IScene::SetName(std::string name)
+{
+	m_name = std::move(name);
+}
+
+std::string IScene::GetName() const
+{
+	return m_name;
 }
 
 void IScene::Render()

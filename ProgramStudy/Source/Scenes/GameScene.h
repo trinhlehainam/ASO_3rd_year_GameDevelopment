@@ -4,7 +4,6 @@
 #include <memory>
 
 class TileMap;
-class EntityMng;
 class Player;
 
 class GameScene :
@@ -23,7 +22,6 @@ private:
     SCENE_ID GetSceneID() override;
 
 private:
-    std::shared_ptr<EntityMng> m_entityMng;
     std::shared_ptr<Player> m_player;
     std::shared_ptr<TileMap> m_map;
 };

@@ -14,13 +14,13 @@ struct Tile
 	int ID;
 };
 
-class Entity;
+class EntityMng;
 
 class TileMap
 {
 public:
-	TileMap();
-	explicit TileMap(const std::string& xmlFile, const std::string& key);
+	explicit TileMap(const std::shared_ptr<EntityMng>& entityMng);
+	explicit TileMap(const std::shared_ptr<EntityMng>& entityMng, const std::string& xmlFile, const std::string& key);
 	~TileMap();
 public:
 	void LoadMapDataFromXML(const std::string& fileName, const std::string& key);
@@ -39,9 +39,6 @@ private:
 	int m_mapImageID;
 
 	std::unordered_map<std::string, std::vector<Tile>> m_layerMap;
-	std::vector<std::shared_ptr<Entity>> m_colliderObjects;
-
-private:
-	friend class GameScene;
+	std::weak_ptr<EntityMng> m_entityMng;
 };
 

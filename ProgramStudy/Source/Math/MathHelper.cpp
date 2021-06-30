@@ -263,8 +263,6 @@ namespace MathHelper
 
 	bool isOverlap(const segment2& s, const AABBf& r)
 	{
-		if (!isOverlap(line2{ s.a,s.b - s.a }, r)) return false;
-
 		range segX{ s.a.x,s.b.x };
 		if (segX.min > segX.max) std::swap(segX.min, segX.max);
 		if (!isOverlap(segX.min, segX.max, r.Origin.x, r.Origin.x + r.Size.x)) return false;
