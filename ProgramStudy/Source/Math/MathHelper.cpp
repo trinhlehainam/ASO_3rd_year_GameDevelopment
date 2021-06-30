@@ -98,10 +98,8 @@ namespace MathHelper
 	{
 		auto ontoUnit = onto / std::sqrt(dot(onto,onto));
 
-		range r;
-		r.min = dot(s.a, onto);
-		r.max = dot(s.a, onto);
-		std::sort(&r.min, &r.max);
+		range r{ dot(s.a, onto) , dot(s.a, onto) };
+		if (r.min > r.max) std::swap(r.min, r.max);
 
 		return r;
 	}
@@ -265,21 +263,15 @@ namespace MathHelper
 
 	bool isOverlap(const segment2& s, const AABBf& r)
 	{
-		vec2f dir = unitVec(s.b - s.a);
-		vec2f invDir = dir != 0.0f ? invertedVec(dir) : vec2f{};
+		if (!isOverlap(line2{ s.a,s.b - s.a }, r)) return false;
 
-		auto timeInX = (r.Origin.x - s.a.x) * invDir.x;
-		auto timeOutX = ((r.Origin.x + r.Size.x) - s.a.x) * invDir.x;
+		range segX{ s.a.x,s.b.x };
+		if (segX.min > segX.max) std::swap(segX.min, segX.max);
+		if (!isOverlap(segX.min, segX.max, r.Origin.x, r.Origin.x + r.Size.x)) return false;
 
-		auto timeInY = (r.Origin.y - s.a.y) * invDir.y;
-		auto timeOutY = ((r.Origin.y + r.Size.y) - s.a.y) * invDir.y;
-
-		auto rangeMin = std::min(timeInX, timeInY);
-		auto rangeMax = std::max(timeOutX, timeOutY);
-
-		if (rangeMax <= rangeMin) return false;
-
-		return true;
+		range segY{ s.a.y,s.b.y };
+		if (segY.min > segY.max) std::swap(segY.min, segY.max);
+		return isOverlap(segY.min, segY.max, r.Origin.y, r.Origin.y + r.Size.y);
 	}
 
 	bool isOverlap(float minA, float maxA, float minB, float maxB)
