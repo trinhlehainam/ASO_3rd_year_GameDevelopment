@@ -265,7 +265,21 @@ namespace MathHelper
 
 	bool isOverlap(const segment2& s, const AABBf& r)
 	{
-		return false;
+		vec2f dir = unitVec(s.b - s.a);
+		vec2f invDir = dir != 0.0f ? invertedVec(dir) : vec2f{};
+
+		auto timeInX = (r.Origin.x - s.a.x) * invDir.x;
+		auto timeOutX = ((r.Origin.x + r.Size.x) - s.a.x) * invDir.x;
+
+		auto timeInY = (r.Origin.y - s.a.y) * invDir.y;
+		auto timeOutY = ((r.Origin.y + r.Size.y) - s.a.y) * invDir.y;
+
+		auto rangeMin = std::min(timeInX, timeInY);
+		auto rangeMax = std::max(timeOutX, timeOutY);
+
+		if (rangeMax <= rangeMin) return false;
+
+		return true;
 	}
 
 	bool isOverlap(float minA, float maxA, float minB, float maxB)

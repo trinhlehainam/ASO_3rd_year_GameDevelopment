@@ -39,7 +39,19 @@ bool GameScene::Init()
 	m_player->Init(INPUT_DEVICE_ID::KEYBOARD);
 	m_entityMng->AddEntity(m_player->GetEntity());
 
+	for (const auto& entity : m_entityMng->m_entities)
+	{
+		if (!entity->HasComponent<ICollider>()) continue;
+		auto collider = entity->GetComponent<ICollider>();
+		Physics::AddCollider(collider);
+	}
 
+	for (const auto& entity : m_map->m_colliderObjects)
+	{
+		if (!entity->HasComponent<ICollider>()) continue;
+		auto collider = entity->GetComponent<ICollider>();
+		Physics::AddCollider(collider);
+	}
 
 	RenderToOwnScreen();
 

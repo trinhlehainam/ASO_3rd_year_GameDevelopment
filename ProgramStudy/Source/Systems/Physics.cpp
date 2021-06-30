@@ -11,7 +11,7 @@ std::vector<std::weak_ptr<ICollider>> Physics::m_colliders;
 
 bool Physics::RayCast(const vec2f& origin, const vec2f& dir, float maxDistance)
 {
-    segment2 seg{ origin, unitVec(dir) * maxDistance };
+    segment2 seg{ origin, origin + unitVec(dir) * maxDistance };
     for (const auto& pCollider : m_colliders)
     {
         auto pCollider_checked = pCollider.lock();
@@ -38,4 +38,9 @@ bool Physics::RayCast(const vec2f& origin, const vec2f& dir, float maxDistance)
            
     }
     return false;
+}
+
+void Physics::AddCollider(const std::shared_ptr<ICollider>& collider)
+{
+    m_colliders.push_back(collider);
 }

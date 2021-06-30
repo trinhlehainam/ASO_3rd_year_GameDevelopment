@@ -56,7 +56,9 @@ void Entity::AddComponent(const std::shared_ptr<Entity>& owner)
 	auto component = std::make_shared<T>(owner);
 	m_components.emplace_back(component);
 	m_componentMap.emplace(&typeid(T), component);
-	if(typeid(T) == typeid(BoxCollider))
+	if (typeid(T) == typeid(BoxCollider))
+		m_componentMap.emplace(&typeid(ICollider), component);
+	else if (typeid(T) == typeid(CircleCollider))
 		m_componentMap.emplace(&typeid(ICollider), component);
 	component->Init();
 }

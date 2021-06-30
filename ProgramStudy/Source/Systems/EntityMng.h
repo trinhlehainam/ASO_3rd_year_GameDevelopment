@@ -13,5 +13,7 @@ public:
 	void Render();
 private:
 	std::vector<std::shared_ptr<Entity>> m_entities;
+private:
+	friend class GameScene;
 };
 

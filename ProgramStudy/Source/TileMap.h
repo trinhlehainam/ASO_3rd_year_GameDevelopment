@@ -40,5 +40,8 @@ private:
 
 	std::unordered_map<std::string, std::vector<Tile>> m_layerMap;
 	std::vector<std::shared_ptr<Entity>> m_colliderObjects;
+
+private:
+	friend class GameScene;
 };
 
