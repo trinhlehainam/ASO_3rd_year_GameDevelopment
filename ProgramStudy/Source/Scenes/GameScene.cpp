@@ -32,21 +32,13 @@ bool GameScene::Init()
 	auto& animMng = AnimationMng::Instance();
 	animMng.LoadAnimationFromXML("Assets/Animations/animation.xml");
 
-	m_entityMng = std::make_shared<EntityMng>();
-	m_map = std::make_shared<TileMap>("Assets/Map/map.xml", "map");
+	m_map = std::make_shared<TileMap>(m_entityMng, "Assets/Map/map.xml", "map");
 	m_player = std::make_shared<Player>();
 
 	m_player->Init(INPUT_DEVICE_ID::KEYBOARD);
 	m_entityMng->AddEntity(m_player->GetEntity());
 
-	for (const auto& entity : m_entityMng->m_entities)
-	{
-		if (!entity->HasComponent<ICollider>()) continue;
-		auto collider = entity->GetComponent<ICollider>();
-		Physics::AddCollider(collider);
-	}
-
-	for (const auto& entity : m_map->m_colliderObjects)
+	for (const auto& entity : m_entityMng->GetAllEntities())
 	{
 		if (!entity->HasComponent<ICollider>()) continue;
 		auto collider = entity->GetComponent<ICollider>();

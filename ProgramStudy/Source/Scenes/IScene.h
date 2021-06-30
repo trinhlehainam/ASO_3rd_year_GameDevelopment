@@ -1,5 +1,6 @@
 #pragma once
 #include <memory>
+#include <string>
 
 enum class SCENE_ID
 {
@@ -8,12 +9,18 @@ enum class SCENE_ID
 	TRANSITION
 };
 
+class EntityMng;
+
 class IScene
 {
 public:
 	IScene();
 	virtual ~IScene();
 
+	void SetName(std::string name);
+	std::string GetName() const;
+
+public:
 	virtual bool Init() = 0;
 	virtual void Update(float deltaTime_s) = 0;
 	virtual void Render();
@@ -27,5 +34,8 @@ protected:
 	float m_screenOffsetX, m_screenOffsetY;
 	int m_screenWidth, m_screenHeight;
 	int m_screenID;
+
+	std::string m_name;
+	std::shared_ptr<EntityMng> m_entityMng;
 };
 
