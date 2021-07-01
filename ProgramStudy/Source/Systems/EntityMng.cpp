@@ -2,12 +2,17 @@
 
 #include "../GameObject/Entity.h"
 
-EntityMng::EntityMng()
+EntityMng::EntityMng():m_currentID(0)
 {
 }
 
 EntityMng::~EntityMng()
 {
+}
+
+bool EntityMng::HasEntity(int entityID) const
+{
+	return m_entityMap.count(entityID);
 }
 
 std::shared_ptr<Entity> EntityMng::AddEntity(std::string tag)
@@ -19,7 +24,11 @@ std::shared_ptr<Entity> EntityMng::AddEntity(std::string tag)
 
 void EntityMng::AddEntity(const std::shared_ptr<Entity>& entity)
 {
+	if (HasEntity(entity->GetEntityID())) return;
+	entity->SetEntityID(m_currentID);
 	m_entities.push_back(entity);
+	m_entityMap.emplace(m_currentID, entity);
+	++m_currentID;
 }
 
 const std::vector<std::shared_ptr<Entity>>& EntityMng::GetAllEntities() const

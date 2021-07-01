@@ -20,9 +20,11 @@ public:
 
 	void SetActive(bool activeFlag);
 	void SetTag(std::string tag);
+	void SetEntityID(int id);
 	void SetEntityMng(const std::shared_ptr<EntityMng>& entityMng);
 
 	std::string GetTag() const;
+	int GetEntityID() const;
 	bool IsActive() const;
 
 	void Update(float deltaTime_s);
@@ -45,7 +47,10 @@ private:
 	std::unordered_map<const type_info*, std::shared_ptr<IComponent>> m_componentMap;
 	bool m_isActive;
 	std::string m_tag;
-	std::vector<std::weak_ptr<Entity>> m_childs;
+	int m_id = 0;
 	std::weak_ptr<EntityMng> m_entityMng;
+
+	//TODO : Implement hierarchy game objects
+	std::vector<std::weak_ptr<Entity>> m_childs;
 };
 

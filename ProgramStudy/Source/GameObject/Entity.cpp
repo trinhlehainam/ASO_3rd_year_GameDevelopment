@@ -7,19 +7,19 @@
 #include "../Component/Collider/BoxCollider.h"
 #include "../Component/Collider/CircleCollider.h"
 
-Entity::Entity():m_isActive(true)
+Entity::Entity():m_isActive(true), m_id(-1)
 {
 }
 
-Entity::Entity(std::string tag) : m_isActive(true), m_tag(std::move(tag))
+Entity::Entity(std::string tag) : m_isActive(true), m_tag(std::move(tag)), m_id(-1)
 {
 }
 
-Entity::Entity(const std::shared_ptr<EntityMng>& entityMng):m_isActive(true), m_entityMng(entityMng)
+Entity::Entity(const std::shared_ptr<EntityMng>& entityMng):m_isActive(true), m_entityMng(entityMng), m_id(-1)
 {
 }
 
-Entity::Entity(const std::shared_ptr<EntityMng>& entityMng, std::string tag):m_isActive(true), m_tag(std::move(tag)), m_entityMng(entityMng)
+Entity::Entity(const std::shared_ptr<EntityMng>& entityMng, std::string tag):m_isActive(true), m_tag(std::move(tag)), m_entityMng(entityMng), m_id(-1)
 {
 }
 
@@ -37,6 +37,14 @@ void Entity::SetTag(std::string tag)
 	m_tag = std::move(tag);
 }
 
+void Entity::SetEntityID(int id)
+{
+	// TODO
+	auto entityMng = m_entityMng.lock();
+	if (!entityMng->HasEntity(m_id)) return;
+	if (entityMng->HasEntity(id)) return;
+}
+
 void Entity::SetEntityMng(const std::shared_ptr<EntityMng>& entityMng)
 {
 	m_entityMng = entityMng;
@@ -45,6 +53,11 @@ void Entity::SetEntityMng(const std::shared_ptr<EntityMng>& entityMng)
 std::string Entity::GetTag() const
 {
 	return m_tag;
+}
+
+int Entity::GetEntityID() const
+{
+	return m_id;
 }
 
 bool Entity::IsActive() const
