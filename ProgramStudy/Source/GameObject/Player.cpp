@@ -1,12 +1,16 @@
 #include "Player.h"
 
 #include "../_debug/_DebugDispOut.h"
-#include "../Systems/ImageMng.h"
-#include "../Systems/Physics.h"
 
 #include "Entity.h"
+
+#include "../Systems/ImageMng.h"
+#include "../Systems/Physics.h"
+#include "../Systems/EntityMng.h"
+
 #include "../Input/KeyboardInput.h"
 #include "../Input/JoypadXInput.h"
+
 #include "../Component/TransformComponent.h"
 #include "../Component/SpriteComponent.h"
 #include "../Component/Collider/BoxCollider.h"
@@ -18,8 +22,9 @@ namespace
 	vec2f dir;
 }
 
-Player::Player()
+Player::Player(const std::shared_ptr<EntityMng>& entityMng):m_entity(std::make_shared<Entity>(entityMng))
 {
+	entityMng->AddEntity(m_entity);
 }
 
 Player::~Player()
@@ -28,10 +33,8 @@ Player::~Player()
 
 void Player::Init(INPUT_DEVICE_ID deviceId)
 {
-	auto& imageMng = ImageMng::Instance();
-	imageMng.AddImage("knight", "Assets/Textures/knight 1 axe.png");
+	ImageMng::AddImage("knight", "Assets/Textures/knight 1 axe.png");
 
-	m_entity = std::make_shared<Entity>("knight");
 	switch (deviceId)
 	{
 	case INPUT_DEVICE_ID::KEYBOARD:
@@ -42,6 +45,7 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 		break;
 	}
 
+	m_entity->SetTag("kinght");
 	m_entity->AddComponent<TransformComponent>(m_entity);
 	auto transform = m_entity->GetComponent<TransformComponent>();
 	transform->Pos = vec2f{ 100.0f,100.0f };

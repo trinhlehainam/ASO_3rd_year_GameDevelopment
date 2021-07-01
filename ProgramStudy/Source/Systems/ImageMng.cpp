@@ -4,29 +4,9 @@
 
 #include <DxLib.h>
 
-ImageMng* ImageMng::m_instance = nullptr;
+#include "../Utilities/MacroHelper.h"
 
-void ImageMng::Create()
-{
-    if (m_instance == nullptr)
-        m_instance = new ImageMng();
-}
-
-void ImageMng::Destroy()
-{
-    if (m_instance != nullptr)
-    {
-        delete m_instance;
-        m_instance = nullptr;
-    }
-}
-
-ImageMng& ImageMng::Instance()
-{
-    if (m_instance == nullptr)
-        Create();
-    return *m_instance;
-}
+GenerateDynamicSingleton(ImageMng);
 
 bool ImageMng::AddImage(const std::string& fileName, const std::string& key)
 {
@@ -52,9 +32,3 @@ int ImageMng::GetID(const std::string& key)
 ImageMng::ImageMng() {}
 ImageMng::~ImageMng() {}
 
-// Don't allow copy and move semantics
-ImageMng::ImageMng(const ImageMng&) {}
-ImageMng::ImageMng(ImageMng&&) noexcept {}
-void ImageMng::operator=(const ImageMng&) {}
-void ImageMng::operator=(ImageMng&&) noexcept {}
-//

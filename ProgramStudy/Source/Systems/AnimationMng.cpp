@@ -4,6 +4,7 @@
 
 #include <rapidxml.hpp>
 
+#include "../Utilities/MacroHelper.h"
 #include "../Utilities/StringHelper.h"
 #include "ImageMng.h"
 
@@ -12,28 +13,7 @@ namespace
 	const std::string kConnectTag = "_";
 }
 
-AnimationMng* AnimationMng::m_instance = nullptr;
-
-void AnimationMng::Create()
-{
-	if (m_instance == nullptr)
-		m_instance = new AnimationMng();
-}
-void AnimationMng::Destroy()
-{
-	if (m_instance != nullptr)
-	{
-		delete m_instance;
-		m_instance = nullptr;
-	}
-}
-
-AnimationMng& AnimationMng::Instance()
-{
-	if (m_instance == nullptr)
-		Create();
-	return *m_instance;
-}
+GenerateDynamicSingleton(AnimationMng);
 
 bool AnimationMng::LoadAnimationFromXML(const std::string& file)
 {
@@ -144,11 +124,4 @@ int AnimationMng::GetDuration_ms(int durationIndex)
 }
 
 AnimationMng::AnimationMng() {}
-
 AnimationMng::~AnimationMng() {}
-
-// Avoid copy and move sematics
-AnimationMng::AnimationMng(const AnimationMng&) {}
-AnimationMng::AnimationMng(AnimationMng&&) noexcept {}
-void AnimationMng::operator = (const AnimationMng&) {}
-void AnimationMng::operator = (AnimationMng&&) noexcept {}

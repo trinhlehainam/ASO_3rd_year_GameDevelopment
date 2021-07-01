@@ -1,5 +1,7 @@
 #include "Physics.h"
 
+#include "../Utilities/MacroHelper.h"
+
 #include "../Math/MathHelper.h"
 #include "../Math/vec2.h"
 #include "../Math/segment2.h"
@@ -7,29 +9,7 @@
 #include "../Component/Collider/BoxCollider.h"
 #include "../Component/Collider/CircleCollider.h"
 
-Physics* Physics::m_instance = nullptr;
-
-void Physics::Create()
-{
-    if (m_instance == nullptr)
-        m_instance = new Physics();
-}
-
-void Physics::Destroy()
-{
-    if (m_instance != nullptr)
-    {
-        delete m_instance;
-        m_instance = nullptr;
-    }
-}
-
-Physics& Physics::Instance()
-{
-    if (m_instance == nullptr)
-        Create();
-    return *m_instance;
-}
+GenerateDynamicSingleton(Physics);
 
 bool Physics::RayCast(const vec2f& origin, const vec2f& dir, float maxDistance)
 {

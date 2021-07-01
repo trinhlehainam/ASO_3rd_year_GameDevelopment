@@ -12,6 +12,7 @@
 #include "../Systems/ImageMng.h"
 #include "../Input/Input.h"
 #include "../GameObject/Player.h"
+#include "../GameObject/Entity.h"
 
 namespace
 {
@@ -32,10 +33,9 @@ bool GameScene::Init()
 	AnimationMng::LoadAnimationFromXML("Assets/Animations/animation.xml");
 
 	m_map = std::make_shared<TileMap>(m_entityMng, "Assets/Map/map.xml", "map");
-	m_player = std::make_shared<Player>();
+	m_player = std::make_shared<Player>(m_entityMng);
 
 	m_player->Init(INPUT_DEVICE_ID::KEYBOARD);
-	m_entityMng->AddEntity(m_player->GetEntity());
 
 	for (const auto& entity : m_entityMng->GetAllEntities())
 	{

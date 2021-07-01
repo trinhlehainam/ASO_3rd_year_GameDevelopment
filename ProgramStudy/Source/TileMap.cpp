@@ -7,6 +7,7 @@
 
 #include "Utilities/StringHelper.h"
 
+#include "GameObject/Entity.h"
 #include "Systems/ImageMng.h"
 #include "Systems/EntityMng.h"
 #include "Component/TransformComponent.h"
@@ -163,7 +164,7 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName, const std::string&
 			}
 		}
 
-		auto entity = std::make_shared<Entity>("tile-collision");
+		auto entity = std::make_shared<Entity>(m_entityMng.lock(), "tile-collision");
 		entity->AddComponent<TransformComponent>(entity);
 		auto transform = entity->GetComponent<TransformComponent>();
 		transform->Pos = origin;

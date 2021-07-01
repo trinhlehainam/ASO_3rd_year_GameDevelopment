@@ -3,11 +3,12 @@
 #include "../Input/Input.h"
 
 class Entity;
+class EntityMng;
 
 class Player
 {
 public:
-	Player();
+	Player(const std::shared_ptr<EntityMng>& entityMng);
 	~Player();
 public:
 	void Init(INPUT_DEVICE_ID deviceId);

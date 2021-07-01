@@ -1,5 +1,7 @@
 #include "Entity.h"
 
+#include "../Systems/EntityMng.h"
+
 #include "../Component/TransformComponent.h"
 #include "../Component/SpriteComponent.h"
 #include "../Component/Collider/BoxCollider.h"
@@ -7,10 +9,17 @@
 
 Entity::Entity():m_isActive(true)
 {
-	
 }
 
-Entity::Entity(std::string tag):m_isActive(true), m_tag(std::move(tag))
+Entity::Entity(std::string tag) : m_isActive(true), m_tag(std::move(tag))
+{
+}
+
+Entity::Entity(const std::shared_ptr<EntityMng>& entityMng):m_isActive(true), m_entityMng(entityMng)
+{
+}
+
+Entity::Entity(const std::shared_ptr<EntityMng>& entityMng, std::string tag):m_isActive(true), m_tag(std::move(tag)), m_entityMng(entityMng)
 {
 }
 
@@ -26,6 +35,11 @@ void Entity::SetActive(bool activeFlag)
 void Entity::SetTag(std::string tag)
 {
 	m_tag = std::move(tag);
+}
+
+void Entity::SetEntityMng(const std::shared_ptr<EntityMng>& entityMng)
+{
+	m_entityMng = entityMng;
 }
 
 std::string Entity::GetTag() const

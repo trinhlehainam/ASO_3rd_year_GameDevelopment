@@ -9,6 +9,7 @@ using vec2f = vec2<float>;
 
 class ICollider;
 
+// Dynamic Singleton
 class Physics
 {
 public:
@@ -22,6 +23,13 @@ public:
 private:
 	Physics();
 	~Physics();
+
+private:
+	// Don't allow copy and move semantics
+	Physics(const Physics&);
+	Physics(Physics&&) noexcept;
+	void operator = (const Physics&);
+	void operator = (Physics&&) noexcept;
 private:
 	 std::vector<std::weak_ptr<ICollider>> m_colliders;
 	 static Physics* m_instance;

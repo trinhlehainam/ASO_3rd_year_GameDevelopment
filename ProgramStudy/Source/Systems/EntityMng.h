@@ -1,5 +1,9 @@
 #pragma once
-#include "../GameObject/Entity.h"
+#include <vector>
+#include <memory>
+#include <string>
+
+class Entity;
 
 class EntityMng
 {

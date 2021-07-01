@@ -1,5 +1,7 @@
 #include "EntityMng.h"
 
+#include "../GameObject/Entity.h"
+
 EntityMng::EntityMng()
 {
 }

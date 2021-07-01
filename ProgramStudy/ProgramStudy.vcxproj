@@ -212,6 +212,7 @@
     <ClInclude Include="Source\Scenes\TransitionScene.h" />
     <ClInclude Include="Source\Utilities\ScopedTimer.h" />
     <ClInclude Include="Source\TileMap.h" />
+    <ClInclude Include="Source\Utilities\MacroHelper.h" />
     <ClInclude Include="Source\_debug\_DebugConOut.h" />
     <ClInclude Include="Source\_debug\_DebugDispOut.h" />
     <ClInclude Include="Source\Component\TransformComponent.h" />

@@ -6,17 +6,21 @@
 #include <string>
 
 #include "../Component/IComponent.h"
-#include "../Input/Input.h"
+
+class EntityMng;
 
 class Entity
 {
 public:
 	Entity();
 	explicit Entity(std::string tag);
+	explicit Entity(const std::shared_ptr<EntityMng>& entityMng);
+	explicit Entity(const std::shared_ptr<EntityMng>& entityMng, std::string tag);
 	~Entity();
 
 	void SetActive(bool activeFlag);
 	void SetTag(std::string tag);
+	void SetEntityMng(const std::shared_ptr<EntityMng>& entityMng);
 
 	std::string GetTag() const;
 	bool IsActive() const;
@@ -41,5 +45,7 @@ private:
 	std::unordered_map<const type_info*, std::shared_ptr<IComponent>> m_componentMap;
 	bool m_isActive;
 	std::string m_tag;
+	std::vector<std::weak_ptr<Entity>> m_childs;
+	std::weak_ptr<EntityMng> m_entityMng;
 };
 
