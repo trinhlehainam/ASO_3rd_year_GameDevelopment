@@ -7,12 +7,34 @@
 #include "../Component/Collider/BoxCollider.h"
 #include "../Component/Collider/CircleCollider.h"
 
-std::vector<std::weak_ptr<ICollider>> Physics::m_colliders;
+Physics* Physics::m_instance = nullptr;
+
+void Physics::Create()
+{
+    if (m_instance == nullptr)
+        m_instance = new Physics();
+}
+
+void Physics::Destroy()
+{
+    if (m_instance != nullptr)
+    {
+        delete m_instance;
+        m_instance = nullptr;
+    }
+}
+
+Physics& Physics::Instance()
+{
+    if (m_instance == nullptr)
+        Create();
+    return *m_instance;
+}
 
 bool Physics::RayCast(const vec2f& origin, const vec2f& dir, float maxDistance)
 {
     segment2 seg{ origin, origin + unitVec(dir) * maxDistance };
-    for (const auto& pCollider : m_colliders)
+    for (const auto& pCollider : m_instance->m_colliders)
     {
         auto pCollider_checked = pCollider.lock();
         auto collider_type = pCollider_checked->ColliderType();
@@ -42,5 +64,8 @@ bool Physics::RayCast(const vec2f& origin, const vec2f& dir, float maxDistance)
 
 void Physics::AddCollider(const std::shared_ptr<ICollider>& collider)
 {
-    m_colliders.push_back(collider);
+    m_instance->m_colliders.push_back(collider);
 }
+
+Physics::Physics() {}
+Physics::~Physics(){}

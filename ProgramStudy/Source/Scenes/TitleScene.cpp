@@ -13,14 +13,12 @@ TitleScene::TitleScene()
 
 TitleScene::~TitleScene()
 {
-	auto& imageMng = ImageMng::Instance();
-	imageMng.DeleteImage("title");
+	ImageMng::DeleteImage("title");
 }
 
 bool TitleScene::Init()
 {
-	auto& imageMng = ImageMng::Instance();
-	imageMng.AddImage("Assets/Textures/statue.jpg", "title");
+	ImageMng::AddImage("Assets/Textures/statue.jpg", "title");
 
 	return true;
 }
@@ -36,8 +34,7 @@ void TitleScene::RenderToOwnScreen()
 	DxLib::SetDrawScreen(m_screenID);
 	DxLib::ClearDrawScreen();
 
-	auto& imageMng = ImageMng::Instance();
-	auto imageId = imageMng.GetID("title");
+	auto imageId = ImageMng::GetID("title");
 	int x, y;
 	DxLib::GetGraphSize(imageId, &x, &y);
 	DxLib::DrawGraph(0, 0, imageId, 0);

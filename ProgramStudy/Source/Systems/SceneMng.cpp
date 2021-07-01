@@ -8,6 +8,7 @@
 #include "../Math/MathHelper.h"
 #include "../Systems/ImageMng.h"
 #include "../Systems/AnimationMng.h"
+#include "../Systems/Physics.h"
 
 #include "../Scenes/TitleScene.h"
 #include "../Scenes/GameScene.h"
@@ -98,6 +99,7 @@ bool SceneMng::Init()
 
     _dbgSetup(kScreenWidth, kScreenHeight, 255);
 
+	Physics::Create();
 	ImageMng::Create();
 	AnimationMng::Create();
 
@@ -111,6 +113,7 @@ void SceneMng::Exit()
 {
 	ImageMng::Destroy();
 	AnimationMng::Destroy();
+	Physics::Destroy();
     DxLib_End();
 }
 

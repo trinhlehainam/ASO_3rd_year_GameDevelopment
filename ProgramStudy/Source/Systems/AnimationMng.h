@@ -24,15 +24,14 @@ public:
     static void Destroy();
     static AnimationMng& Instance();
 
-    bool LoadAnimationFromXML(const std::string& file);
-    bool HasAnimationList(const std::string& listKey);
-    bool HasAnimation(const std::string& listKey, const std::string& state);
-    const Animation& GetAnimation(const std::string& listKey, const std::string& state) const;
-    int GetDuration_ms(int durationIndex) const;
+    static bool LoadAnimationFromXML(const std::string& file);
+    static bool HasAnimationList(const std::string& listKey);
+    static bool HasAnimation(const std::string& listKey, const std::string& state);
+    static const Animation& GetAnimation(const std::string& listKey, const std::string& state);
+    static int GetDuration_ms(int durationIndex);
 private:
     AnimationMng();
     ~AnimationMng();
-
 private:
     // Not allow copy and move
     // Body of these functions are empty

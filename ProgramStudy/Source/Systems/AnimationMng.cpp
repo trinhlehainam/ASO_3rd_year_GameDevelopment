@@ -60,10 +60,10 @@ bool AnimationMng::LoadAnimationFromXML(const std::string& file)
 		else if (strcmp(pAttr->name(), "columns") == 0)
 			texColumns = std::atoi(pAttr->value());
 	}
-	m_durations_ms.reserve(m_durations_ms.size() + celCount);
+	m_instance->m_durations_ms.reserve(m_instance->m_durations_ms.size() + celCount);
 
-	if (m_listMap.count(listName)) return false;
-	auto& animationMap = m_listMap[listName];
+	if (m_instance->m_listMap.count(listName)) return false;
+	auto& animationMap = m_instance->m_listMap[listName];
 
 	auto pImage = pAminationList->first_node("image");
 	for (auto pAttr = pImage->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
@@ -107,7 +107,7 @@ bool AnimationMng::LoadAnimationFromXML(const std::string& file)
 			int duration = 0;
 			while (ssLine >> duration)
 			{
-				m_durations_ms.push_back(duration);
+				m_instance->m_durations_ms.push_back(duration);
 
 				if (ssLine.peek() == ',')
 					ssLine.ignore();
@@ -123,24 +123,24 @@ bool AnimationMng::LoadAnimationFromXML(const std::string& file)
 
 bool AnimationMng::HasAnimationList(const std::string& listKey)
 {
-	return m_listMap.count(listKey);
+	return m_instance->m_listMap.count(listKey);
 }
 
 bool AnimationMng::HasAnimation(const std::string& listKey, const std::string& state)
 {
-	if (!m_listMap.count(listKey)) return false;
+	if (!m_instance->m_listMap.count(listKey)) return false;
 
-	return m_listMap[listKey].count(listKey + kConnectTag + state);
+	return m_instance->m_listMap[listKey].count(listKey + kConnectTag + state);
 }
 
-const Animation& AnimationMng::GetAnimation(const std::string& listKey, const std::string& state) const
+const Animation& AnimationMng::GetAnimation(const std::string& listKey, const std::string& state)
 {
-	return m_listMap.at(listKey).at(listKey + kConnectTag + state);
+	return m_instance->m_listMap.at(listKey).at(listKey + kConnectTag + state);
 }
 
-int AnimationMng::GetDuration_ms(int durationIndex) const
+int AnimationMng::GetDuration_ms(int durationIndex)
 {
-	return m_durations_ms[durationIndex];
+	return m_instance->m_durations_ms[durationIndex];
 }
 
 AnimationMng::AnimationMng() {}
