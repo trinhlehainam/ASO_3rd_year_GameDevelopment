@@ -17,15 +17,18 @@ bool EntityMng::HasEntity(int entityID) const
 
 std::shared_ptr<Entity> EntityMng::AddEntity(std::string tag)
 {
-	auto entity = std::make_shared<Entity>(std::move(tag));
+	auto entity = std::make_shared<Entity>(m_self.lock(),std::move(tag));
+	entity->m_id = m_currentID;
 	m_entities.push_back(entity);
+	m_entityMap.emplace(m_currentID, entity);
+	++m_currentID;
 	return entity ;
 }
 
 void EntityMng::AddEntity(const std::shared_ptr<Entity>& entity)
 {
 	if (HasEntity(entity->GetEntityID())) return;
-	entity->SetEntityID(m_currentID);
+	entity->m_id = m_currentID;
 	m_entities.push_back(entity);
 	m_entityMap.emplace(m_currentID, entity);
 	++m_currentID;

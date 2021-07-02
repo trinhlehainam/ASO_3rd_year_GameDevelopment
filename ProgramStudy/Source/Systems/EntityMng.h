@@ -23,7 +23,13 @@ public:
 private:
 	std::vector<std::shared_ptr<Entity>> m_entities;
 	std::unordered_map<int, std::shared_ptr<Entity>> m_entityMap;
+	// Use for set EntityMng owner for Entities
+	std::weak_ptr<EntityMng> m_self;
 
 	int m_currentID;
+
+private:
+	// Allow IScene to set up m_self point to this
+	friend class IScene;
 };
 

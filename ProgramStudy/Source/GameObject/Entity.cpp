@@ -37,14 +37,6 @@ void Entity::SetTag(std::string tag)
 	m_tag = std::move(tag);
 }
 
-void Entity::SetEntityID(int id)
-{
-	// TODO
-	auto entityMng = m_entityMng.lock();
-	if (!entityMng->HasEntity(m_id)) return;
-	if (entityMng->HasEntity(id)) return;
-}
-
 void Entity::SetEntityMng(const std::shared_ptr<EntityMng>& entityMng)
 {
 	m_entityMng = entityMng;

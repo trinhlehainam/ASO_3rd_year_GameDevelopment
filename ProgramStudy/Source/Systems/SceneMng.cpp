@@ -111,6 +111,7 @@ bool SceneMng::Init()
 
 void SceneMng::Exit()
 {
+	m_impl.release();
 	ImageMng::Destroy();
 	AnimationMng::Destroy();
 	Physics::Destroy();
