@@ -149,6 +149,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Systems\Renderer.cpp" />
     <ClCompile Include="Source\Systems\Physics.cpp" />
     <ClCompile Include="Source\Systems\EntityMng.cpp" />
     <ClCompile Include="Source\Component\Collider\BoxCollider.cpp" />
@@ -185,6 +186,7 @@
     <ClCompile Include="Source\Component\Collider\TriangleCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Systems\Renderer.h" />
     <ClInclude Include="Source\Systems\Physics.h" />
     <ClInclude Include="Source\Systems\EntityMng.h" />
     <ClInclude Include="Source\Component\Collider\BoxCollider.h" />

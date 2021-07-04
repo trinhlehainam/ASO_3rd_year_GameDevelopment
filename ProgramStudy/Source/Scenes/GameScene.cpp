@@ -5,6 +5,7 @@
 
 #include "../Math/MathHelper.h"
 
+#include "../Systems/Renderer.h"
 #include "../Systems/Physics.h"
 #include "../Systems/AnimationMng.h"
 #include "../Systems/EntityMng.h"
@@ -44,6 +45,13 @@ bool GameScene::Init()
 		Physics::AddCollider(collider);
 	}
 
+	for (const auto& entity : m_entityMng->GetAllEntities())
+	{
+		if (!entity->HasComponent<SpriteComponent>()) continue;
+		auto renderer = entity->GetComponent<SpriteComponent>();
+		Renderer::AddRenderer(renderer);
+	}
+
 	RenderToOwnScreen();
 
     return true;
@@ -66,7 +74,7 @@ void GameScene::RenderToOwnScreen()
 	DxLib::ClearDrawScreen();
 
 	m_map->Render();
-	m_entityMng->Render();
+	Renderer::Render();
 	m_player->Render();
 }
 
