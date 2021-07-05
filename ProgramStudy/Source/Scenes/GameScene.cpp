@@ -74,7 +74,7 @@ void GameScene::RenderToOwnScreen()
 	DxLib::ClearDrawScreen();
 
 	m_map->Render();
-	Renderer::Render();
+	m_entityMng->Render();
 	m_player->Render();
 }
 
