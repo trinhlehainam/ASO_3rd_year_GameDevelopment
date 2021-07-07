@@ -7,6 +7,38 @@
 
 class TransformComponent;
 
+enum class COMPARE
+{
+	IS,
+	IS_NOT,
+	GREATER,
+	LESS,
+	EQUAL,
+	NOT_EQUAL
+};
+
+template<typename T>
+struct AnimatorCondition
+{
+	COMPARE compareMode;
+	std::string paramName;
+	T threshold;
+};
+
+struct AnimatorTransition
+{
+	std::string tag;
+	std::string currentState;
+	std::string destinationState;
+
+	struct
+	{
+		std::vector<AnimatorCondition<float>> floats;
+		std::vector<AnimatorCondition<int>> ints;
+		std::vector<AnimatorCondition<bool>> flags;
+	} conditions;
+};
+
 class Animator : public IComponent
 {
 public:
@@ -53,7 +85,7 @@ private:
 	std::unordered_map<std::string, int> m_intParams;
 
 	// TODO : Implement parameter ID
-	std::string m_state;
+	std::string m_currentState;
 	int m_currentDurationId;
 	int m_timer_ms;
 	int m_loopCount;
