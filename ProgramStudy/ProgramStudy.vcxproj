@@ -214,6 +214,7 @@
     <ClInclude Include="Source\Math\vec2.h" />
     <ClInclude Include="Source\Scenes\TitleScene.h" />
     <ClInclude Include="Source\Scenes\TransitionScene.h" />
+    <ClInclude Include="Source\Utilities\StaticRingBuffer.h" />
     <ClInclude Include="Source\Utilities\ScopedTimer.h" />
     <ClInclude Include="Source\TileMap.h" />
     <ClInclude Include="Source\Utilities\MacroHelper.h" />

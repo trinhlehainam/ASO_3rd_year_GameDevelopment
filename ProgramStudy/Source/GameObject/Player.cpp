@@ -1,6 +1,7 @@
 #include "Player.h"
 
 #include "../_debug/_DebugDispOut.h"
+#include "../_debug/_DebugConOut.h"
 
 #include "Entity.h"
 
@@ -58,6 +59,7 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	// auto collider = m_entity->GetComponent<CircleCollider>();
 	// collider->SetCenterPos(vec2f{ 100.0f, 100.0f });
 	// collider->SetRadius(32.0f);
+
 }
 
 void Player::Update(float deltaTime_s)
@@ -88,6 +90,24 @@ void Player::Update(float deltaTime_s)
 		sprite->Play("Run");
 	else
 		sprite->Play("Idle");
+
+	static float timer_s = 0.5f;
+	timer_s -= deltaTime_s;
+	if (timer_s <= 0.0f)
+	{
+		timer_s = 0.5f;
+		m_testBuffer.add(rand());
+
+		auto head = m_testBuffer.get_head_index();
+		auto tail = m_testBuffer.get_tail_index();
+		auto size = m_testBuffer.get_size();
+		for (size_t i = 0; i < size; ++i)
+		{
+			TRACE("%d  ", m_testBuffer[i]);
+		}
+		TRACE("\n");
+	}
+	
 }
 
 void Player::Render()
