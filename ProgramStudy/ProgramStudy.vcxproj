@@ -72,21 +72,23 @@
   <PropertyGroup Label="UserMacros" />
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(RAPIDXML);$(RAPIDXML_INCLUDE);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(DXLIB_DIR);$(RAPIDXML);$(RAPIDXML_INCLUDE);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(DXLIB_DIR);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(RAPIDXML);$(RAPIDXML_INCLUDE);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <IncludePath>$(DXLIB_DIR);$(RAPIDXML);$(RAPIDXML_INCLUDE);$(VC_IncludePath);$(WindowsSDK_IncludePath);</IncludePath>
+    <LibraryPath>$(DXLIB_DIR);$(VC_LibraryPath_x86);$(WindowsSDK_LibraryPath_x86)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|x64'">
     <LinkIncremental>true</LinkIncremental>
-    <IncludePath>$(RAPIDXML);$(RAPIDXML_INCLUDE);$(DXLIB_DIR);$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXLIB_DIR);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXLIB_DIR);$(RAPIDXML);$(RAPIDXML_INCLUDE);$(DXLIB_DIR);$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXLIB_DIR);$(DXLIB_DIR);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|x64'">
     <LinkIncremental>false</LinkIncremental>
-    <IncludePath>$(RAPIDXML);$(RAPIDXML_INCLUDE);$(DXLIB_DIR);$(IncludePath)</IncludePath>
-    <LibraryPath>$(DXLIB_DIR);$(LibraryPath)</LibraryPath>
+    <IncludePath>$(DXLIB_DIR);$(RAPIDXML);$(RAPIDXML_INCLUDE);$(DXLIB_DIR);$(IncludePath)</IncludePath>
+    <LibraryPath>$(DXLIB_DIR);$(DXLIB_DIR);$(LibraryPath)</LibraryPath>
   </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
@@ -214,7 +216,7 @@
     <ClInclude Include="Source\Math\vec2.h" />
     <ClInclude Include="Source\Scenes\TitleScene.h" />
     <ClInclude Include="Source\Scenes\TransitionScene.h" />
-    <ClInclude Include="Source\Utilities\StaticRingBuffer.h" />
+    <ClInclude Include="Source\Utilities\static_ring.h" />
     <ClInclude Include="Source\Utilities\ScopedTimer.h" />
     <ClInclude Include="Source\TileMap.h" />
     <ClInclude Include="Source\Utilities\MacroHelper.h" />

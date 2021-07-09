@@ -60,6 +60,7 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	// collider->SetCenterPos(vec2f{ 100.0f, 100.0f });
 	// collider->SetRadius(32.0f);
 
+	m_testBuffer.set_head_to_tail_loop();
 }
 
 void Player::Update(float deltaTime_s)
@@ -96,15 +97,14 @@ void Player::Update(float deltaTime_s)
 	if (timer_s <= 0.0f)
 	{
 		timer_s = 0.5f;
-		m_testBuffer.add(rand());
+		m_testBuffer.insert(rand());
 
 		auto head = m_testBuffer.get_head_index();
 		auto tail = m_testBuffer.get_tail_index();
-		auto size = m_testBuffer.get_size();
-		for (size_t i = 0; i < size; ++i)
-		{
-			TRACE("%d  ", m_testBuffer[i]);
-		}
+		auto size = m_testBuffer.get_size();	
+
+		for (auto b : m_testBuffer)
+			TRACE("%d  ", b);
 		TRACE("\n");
 	}
 	

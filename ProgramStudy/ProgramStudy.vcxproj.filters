@@ -236,7 +236,7 @@
     <ClInclude Include="Source\Component\Animator.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Utilities\StaticRingBuffer.h">
+    <ClInclude Include="Source\Utilities\static_ring.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
