@@ -1,6 +1,6 @@
 #pragma once
 #include <memory>
-#include "../Input/Input.h"
+#include "../Input/IInput.h"
 #include "../Utilities/static_ring.h"
 
 class Entity;
@@ -19,7 +19,7 @@ public:
 	std::shared_ptr<Entity> GetEntity() const;
 private:
 	std::shared_ptr<Entity> m_entity;
-	std::unique_ptr<Input> m_input;
+	std::unique_ptr<IInput> m_input;
 	static_ring<int, 5> m_testBuffer;
 };
 

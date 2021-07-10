@@ -151,6 +151,7 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClCompile Include="Source\Input\InputCommand.cpp" />
     <ClCompile Include="Source\Component\Animator.cpp" />
     <ClCompile Include="Source\Systems\Renderer.cpp" />
     <ClCompile Include="Source\Systems\Physics.cpp" />
@@ -166,7 +167,7 @@
     <ClCompile Include="Source\Math\Geometry\AABB.cpp" />
     <ClCompile Include="Source\Math\Geometry\Circle.cpp" />
     <ClCompile Include="Source\Math\Geometry\Triangle.cpp" />
-    <ClCompile Include="Source\Input\Input.cpp" />
+    <ClCompile Include="Source\Input\IInput.cpp" />
     <ClCompile Include="Source\Systems\ImageMng.cpp" />
     <ClCompile Include="Source\Scenes\GameScene.cpp" />
     <ClCompile Include="Source\Systems\SceneMng.cpp" />
@@ -189,6 +190,7 @@
     <ClCompile Include="Source\Component\Collider\TriangleCollider.cpp" />
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="Source\Input\InputCommand.h" />
     <ClInclude Include="Source\Component\Animator.h" />
     <ClInclude Include="Source\Systems\Renderer.h" />
     <ClInclude Include="Source\Systems\Physics.h" />
@@ -204,7 +206,7 @@
     <ClInclude Include="Source\Math\Geometry\AABB.h" />
     <ClInclude Include="Source\Math\Geometry\Circle.h" />
     <ClInclude Include="Source\Math\Geometry\Triangle.h" />
-    <ClInclude Include="Source\Input\Input.h" />
+    <ClInclude Include="Source\Input\IInput.h" />
     <ClInclude Include="Source\Input\InputID.h" />
     <ClInclude Include="Source\Systems\ImageMng.h" />
     <ClInclude Include="Source\Scenes\GameScene.h" />
@@ -216,6 +218,8 @@
     <ClInclude Include="Source\Math\vec2.h" />
     <ClInclude Include="Source\Scenes\TitleScene.h" />
     <ClInclude Include="Source\Scenes\TransitionScene.h" />
+    <ClInclude Include="Source\Utilities\dynamic_ring.h" />
+    <ClInclude Include="Source\Utilities\ring_iterator.h" />
     <ClInclude Include="Source\Utilities\static_ring.h" />
     <ClInclude Include="Source\Utilities\ScopedTimer.h" />
     <ClInclude Include="Source\TileMap.h" />

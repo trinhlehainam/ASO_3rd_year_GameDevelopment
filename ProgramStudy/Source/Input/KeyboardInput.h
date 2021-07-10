@@ -1,7 +1,7 @@
 #pragma once
-#include "Input.h"
+#include "IInput.h"
 
-class KeyboardInput : public Input
+class KeyboardInput : public IInput
 {
 public:
 	KeyboardInput();

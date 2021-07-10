@@ -1,9 +1,9 @@
 #pragma once
-#include "Input.h"
+#include "IInput.h"
 
 #include <DxLib.h>
 
-class JoypadXInput: public Input
+class JoypadXInput: public IInput
 {
 public:
 	JoypadXInput();

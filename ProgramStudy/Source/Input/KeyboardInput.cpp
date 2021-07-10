@@ -9,7 +9,7 @@ namespace
 }
 
 
-KeyboardInput::KeyboardInput():Input(ArrayInputs_t{ 
+KeyboardInput::KeyboardInput():IInput(ArrayInputs_t{ 
 	KEY_INPUT_UP,
 	KEY_INPUT_DOWN,
 	KEY_INPUT_LEFT,

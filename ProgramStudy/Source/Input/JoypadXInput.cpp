@@ -1,7 +1,7 @@
 #include "JoypadXInput.h"
 
 JoypadXInput::JoypadXInput():
-	Input(ArrayInputs_t{
+	IInput(ArrayInputs_t{
 	XINPUT_BUTTON_DPAD_UP,
 	XINPUT_BUTTON_DPAD_DOWN,
 	XINPUT_BUTTON_DPAD_LEFT,
