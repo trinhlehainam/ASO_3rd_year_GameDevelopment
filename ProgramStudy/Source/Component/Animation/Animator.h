@@ -1,43 +1,13 @@
 #pragma once
-#include "IComponent.h"
+#include "../IComponent.h"
 
 #include <string>
 #include <vector>
 #include <unordered_map>
 
+#include "AnimatorState.h"
+
 class TransformComponent;
-
-enum class COMPARE
-{
-	IS,
-	IS_NOT,
-	GREATER,
-	LESS,
-	EQUAL,
-	NOT_EQUAL
-};
-
-template<typename T>
-struct AnimatorCondition
-{
-	COMPARE compareMode;
-	std::string paramName;
-	T threshold;
-};
-
-struct AnimatorTransition
-{
-	std::string tag;
-	std::string currentState;
-	std::string destinationState;
-
-	struct
-	{
-		std::vector<AnimatorCondition<float>> floats;
-		std::vector<AnimatorCondition<int>> ints;
-		std::vector<AnimatorCondition<bool>> flags;
-	} conditions;
-};
 
 class Animator : public IComponent
 {
@@ -72,20 +42,15 @@ private:
 	bool HasParameter(const std::string& name);
 private:
 	std::weak_ptr<TransformComponent> m_tranform;
-
-	// Animation Map : <StateKey, key to access Animation in AnimationMng>
-	std::unordered_map<std::string, std::string> m_animationMap;
-
-	// TODO : Implement Transition
-
+	
+	std::unordered_map<std::string, AnimatorState> m_stateMap;
 
 	// Parameters
 	std::unordered_map<std::string, float> m_floatParams;
 	std::unordered_map<std::string, bool> m_boolParams;
 	std::unordered_map<std::string, int> m_intParams;
 
-	// TODO : Implement parameter ID
-	std::string m_currentState;
+	std::string m_currentAnimState;
 	int m_currentDurationId;
 	int m_timer_ms;
 	int m_loopCount;

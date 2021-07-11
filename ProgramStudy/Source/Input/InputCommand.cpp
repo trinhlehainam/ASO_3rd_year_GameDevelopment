@@ -79,8 +79,8 @@ bool InputCommand::IsMatch(const std::string& key, float inLastTime_s)
 	if (pattern.empty()) return false;
 
 	const auto kMatchNum = pattern.size();
-	size_t matchIndex = 0;
 	auto currentTime = std::chrono::high_resolution_clock::now();
+	size_t matchIndex = 0;
 	for (const auto& input : m_impl->m_inputs)
 	{
 		float deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(currentTime - input.time).count();
