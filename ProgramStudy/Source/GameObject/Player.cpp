@@ -11,6 +11,7 @@
 
 #include "../Input/KeyboardInput.h"
 #include "../Input/JoypadXInput.h"
+#include "../Input/InputCommand.h"
 
 #include "../Component/TransformComponent.h"
 #include "../Component/SpriteComponent.h"
@@ -39,12 +40,15 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	switch (deviceId)
 	{
 	case INPUT_DEVICE_ID::KEYBOARD:
-		m_input = std::make_unique<KeyboardInput>();
+		m_input = std::make_shared<KeyboardInput>();
 		break;
 	case INPUT_DEVICE_ID::JOYPAD:
-		m_input = std::make_unique<JoypadXInput>();
+		m_input = std::make_shared<JoypadXInput>();
 		break;
 	}
+
+	m_inputCommand = std::make_shared<InputCommand>(m_input);
+	m_inputCommand->AddPattern("combo-1", INPUT_ID::BTN1, INPUT_ID::BTN2, INPUT_ID::BTN2);
 
 	m_entity->SetTag("kinght");
 	m_entity->AddComponent<TransformComponent>(m_entity);
@@ -59,13 +63,12 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	// auto collider = m_entity->GetComponent<CircleCollider>();
 	// collider->SetCenterPos(vec2f{ 100.0f, 100.0f });
 	// collider->SetRadius(32.0f);
-
-	m_testBuffer.set_head_to_tail_loop();
 }
 
 void Player::Update(float deltaTime_s)
 {
 	m_input->Update();
+	m_inputCommand->Update();
 	auto speed = vec2f{ 0.0f,0.0f };
 
 	const auto& transform = m_entity->GetComponent<TransformComponent>();
@@ -87,27 +90,19 @@ void Player::Update(float deltaTime_s)
 		color = Physics::RayCast(transform->Pos, dir, 50.0f) ? 0xff0000 : 0x00ff00;
 	}
 
+	if (m_inputCommand->IsMatch("combo-1"))
+	{
+		sprite->Play("Attack");
+		return;
+	}
+		
 	if (speed.x != 0.0f || speed.y != 0.0f)
 		sprite->Play("Run");
 	else
 		sprite->Play("Idle");
 
-	static float timer_s = 0.5f;
-	timer_s -= deltaTime_s;
-	if (timer_s <= 0.0f)
-	{
-		timer_s = 0.5f;
-		m_testBuffer.insert(rand());
-
-		auto head = m_testBuffer.get_head_index();
-		auto tail = m_testBuffer.get_tail_index();
-		auto size = m_testBuffer.get_size();	
-
-		for (auto b : m_testBuffer)
-			TRACE("%d  ", b);
-		TRACE("\n");
-	}
 	
+
 }
 
 void Player::Render()

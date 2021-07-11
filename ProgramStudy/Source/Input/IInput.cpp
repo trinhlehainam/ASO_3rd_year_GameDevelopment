@@ -30,7 +30,16 @@ std::vector<INPUT_ID> IInput::GetPressedKeys() const
 {
 	std::vector<INPUT_ID> ret;
 	for (auto id : INPUT_ID())
-		if (m_inputStates[m_currentState].test(static_cast<size_t>(id)))
+		if (IsPressed(id))
+			ret.push_back(id);
+	return ret;
+}
+
+std::vector<INPUT_ID> IInput::GetJustPressedKeys() const
+{
+	std::vector<INPUT_ID> ret;
+	for (auto id : INPUT_ID())
+		if (IsJustPressed(id))
 			ret.push_back(id);
 	return ret;
 }

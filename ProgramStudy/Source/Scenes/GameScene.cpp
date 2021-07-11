@@ -11,7 +11,7 @@
 #include "../Systems/EntityMng.h"
 #include "../TileMap.h"
 #include "../Systems/ImageMng.h"
-#include "../Input/Input.h"
+#include "../Input/IInput.h"
 #include "../GameObject/Player.h"
 #include "../GameObject/Entity.h"
 

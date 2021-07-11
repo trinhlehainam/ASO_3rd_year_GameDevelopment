@@ -33,6 +33,7 @@ public:
 	void SetInput(INPUT_ID id, int DX_KEY_INPUT);
 
 	std::vector<INPUT_ID> GetPressedKeys() const;
+	std::vector<INPUT_ID> GetJustPressedKeys() const;
 
 	bool IsPressed(INPUT_ID id) const;
 	bool IsJustPressed(INPUT_ID id) const;
