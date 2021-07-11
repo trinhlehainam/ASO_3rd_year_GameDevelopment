@@ -21,7 +21,7 @@ public:
 	using PatternMap_t = std::unordered_map<std::string, std::vector<INPUT_ID>>;
 
 public:
-	explicit InputCommand(const std::shared_ptr<IInput>& controller, float duration_s);
+	explicit InputCommand(const std::shared_ptr<IInput>& controller);
 	~InputCommand();
 
 	template<typename...Args>
@@ -32,12 +32,12 @@ public:
 	}
 
 	bool IsMatch(const std::string& patternKey);
+	bool IsMatch(const std::string& patternKey, float timeThreshold_s);
 
 	void Update();
 private:
 	std::weak_ptr<IInput> m_controller;
 	static_ring<InputInfo, 10> m_inputs;
 	PatternMap_t m_patternMap;
-	float m_duration_s;
 };
 

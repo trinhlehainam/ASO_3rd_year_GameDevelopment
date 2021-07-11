@@ -47,7 +47,7 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 		break;
 	}
 
-	m_inputCommand = std::make_shared<InputCommand>(m_input, 1.0f);
+	m_inputCommand = std::make_shared<InputCommand>(m_input);
 	m_inputCommand->AddPattern("combo-1", INPUT_ID::BTN1, INPUT_ID::BTN2, INPUT_ID::BTN2);
 
 	m_entity->SetTag("kinght");
@@ -90,7 +90,7 @@ void Player::Update(float deltaTime_s)
 		color = Physics::RayCast(transform->Pos, dir, 50.0f) ? 0xff0000 : 0x00ff00;
 	}
 
-	if (m_inputCommand->IsMatch("combo-1"))
+	if (m_inputCommand->IsMatch("combo-1", 1.0f))
 	{
 		sprite->Play("Attack");
 		return;

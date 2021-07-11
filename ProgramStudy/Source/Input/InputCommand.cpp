@@ -2,7 +2,7 @@
 
 #include "../_debug/_DebugConOut.h"
 
-InputCommand::InputCommand(const std::shared_ptr<IInput>& controller, float duration_s) : m_controller(controller), m_duration_s(duration_s)
+InputCommand::InputCommand(const std::shared_ptr<IInput>& controller) : m_controller(controller)
 {
 	m_inputs.set_tail_to_head_loop();
 }
@@ -21,7 +21,26 @@ bool InputCommand::IsMatch(const std::string& key)
 	for (const auto& input : m_inputs)
 	{
 		float deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - input.time).count();
-		if (deltaTime > m_duration_s)
+
+		matchIndex = input.id == pattern[matchIndex] ? matchIndex + 1 : 0;
+		if (matchIndex >= kMatchNum)
+			return true;
+	}
+
+	return false;
+}
+
+bool InputCommand::IsMatch(const std::string& key, float timeThreshold_s)
+{
+	const auto& pattern = m_patternMap.at(key);
+	if (pattern.empty()) return false;
+
+	const auto kMatchNum = pattern.size();
+	size_t matchIndex = 0;
+	for (const auto& input : m_inputs)
+	{
+		float deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - input.time).count();
+		if (deltaTime > timeThreshold_s)
 			continue;
 
 		matchIndex = input.id == pattern[matchIndex] ? matchIndex + 1 : 0;
