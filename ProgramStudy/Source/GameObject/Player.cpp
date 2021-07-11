@@ -48,7 +48,7 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	}
 
 	m_inputCommand = std::make_shared<InputCommand>(m_input);
-	m_inputCommand->AddPattern("combo-1", INPUT_ID::BTN1, INPUT_ID::BTN2, INPUT_ID::BTN2);
+	m_inputCommand->AddPattern("combo-1", { INPUT_ID::BTN1, INPUT_ID::BTN2, INPUT_ID::BTN2, INPUT_ID::BTN3 });
 
 	m_entity->SetTag("kinght");
 	m_entity->AddComponent<TransformComponent>(m_entity);

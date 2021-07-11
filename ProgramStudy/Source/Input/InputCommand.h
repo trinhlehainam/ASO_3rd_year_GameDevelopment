@@ -1,43 +1,27 @@
 #pragma once
-#include <unordered_map>
-#include <vector>
-#include <string>
 #include <memory>
-#include <chrono>
+#include <string>
+#include <vector>
 
-#include "../Utilities/static_ring.h"
+#include "InputID.h"
 
-#include "IInput.h"
+class IInput;
 
 class InputCommand
 {
 public:
-	struct InputInfo
-	{
-		INPUT_ID id;
-		std::chrono::steady_clock::time_point time;
-	};
-
-	using PatternMap_t = std::unordered_map<std::string, std::vector<INPUT_ID>>;
-
-public:
 	explicit InputCommand(const std::shared_ptr<IInput>& controller);
 	~InputCommand();
 
-	template<typename...Args>
-	void AddPattern(std::string key, Args&&...args)
-	{
-		assert(!m_patternMap.count(key));
-		(m_patternMap[key].push_back(std::forward<Args>(args)),...);
-	}
+	void AddPattern(const std::string& key, std::vector<INPUT_ID> inputIDs);
 
 	bool IsMatch(const std::string& patternKey);
-	bool IsMatch(const std::string& patternKey, float timeThreshold_s);
+	bool IsMatch(const std::string& patternKey, float inLastTime_s);
 
+public:
 	void Update();
 private:
-	std::weak_ptr<IInput> m_controller;
-	static_ring<InputInfo, 10> m_inputs;
-	PatternMap_t m_patternMap;
+	class Impl;
+	std::unique_ptr<Impl> m_impl;
 };
 
