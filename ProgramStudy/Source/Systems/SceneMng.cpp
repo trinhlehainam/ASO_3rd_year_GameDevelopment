@@ -74,7 +74,7 @@ void SceneMng::Impl::Render()
 
 float SceneMng::Impl::GetDeltaTime_s()
 {
-	return std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - lastTime).count();;
+	return std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - lastTime).count();
 }
 #pragma endregion
 

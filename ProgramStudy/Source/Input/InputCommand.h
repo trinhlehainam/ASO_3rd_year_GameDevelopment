@@ -3,6 +3,7 @@
 #include <vector>
 #include <string>
 #include <memory>
+#include <chrono>
 
 #include "../Utilities/static_ring.h"
 
@@ -14,13 +15,13 @@ public:
 	struct InputInfo
 	{
 		INPUT_ID id;
-		float time;
+		std::chrono::steady_clock::time_point time;
 	};
 
 	using PatternMap_t = std::unordered_map<std::string, std::vector<INPUT_ID>>;
 
 public:
-	explicit InputCommand(const std::shared_ptr<IInput>& controller);
+	explicit InputCommand(const std::shared_ptr<IInput>& controller, float duration_s);
 	~InputCommand();
 
 	template<typename...Args>
@@ -35,7 +36,8 @@ public:
 	void Update();
 private:
 	std::weak_ptr<IInput> m_controller;
-	static_ring<INPUT_ID, 10> m_inputs;
+	static_ring<InputInfo, 10> m_inputs;
 	PatternMap_t m_patternMap;
+	float m_duration_s;
 };
 
