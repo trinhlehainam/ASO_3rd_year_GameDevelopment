@@ -83,7 +83,7 @@ bool AnimationMng::LoadAnimationFromXML(const std::string& file)
 		{
 			std::string line;
 			data >> line;
-			std::stringstream ssLine{ line };
+			std::stringstream ssLine{ std::move(line) };
 			int duration = 0;
 			while (ssLine >> duration)
 			{

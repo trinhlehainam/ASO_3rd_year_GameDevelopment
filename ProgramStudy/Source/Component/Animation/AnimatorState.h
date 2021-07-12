@@ -3,7 +3,8 @@
 
 struct AnimatorState
 {
-	std::string motionName;
+	std::string animationList;
+	std::string animationState;
 	std::vector<AnimatorTransition> transitions;
 	std::string tag;
 };

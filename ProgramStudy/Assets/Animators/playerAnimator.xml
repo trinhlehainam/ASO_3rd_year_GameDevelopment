@@ -2,12 +2,12 @@
 <animatorController name ="playerAnimator" entryState="idle">
 	<parameter name="isAttack" type="1" value="0.0"/>
 	<parameter name="speed" type="0" value="0.0"/>
-	<animatorState name ="attack" motion="knight-attack">
+	<animatorState name ="attack" animationList="knight" animationState="Attack">
 		<transition name ="" currentState="attack" destinationState="idle">
 			<condition mode ="1" paraName ="isAttack" threshold="0"/>
 		</transition>
 	</animatorState>
-	<animatorState name ="idle" motion="knight-idle">
+	<animatorState name ="idle" animationList="knight" animationState="Idle">
 		<transition name ="" currentState="idle" destinationState="run">
 			<condition mode ="5" paraName ="speed" threshold="0"/>
 		</transition>
@@ -15,7 +15,7 @@
 			<condition mode ="0" paraName ="isAttack" threshold="1"/>
 		</transition>
 	</animatorState>
-	<animatorState name ="run" motion="knight-run">
+	<animatorState name ="run" animationList="knight" animationState="Run">
 		<transition name ="" currentState="run" destinationState="idle">
 			<condition mode ="4" paraName ="speed" threshold="0"/>
 		</transition>
