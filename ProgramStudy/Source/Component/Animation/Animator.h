@@ -19,7 +19,7 @@ public:
 	bool GetBool(const std::string& name);
 	int GetInteger(const std::string& name);
 
-	void Play(const std::string& state);
+	void Play(const std::string& animatorState);
 
 public:
 	void Init() override;

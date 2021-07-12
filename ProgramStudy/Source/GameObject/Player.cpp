@@ -14,7 +14,6 @@
 #include "../Input/InputCommand.h"
 
 #include "../Component/TransformComponent.h"
-#include "../Component/SpriteComponent.h"
 #include "../Component/Collider/BoxCollider.h"
 #include "../Component/Collider/CircleCollider.h"
 #include "../Component/Animation/Animator.h"
@@ -56,10 +55,6 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	auto transform = m_entity->GetComponent<TransformComponent>();
 	transform->Pos = vec2f{ 100.0f,100.0f };
 	transform->Scale = vec2f{ 1.5f,1.5f };
-	m_entity->AddComponent<SpriteComponent>(m_entity);
-	auto sprite = m_entity->GetComponent<SpriteComponent>();
-	sprite->PickAnimationList("knight");
-	sprite->Play("Idle");
 	// m_entity->AddComponent<CircleCollider>(m_entity);
 	// auto collider = m_entity->GetComponent<CircleCollider>();
 	// collider->SetCenterPos(vec2f{ 100.0f, 100.0f });
@@ -78,7 +73,7 @@ void Player::Update(float deltaTime_s)
 	auto speed = vec2f{ 0.0f,0.0f };
 
 	const auto& transform = m_entity->GetComponent<TransformComponent>();
-	const auto& sprite = m_entity->GetComponent<SpriteComponent>();
+	auto animator = m_entity->GetComponent<Animator>();
 
 	if (m_input->IsPressed(INPUT_ID::UP))
 		speed.y = -100.0f;
@@ -90,22 +85,23 @@ void Player::Update(float deltaTime_s)
 		speed.x = 100.0f;
 	transform->Pos += speed * deltaTime_s;
 
+	animator->SetFloat("speed", dot(speed, speed));
+
+	if (m_inputCommand->IsMatch("combo-1", 1.0f))
+	{
+		animator->SetBool("isAttack", true);
+		return;
+	}
+	else
+	{
+		animator->SetBool("isAttack", false);
+	}
+
 	if (speed != 0.0f)
 	{
 		dir = unitVec(speed);
 		color = Physics::RayCast(transform->Pos, dir, 50.0f) ? 0xff0000 : 0x00ff00;
 	}
-
-	if (m_inputCommand->IsMatch("combo-1", 1.0f))
-	{
-		sprite->Play("Attack");
-		return;
-	}
-		
-	if (speed.x != 0.0f || speed.y != 0.0f)
-		sprite->Play("Run");
-	else
-		sprite->Play("Idle");
 
 }
 
