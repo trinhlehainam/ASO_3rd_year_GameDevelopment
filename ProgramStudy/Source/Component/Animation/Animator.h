@@ -20,6 +20,7 @@ public:
 	int GetInteger(const std::string& name);
 
 	void Play(const std::string& state);
+
 public:
 	void Init() override;
 	void Update(float deltaTime_s) override;

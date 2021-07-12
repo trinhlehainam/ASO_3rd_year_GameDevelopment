@@ -1,5 +1,7 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<animatorController name ="playerAnimator">
+<animatorController name ="playerAnimator" entryState="idle">
+	<parameter name="isAttack" type="1" value="0.0"/>
+	<parameter name="speed" type="0" value="0.0"/>
 	<animatorState name ="attack" motion="knight-attack">
 		<transition name ="" currentState="attack" destinationState="idle">
 			<condition mode ="1" paraName ="isAttack" threshold="0"/>

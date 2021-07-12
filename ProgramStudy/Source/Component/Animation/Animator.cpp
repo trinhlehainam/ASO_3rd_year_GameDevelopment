@@ -15,9 +15,9 @@ namespace
 {
 	enum class PARAMETER_TYPE
 	{
-		FLOAT,
-		BOOL,
-		INTEGER
+		FLOAT			= 0,
+		BOOL			= 1,
+		INTEGER			= 2
 	};
 }
 
@@ -37,6 +37,7 @@ public:
 
 private:
 	void AddParameter(const std::string& name, PARAMETER_TYPE paramType);
+	void AddParameter(const std::string& name, PARAMETER_TYPE paramType, float value);
 	bool HasParameter(const std::string& name);
 private:
 	friend Animator;
@@ -62,7 +63,7 @@ Animator::Impl::~Impl() {}
 
 void Animator::Impl::AddParameter(const std::string& name, PARAMETER_TYPE paramType)
 {
-	assert(HasParameter(name));
+	assert(!HasParameter(name));
 	switch (paramType)
 	{
 	case PARAMETER_TYPE::FLOAT:
@@ -73,6 +74,25 @@ void Animator::Impl::AddParameter(const std::string& name, PARAMETER_TYPE paramT
 		break;
 	case PARAMETER_TYPE::INTEGER:
 		intParams.emplace(name, kDefaultInt);
+		break;
+	default:
+		break;
+	}
+}
+
+void Animator::Impl::AddParameter(const std::string& name, PARAMETER_TYPE paramType, float value)
+{
+	assert(!HasParameter(name));
+	switch (paramType)
+	{
+	case PARAMETER_TYPE::FLOAT:
+		floatParams.emplace(name, value);
+		break;
+	case PARAMETER_TYPE::BOOL:
+		boolParams.emplace(name, static_cast<bool>(value));
+		break;
+	case PARAMETER_TYPE::INTEGER:
+		intParams.emplace(name, static_cast<int>(value));
 		break;
 	default:
 		break;
@@ -103,7 +123,41 @@ void Animator::AddAnimatorController(const std::string& path)
 	doc.parse<0>(&content[0]);
 
 	auto pAnimController = doc.first_node();
-	for (auto pState = pAnimController->first_node(); pState; pState = pState->next_sibling())
+
+	std::string animtorName;
+	std::string entryState;
+	for (auto pAttr = pAnimController->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+	{
+		if (strcmp(pAttr->name(), "name") == 0)
+			animtorName = std::move(pAttr->value());
+		else if (strcmp(pAttr->name(), "entryState") == 0)
+			entryState = std::move(pAttr->value());
+	}
+	m_impl->currentAnimState = std::move(entryState);
+
+	// Load Parameters
+	for (auto pParameter = pAnimController->first_node("parameter"); pParameter; pParameter = pParameter->next_sibling())
+	{
+		if (strcmp(pParameter->name(), "parameter") != 0)
+			break;
+
+		std::string paraName;
+		PARAMETER_TYPE type{};
+		float value = 0.0f;
+		for (auto pAttr = pParameter->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
+		{
+			if (strcmp(pAttr->name(), "name") == 0)
+				paraName = std::move(pAttr->value());
+			else if (strcmp(pAttr->name(), "type") == 0)
+				type = static_cast<PARAMETER_TYPE>(std::atoi(pAttr->value()));
+			else if (strcmp(pAttr->name(), "value") == 0)
+				value = std::strtof(std::move(pAttr->value()), 0);
+		}
+		m_impl->AddParameter(paraName, type, value);
+	}
+	//
+
+	for (auto pState = pAnimController->first_node("animatorState"); pState; pState = pState->next_sibling())
 	{
 		// Load AnimationState
 		std::string stateName;
