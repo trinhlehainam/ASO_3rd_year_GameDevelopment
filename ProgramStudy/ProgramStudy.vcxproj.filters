@@ -257,7 +257,7 @@
     <ClInclude Include="Source\Component\Animation\AnimationTransition.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="Source\Component\Animation\CompareMode.h">
+    <ClInclude Include="Source\Component\Animation\ConditionMode.h">
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
     <ClInclude Include="Source\Component\Animation\AnimatorCondition.h">

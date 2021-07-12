@@ -1,0 +1,21 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<animatorController name ="playerAnimator">
+	<animatorState name ="attack" motion="knight-attack">
+		<transition name ="" currentState="attack" destinationState="idle">
+			<condition mode ="1" paraName ="isAttack" threshold="0"/>
+		</transition>
+	</animatorState>
+	<animatorState name ="idle" motion="knight-idle">
+		<transition name ="" currentState="idle" destinationState="run">
+			<condition mode ="5" paraName ="speed" threshold="0"/>
+		</transition>
+		<transition name ="" currentState="idle" destinationState="attack">
+			<condition mode ="0" paraName ="isAttack" threshold="1"/>
+		</transition>
+	</animatorState>
+	<animatorState name ="run" motion="knight-run">
+		<transition name ="" currentState="run" destinationState="idle">
+			<condition mode ="4" paraName ="speed" threshold="0"/>
+		</transition>
+	</animatorState>
+</animatorController>

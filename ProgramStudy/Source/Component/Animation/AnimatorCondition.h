@@ -1,11 +1,11 @@
 #pragma once
 #include <string>
 
-#include "CompareMode.h"
+#include "ConditionMode.h"
 
 struct AnimatorCondition
 {
-	COMPARE_MODE compareMode;
+	CONDITION_MODE compareMode;
 	std::string paramName;
 	float threshold;
 };

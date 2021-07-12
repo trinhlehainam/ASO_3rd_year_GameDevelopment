@@ -1,7 +1,6 @@
 #pragma once
 #include <vector>
 
-#include "CompareMode.h"
 #include "AnimatorCondition.h"
 
 struct AnimatorTransition
@@ -12,6 +11,6 @@ struct AnimatorTransition
 	std::string tag;
 	bool isMute;
 
-	void AddCondition(COMPARE_MODE mode, const std::string& paraName, float threshold);
+	void AddCondition(CONDITION_MODE mode, const std::string& paraName, float threshold);
 };
 

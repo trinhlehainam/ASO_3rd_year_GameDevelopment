@@ -6,6 +6,7 @@
 #include "../Component/SpriteComponent.h"
 #include "../Component/Collider/BoxCollider.h"
 #include "../Component/Collider/CircleCollider.h"
+#include "../Component/Animation/Animator.h"
 
 Entity::Entity():m_isActive(true), m_id(-1)
 {
@@ -106,6 +107,7 @@ template std::shared_ptr<component> Entity::GetComponent<>();\
 #pragma region Instantiation
 InstantiateFuncTemplate(TransformComponent);
 InstantiateFuncTemplate(SpriteComponent);
+InstantiateFuncTemplate(Animator);
 InstantiateFuncTemplate(BoxCollider);
 InstantiateFuncTemplate(CircleCollider);
 template bool Entity::HasComponent<ICollider>();

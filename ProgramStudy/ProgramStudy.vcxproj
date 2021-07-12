@@ -192,7 +192,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Source\Component\Animation\AnimationTransition.h" />
-    <ClInclude Include="Source\Component\Animation\CompareMode.h" />
+    <ClInclude Include="Source\Component\Animation\ConditionMode.h" />
     <ClInclude Include="Source\Component\Animation\AnimatorCondition.h" />
     <ClInclude Include="Source\Component\Animation\AnimatorState.h" />
     <ClInclude Include="Source\Input\InputCommand.h" />

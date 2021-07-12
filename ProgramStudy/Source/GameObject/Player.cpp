@@ -17,6 +17,7 @@
 #include "../Component/SpriteComponent.h"
 #include "../Component/Collider/BoxCollider.h"
 #include "../Component/Collider/CircleCollider.h"
+#include "../Component/Animation/Animator.h"
 
 namespace
 {
@@ -48,7 +49,7 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	}
 
 	m_inputCommand = std::make_shared<InputCommand>(m_input);
-	m_inputCommand->AddPattern("combo-1", { INPUT_ID::BTN1, INPUT_ID::BTN2, INPUT_ID::BTN2, INPUT_ID::BTN3 });
+	m_inputCommand->AddPattern("combo-1", { INPUT_ID::LEFT, INPUT_ID::RIGHT, INPUT_ID::BTN1, INPUT_ID::BTN2, INPUT_ID::BTN2, INPUT_ID::BTN3 });
 
 	m_entity->SetTag("kinght");
 	m_entity->AddComponent<TransformComponent>(m_entity);
@@ -63,6 +64,11 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 	// auto collider = m_entity->GetComponent<CircleCollider>();
 	// collider->SetCenterPos(vec2f{ 100.0f, 100.0f });
 	// collider->SetRadius(32.0f);
+
+	m_entity->AddComponent<Animator>(m_entity);
+	auto animator = m_entity->GetComponent<Animator>();
+	animator->AddAnimatorController("Assets/Animators/playerAnimator.xml");
+
 }
 
 void Player::Update(float deltaTime_s)
