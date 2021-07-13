@@ -16,11 +16,17 @@
 
 namespace
 {
-	enum class PARAMETER_TYPE
+	enum class ANIMATOR_PARAMETER_TYPE
 	{
 		FLOAT			= 0,
 		BOOL			= 1,
 		INTEGER			= 2
+	};
+
+	struct AnimatorParameter
+	{
+		ANIMATOR_PARAMETER_TYPE type;
+		float value;
 	};
 }
 
@@ -39,8 +45,8 @@ public:
 	~Impl();
 
 private:
-	void AddParameter(const std::string& name, PARAMETER_TYPE paramType);
-	void AddParameter(const std::string& name, PARAMETER_TYPE paramType, float value);
+	void AddParameter(const std::string& name, ANIMATOR_PARAMETER_TYPE paramType);
+	void AddParameter(const std::string& name, ANIMATOR_PARAMETER_TYPE paramType, float value);
 	bool HasParameter(const std::string& name);
 
 	void Play(const std::string& state);
@@ -63,10 +69,7 @@ private:
 
 	std::unordered_map<std::string, AnimatorState> stateMap;
 
-	// Parameters
-	std::unordered_map<std::string, float> floatParams;
-	std::unordered_map<std::string, bool> boolParams;
-	std::unordered_map<std::string, int> intParams;
+	std::unordered_map<std::string, AnimatorParameter> paramMap;
 
 	std::string currentState;
 	int currentDurationID;
@@ -78,47 +81,21 @@ Animator::Impl::Impl(const std::shared_ptr<Entity>& owner) :
 	transform(owner->GetComponent<TransformComponent>()), currentDurationID(0), timer_ms(0), loopCount(0), updateFunc(&Impl::UpdateSleep) {}
 Animator::Impl::~Impl() {}
 
-void Animator::Impl::AddParameter(const std::string& name, PARAMETER_TYPE paramType)
+void Animator::Impl::AddParameter(const std::string& name, ANIMATOR_PARAMETER_TYPE paramType)
 {
 	assert(!HasParameter(name));
-	switch (paramType)
-	{
-	case PARAMETER_TYPE::FLOAT:
-		floatParams.emplace(name, kDefaultFloat);
-		break;
-	case PARAMETER_TYPE::BOOL:
-		boolParams.emplace(name, kDefaultBool);
-		break;
-	case PARAMETER_TYPE::INTEGER:
-		intParams.emplace(name, kDefaultInt);
-		break;
-	default:
-		break;
-	}
+	paramMap.emplace(name, AnimatorParameter{ paramType, 0.0f });
 }
 
-void Animator::Impl::AddParameter(const std::string& name, PARAMETER_TYPE paramType, float value)
+void Animator::Impl::AddParameter(const std::string& name, ANIMATOR_PARAMETER_TYPE paramType, float value)
 {
 	assert(!HasParameter(name));
-	switch (paramType)
-	{
-	case PARAMETER_TYPE::FLOAT:
-		floatParams.emplace(name, value);
-		break;
-	case PARAMETER_TYPE::BOOL:
-		boolParams.emplace(name, static_cast<bool>(value));
-		break;
-	case PARAMETER_TYPE::INTEGER:
-		intParams.emplace(name, static_cast<int>(value));
-		break;
-	default:
-		break;
-	}
+	paramMap.emplace(name, AnimatorParameter{ paramType, value });
 }
 
 bool Animator::Impl::HasParameter(const std::string& name)
 {
-	return floatParams.count(name) || intParams.count(name) || boolParams.count(name);
+	return paramMap.count(name);
 }
 
 void Animator::Impl::Play(const std::string& state)
@@ -154,17 +131,17 @@ bool Animator::Impl::CheckCondition(const AnimatorCondition& condition)
 	switch (condition.compareMode)
 	{
 	case CONDITION_MODE::IS_TRUE:
-		return boolParams[condition.paramName] == true;
+		return static_cast<bool>(paramMap[condition.paramName].value) == true;
 	case CONDITION_MODE::IS_FALSE:
-		return boolParams[condition.paramName] == false;
+		return static_cast<bool>(paramMap[condition.paramName].value) == false;
 	case CONDITION_MODE::GREATER:
-		return floatParams[condition.paramName] > condition.threshold;
+		return paramMap[condition.paramName].value > condition.threshold;
 	case CONDITION_MODE::LESS:
-		return floatParams[condition.paramName] < condition.threshold;
+		return paramMap[condition.paramName].value < condition.threshold;
 	case CONDITION_MODE::EQUAL:
-		return floatParams[condition.paramName] ==condition.threshold;
+		return paramMap[condition.paramName].value == condition.threshold;
 	case CONDITION_MODE::NOT_EQUAL:
-		return floatParams[condition.paramName] != condition.threshold;
+		return paramMap[condition.paramName].value != condition.threshold;
 	default:
 		return false;
 	}
@@ -291,14 +268,14 @@ void Animator::AddAnimatorController(const std::string& path)
 			break;
 
 		std::string paraName;
-		PARAMETER_TYPE type{};
+		ANIMATOR_PARAMETER_TYPE type{};
 		float value = 0.0f;
 		for (auto pAttr = pParameter->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
 		{
 			if (strcmp(pAttr->name(), "name") == 0)
 				paraName = std::move(pAttr->value());
 			else if (strcmp(pAttr->name(), "type") == 0)
-				type = static_cast<PARAMETER_TYPE>(std::atoi(pAttr->value()));
+				type = static_cast<ANIMATOR_PARAMETER_TYPE>(std::atoi(pAttr->value()));
 			else if (strcmp(pAttr->name(), "value") == 0)
 				value = std::strtof(std::move(pAttr->value()), 0);
 		}
@@ -376,38 +353,44 @@ void Animator::AddAnimatorController(const std::string& path)
 
 void Animator::SetFloat(const std::string& name, float value)
 {
-	assert(m_impl->floatParams.count(name));
-	m_impl->floatParams[name] = value;
+	assert(m_impl->HasParameter(name));
+	assert(m_impl->paramMap[name].type == ANIMATOR_PARAMETER_TYPE::FLOAT);
+	m_impl->paramMap[name].value = value;
 }
 
 void Animator::SetBool(const std::string& name, bool flag)
 {
-	assert(m_impl->boolParams.count(name));
-	m_impl->boolParams[name] = flag;
+	assert(m_impl->HasParameter(name));
+	assert(m_impl->paramMap[name].type == ANIMATOR_PARAMETER_TYPE::BOOL);
+	m_impl->paramMap[name].value = static_cast<float>(flag);
 }
 
 void Animator::SetInteger(const std::string& name, int value)
 {
-	assert(m_impl->intParams.count(name));
-	m_impl->intParams[name] = value;
+	assert(m_impl->HasParameter(name));
+	assert(m_impl->paramMap[name].type == ANIMATOR_PARAMETER_TYPE::INTEGER);
+	m_impl->paramMap[name].value = static_cast<float>(value);
 }
 
 float Animator::GetFloat(const std::string& name)
 {
-	assert(m_impl->floatParams.count(name));
-	return m_impl->floatParams[name];
+	assert(m_impl->HasParameter(name));
+	assert(m_impl->paramMap[name].type == ANIMATOR_PARAMETER_TYPE::FLOAT);
+	return m_impl->paramMap[name].value;
 }
 
 bool Animator::GetBool(const std::string& name)
 {
-	assert(m_impl->boolParams.count(name));
-	return m_impl->boolParams[name];
+	assert(m_impl->HasParameter(name));
+	assert(m_impl->paramMap[name].type == ANIMATOR_PARAMETER_TYPE::BOOL);
+	return static_cast<bool>(m_impl->paramMap[name].value);
 }
 
 int Animator::GetInteger(const std::string& name)
 {
-	assert(m_impl->intParams.count(name));
-	return m_impl->intParams[name];
+	assert(m_impl->HasParameter(name));
+	assert(m_impl->paramMap[name].type == ANIMATOR_PARAMETER_TYPE::INTEGER);
+	return static_cast<int>(m_impl->paramMap[name].value);
 }
 
 void Animator::Play(const std::string& animatorState)
