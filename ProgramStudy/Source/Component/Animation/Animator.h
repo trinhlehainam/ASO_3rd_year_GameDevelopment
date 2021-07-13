@@ -9,7 +9,7 @@ public:
 	explicit Animator(const std::shared_ptr<Entity>& owner);
 	~Animator();
 
-	void AddAnimatorController(const std::string& path);
+	void AddAnimatorController(const std::string& animatorControllerKey);
 
 	void SetFloat(const std::string& name, float value);
 	void SetBool(const std::string& name, bool flag);

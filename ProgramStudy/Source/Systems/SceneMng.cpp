@@ -8,6 +8,7 @@
 #include "../Math/MathHelper.h"
 #include "../Systems/ImageMng.h"
 #include "../Systems/AnimationMng.h"
+#include "../Systems/AnimatorControllerMng.h"
 #include "../Systems/Physics.h"
 #include "../Systems/Renderer.h"
 
@@ -104,6 +105,7 @@ bool SceneMng::Init()
 	Physics::Create();
 	ImageMng::Create();
 	AnimationMng::Create();
+	AnimatorControllerMng::Create();
 
 	m_impl->scene = std::make_unique<TitleScene>();
 	m_impl->scene->Init();
@@ -116,6 +118,7 @@ void SceneMng::Exit()
 	m_impl.release();
 	ImageMng::Destroy();
 	AnimationMng::Destroy();
+	AnimatorControllerMng::Destroy();
 	Physics::Destroy();
 	Renderer::Destroy();
     DxLib_End();

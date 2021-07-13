@@ -8,6 +8,7 @@
 #include "../Systems/Renderer.h"
 #include "../Systems/Physics.h"
 #include "../Systems/AnimationMng.h"
+#include "../Systems/AnimatorControllerMng.h"
 #include "../Systems/EntityMng.h"
 #include "../TileMap.h"
 #include "../Systems/ImageMng.h"
@@ -32,6 +33,7 @@ GameScene::~GameScene()
 bool GameScene::Init()
 {
 	AnimationMng::LoadAnimationFromXML("Assets/Animations/animation.xml");
+	AnimatorControllerMng::LoadAnimatorControllerFromXML("Assets/Animators/playerAnimator.xml");
 
 	m_map = std::make_shared<TileMap>(m_entityMng, "Assets/Map/map.xml", "map");
 	m_player = std::make_shared<Player>(m_entityMng);

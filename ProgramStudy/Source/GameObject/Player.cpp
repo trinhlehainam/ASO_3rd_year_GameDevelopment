@@ -62,7 +62,7 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 
 	m_entity->AddComponent<Animator>(m_entity);
 	auto animator = m_entity->GetComponent<Animator>();
-	animator->AddAnimatorController("Assets/Animators/playerAnimator.xml");
+	animator->AddAnimatorController("playerAnimator");
 
 }
 
