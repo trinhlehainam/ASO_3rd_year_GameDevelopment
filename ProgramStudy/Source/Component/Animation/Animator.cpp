@@ -1,16 +1,14 @@
 #include "Animator.h"
 
 #include <cassert>
-#include <vector>
-#include <unordered_map>
 
 #include <DxLib.h>
 
 #include "../TransformComponent.h"
 
 #include "../../Systems/AnimatorControllerMng.h"
-#include "../../Math/MathHelper.h"
 #include "../../Systems/AnimationMng.h"
+#include "../../Math/MathHelper.h"
 #include "../../GameObject/Entity.h"
 
 
@@ -42,6 +40,12 @@ private:
 
 	using UpdateFunc_t = void (Impl::*)(float);
 	UpdateFunc_t updateFunc;
+
+	void ActiveCheckTransition();
+	void Sleep();
+
+	using CheckTransitionFunc_t = void (Impl::*)();
+	CheckTransitionFunc_t checkTransFunc;
 private:
 	friend Animator;
 
@@ -57,6 +61,7 @@ private:
 
 Animator::Impl::Impl(const std::shared_ptr<Entity>& owner) :
 	updateFunc(&Impl::UpdateSleep),
+	checkTransFunc(&Impl::Sleep),
 	transform(owner->GetComponent<TransformComponent>()), 
 	currentDurationID(0), timer_ms(0), loopCount(0) 
 	{}
@@ -119,19 +124,7 @@ bool Animator::Impl::CheckCondition(const AnimatorCondition& condition)
 
 void Animator::Impl::Update(float deltaTime_s)
 {
-	if (!AnimatorControllerMng::Has(animatorKey)) return;
-	const auto& animator = AnimatorControllerMng::Get(animatorKey);
-	// Check conditions
-	const auto& state = animator.stateMap.at(currentState);
-	for (const auto& transition : state.transitions)
-	{
-		for (const auto& condition : transition.conditions)
-		{
-			if (CheckCondition(condition))
-				Play(transition.destinationState);
-		}
-	}
-	//
+	(this->*checkTransFunc)();
 
 	(this->*updateFunc)(deltaTime_s);
 }
@@ -206,6 +199,29 @@ void Animator::Impl::UpdateSleep(float deltaTime_s)
 {
 }
 
+void Animator::Impl::ActiveCheckTransition()
+{
+	if (!AnimatorControllerMng::Has(animatorKey)) return;
+	const auto& animator = AnimatorControllerMng::Get(animatorKey);
+	// Check conditions
+	const auto& state = animator.stateMap.at(currentState);
+	for (const auto& transition : state.transitions)
+	{
+		for (const auto& condition : transition.conditions)
+		{
+			if (CheckCondition(condition))
+				Play(transition.destinationState);
+		}
+	}
+	//
+
+	checkTransFunc = &Impl::Sleep;
+}
+
+void Animator::Impl::Sleep()
+{
+}
+
 #pragma endregion
 
 
@@ -233,6 +249,8 @@ void Animator::SetFloat(const std::string& name, float value)
 	assert(animator.HasParameter(name));
 	assert(animator.paramMap.at(name).type == ANIMATOR_PARAMETER_TYPE::FLOAT);
 	animator.paramMap.at(name).value = value;
+
+	m_impl->checkTransFunc = &Impl::ActiveCheckTransition;
 }
 
 void Animator::SetBool(const std::string& name, bool flag)
@@ -242,6 +260,8 @@ void Animator::SetBool(const std::string& name, bool flag)
 	assert(animator.HasParameter(name));
 	assert(animator.paramMap.at(name).type == ANIMATOR_PARAMETER_TYPE::BOOL);
 	animator.paramMap.at(name).value = static_cast<float>(flag);
+
+	m_impl->checkTransFunc = &Impl::ActiveCheckTransition;
 }
 
 void Animator::SetInteger(const std::string& name, int value)
@@ -251,6 +271,8 @@ void Animator::SetInteger(const std::string& name, int value)
 	assert(animator.HasParameter(name));
 	assert(animator.paramMap.at(name).type == ANIMATOR_PARAMETER_TYPE::INTEGER);
 	animator.paramMap.at(name).value = static_cast<float>(value);
+
+	m_impl->checkTransFunc = &Impl::ActiveCheckTransition;
 }
 
 float Animator::GetFloat(const std::string& name)
