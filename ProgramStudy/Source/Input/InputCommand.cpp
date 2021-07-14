@@ -63,8 +63,6 @@ bool InputCommand::IsMatch(const std::string& key)
 	size_t matchIndex = 0;
 	for (const auto& input : m_impl->m_inputs)
 	{
-		float deltaTime = std::chrono::duration<float, std::chrono::seconds::period>(std::chrono::high_resolution_clock::now() - input.time).count();
-
 		matchIndex = input.id == pattern[matchIndex] ? matchIndex + 1 : 0;
 		if (matchIndex >= kMatchNum)
 			return true;

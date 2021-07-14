@@ -24,7 +24,7 @@ public:
     static void Destroy();
     static AnimationMng& Instance();
 
-    static bool LoadAnimationFromXML(const std::string& file);
+    static bool LoadFromXML(const std::string& file);
     static bool HasAnimationList(const std::string& listKey);
     static bool HasAnimation(const std::string& listKey, const std::string& state);
     static const Animation& GetAnimation(const std::string& listKey, const std::string& state);

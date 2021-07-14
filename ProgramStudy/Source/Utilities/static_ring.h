@@ -10,16 +10,11 @@ class static_ring
 public:
 	using iterator = ring_iterator<T, size>;
 
-	static_ring() :m_head(size - 1), m_tail((m_head + 1) % size), m_data{}, m_isReversedLoop(false) {}
+	static_ring();
 	~static_ring() {}
 
-	void insert(const T& value)
-	{
-		m_head = (m_head + 1) % size;
-		m_tail = (m_tail + 1) % size;
-		m_data[m_head] = value;
-	}
-
+	void insert(const T& value);
+	
 	void set_head_to_tail_loop() { m_isReversedLoop = true; }
 	void set_tail_to_head_loop() { m_isReversedLoop = false; }
 
@@ -34,9 +29,7 @@ public:
 	T* data() { return m_data.data(); }
 #pragma endregion
 
-	iterator begin() { 
-		return iterator(m_data.data(), m_isReversedLoop ? m_head : m_tail, m_isReversedLoop); 
-	}
+	iterator begin();
 	iterator end() { return iterator(); }
 private:
 	size_t m_head;
@@ -44,3 +37,20 @@ private:
 	std::array<T, size> m_data;
 	bool m_isReversedLoop;
 };
+
+template<typename T, size_t size>
+inline static_ring<T, size>::static_ring() :m_head(size - 1), m_tail((m_head + 1) % size), m_data{}, m_isReversedLoop(false) {}
+
+template<typename T, size_t size>
+inline void static_ring<T, size>::insert(const T& value)
+{
+	m_head = (m_head + 1) % size;
+	m_tail = (m_tail + 1) % size;
+	m_data[m_head] = value;
+}
+
+template<typename T, size_t size>
+inline ring_iterator<T, size> static_ring<T, size>::begin()
+{
+	return ring_iterator<T, size>(m_data.data(), m_isReversedLoop ? m_head : m_tail, m_isReversedLoop);
+}

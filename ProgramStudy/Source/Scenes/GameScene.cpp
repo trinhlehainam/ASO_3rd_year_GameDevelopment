@@ -32,8 +32,8 @@ GameScene::~GameScene()
 
 bool GameScene::Init()
 {
-	AnimationMng::LoadAnimationFromXML("Assets/Animations/animation.xml");
-	AnimatorControllerMng::LoadAnimatorControllerFromXML("Assets/Animators/playerAnimator.xml");
+	AnimationMng::LoadFromXML("Assets/Animations/animation.xml");
+	AnimatorControllerMng::LoadFromXML("Assets/Animators/playerAnimator.xml");
 
 	m_map = std::make_shared<TileMap>(m_entityMng, "Assets/Map/map.xml", "map");
 	m_player = std::make_shared<Player>(m_entityMng);

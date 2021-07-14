@@ -9,7 +9,7 @@ public:
 	static AnimatorControllerMng& Instance();
 
 public:
-	static void LoadAnimatorControllerFromXML(const std::string& path);
+	static void LoadFromXML(const std::string& path);
 	static AnimatorController& Get(const std::string& animatorControllerKey);
 	static bool Has(const std::string& animatorControllerKey);
 private:

@@ -15,7 +15,7 @@ namespace
 
 GenerateDynamicSingleton(AnimationMng);
 
-bool AnimationMng::LoadAnimationFromXML(const std::string& file)
+bool AnimationMng::LoadFromXML(const std::string& file)
 {
 	rapidxml::xml_document<> doc;
 	auto content = StringHelper::LoadFileToStringBuffer(file);

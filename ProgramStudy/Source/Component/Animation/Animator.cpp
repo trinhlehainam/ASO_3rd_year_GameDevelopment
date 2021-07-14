@@ -1,6 +1,7 @@
 #include "Animator.h"
 
 #include <cassert>
+#include <bitset>
 
 #include <DxLib.h>
 
@@ -195,9 +196,7 @@ void Animator::Impl::UpdateLoop(float deltaTime_s)
 	timer_ms -= static_cast<int>(deltaTime_s / MathHelper::kMsToSecond);
 }
 
-void Animator::Impl::UpdateSleep(float deltaTime_s)
-{
-}
+void Animator::Impl::UpdateSleep(float deltaTime_s) {}
 
 void Animator::Impl::ActiveCheckTransition()
 {
@@ -207,39 +206,36 @@ void Animator::Impl::ActiveCheckTransition()
 	const auto& state = animator.stateMap.at(currentState);
 	for (const auto& transition : state.transitions)
 	{
+		bool checkFlag = true;
 		for (const auto& condition : transition.conditions)
-		{
-			if (CheckCondition(condition))
-				Play(transition.destinationState);
-		}
+			checkFlag = checkFlag & CheckCondition(condition);
+
+		if (checkFlag) 
+			Play(transition.destinationState);
 	}
 	//
 
 	checkTransFunc = &Impl::Sleep;
 }
 
-void Animator::Impl::Sleep()
-{
-}
+void Animator::Impl::Sleep() {}
 
 #pragma endregion
 
 
 Animator::Animator(const std::shared_ptr<Entity>& owner):
-	IComponent(owner),m_impl(std::make_unique<Impl>(owner))
-{
-}
+	IComponent(owner),m_impl(std::make_unique<Impl>(owner)) {}
 
-Animator::~Animator()
-{
-}
+Animator::~Animator() {}
 
 void Animator::AddAnimatorController(const std::string& key)
 {
 	assert(AnimatorControllerMng::Has(key));
+	
 	m_impl->animatorKey = key;
-
-	m_impl->currentState = AnimatorControllerMng::Get(key).entryState;
+	auto entryState = AnimatorControllerMng::Get(key).entryState;
+	Play(entryState);
+	m_impl->currentState = std::move(entryState);
 }
 
 void Animator::SetFloat(const std::string& name, float value)

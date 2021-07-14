@@ -9,7 +9,7 @@
 
 GenerateDynamicSingleton(AnimatorControllerMng);
 
-void AnimatorControllerMng::LoadAnimatorControllerFromXML(const std::string& path)
+void AnimatorControllerMng::LoadFromXML(const std::string& path)
 {
 	rapidxml::xml_document<> doc;
 	auto content = StringHelper::LoadFileToStringBuffer(path);
@@ -17,6 +17,7 @@ void AnimatorControllerMng::LoadAnimatorControllerFromXML(const std::string& pat
 
 	auto pAnimController = doc.first_node();
 
+	// Load animator attribute
 	std::string animatorName;
 	std::string entryState;
 	for (auto pAttr = pAnimController->first_attribute(); pAttr; pAttr = pAttr->next_attribute())
@@ -28,6 +29,7 @@ void AnimatorControllerMng::LoadAnimatorControllerFromXML(const std::string& pat
 	}
 	auto& animatorController = m_instance->m_animatorMap[animatorName];
 	animatorController.entryState = std::move(entryState);
+	//
 
 	// Load Parameters
 	for (auto pParameter = pAnimController->first_node("parameter"); pParameter; pParameter = pParameter->next_sibling())
