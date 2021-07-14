@@ -49,7 +49,7 @@ void Player::Init(INPUT_DEVICE_ID deviceId)
 
 	m_inputCommand = std::make_shared<InputCommand>(m_input);
 	m_inputCommand->AddPattern("combo-1", { INPUT_ID::LEFT, INPUT_ID::RIGHT, INPUT_ID::BTN1, INPUT_ID::BTN2, INPUT_ID::BTN2, INPUT_ID::BTN3 });
-	m_inputCommand->AddPattern("combo-2", { INPUT_ID::DOWN, INPUT_ID::DOWN, INPUT_ID::DOWN, INPUT_ID::DOWN, INPUT_ID::DOWN });
+	m_inputCommand->AddPattern("combo-2", { INPUT_ID::LEFT, INPUT_ID::DOWN, INPUT_ID::RIGHT });
 
 	m_entity->SetTag("kinght");
 	m_entity->AddComponent<TransformComponent>(m_entity);
@@ -88,23 +88,9 @@ void Player::Update(float deltaTime_s)
 
 	animator->SetFloat("speed", dot(speed, speed));
 
-	if (m_inputCommand->IsMatch("combo-1", 1.0f))
-	{
-		animator->SetBool("isAttack", true);
-	}
-	else
-	{
-		animator->SetBool("isAttack", false);
-	}
+	animator->SetBool("isAttack", m_inputCommand->IsMatch("combo-1", 1.0f));
 
-	if (m_inputCommand->IsMatch("combo-2", 1.0f))
-	{
-		animator->SetBool("isImpact", true);
-	}
-	else
-	{
-		animator->SetBool("isImpact", false);
-	}
+	animator->SetBool("isImpact", m_inputCommand->IsMatch("combo-2", 0.5f));
 
 	if (speed != 0.0f)
 	{

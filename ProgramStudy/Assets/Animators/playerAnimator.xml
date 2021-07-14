@@ -28,14 +28,9 @@
 		</transition>
 	</animatorState>
   
-  <animatorState name ="impact" animationList="knight" animationState="Ground Impact">
+  <animatorState name ="impact" animationList="knight" animationState="Dead">
     <transition name ="" currentState="impact" destinationState="idle">
-      <condition mode ="0" paraName ="isImpact" threshold="0"/>
-      <condition mode ="4" paraName ="speed" threshold="0"/>
-    </transition>
-    <transition name ="" currentState="impact" destinationState="run">
-      <condition mode ="0" paraName ="isImpact" threshold="0"/>
-      <condition mode ="5" paraName ="speed" threshold="0"/>
+      <condition mode ="1" paraName ="isImpact" threshold="0"/>
     </transition>
   </animatorState>
 </animatorController>

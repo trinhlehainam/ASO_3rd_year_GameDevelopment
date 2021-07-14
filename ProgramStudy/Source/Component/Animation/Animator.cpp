@@ -208,8 +208,8 @@ void Animator::Impl::ActiveCheckTransition()
 	{
 		bool checkFlag = true;
 		for (const auto& condition : transition.conditions)
-			checkFlag = checkFlag & CheckCondition(condition);
-
+			checkFlag = CheckCondition(condition) && checkFlag;
+			
 		if (checkFlag) 
 			Play(transition.destinationState);
 	}
