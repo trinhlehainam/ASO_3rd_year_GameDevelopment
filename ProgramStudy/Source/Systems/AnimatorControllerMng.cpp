@@ -91,7 +91,7 @@ void AnimatorControllerMng::LoadFromXML(const std::string& path)
 			}
 
 			AnimatorTransition transition{};
-			transition.tag = transName;
+			transition.tag = transName == "" ? currentState + "->" + destState : transName;
 			transition.currentState = std::move(currentState);
 			transition.destinationState = std::move(destState);
 
