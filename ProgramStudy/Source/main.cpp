@@ -1,4 +1,4 @@
-#include <DxLib.h>
+#include <windows.h>
 
 #include "Systems/SceneMng.h"
 

@@ -18,7 +18,7 @@
 			<condition mode ="0" paraName ="isAttack" threshold="1"/>
 		</transition>
 		<transition name ="" currentState="idle" destinationState="impact">
-		  <condition mode ="0" paraName ="isImpact" threshold="1"/>
+			<condition mode ="0" paraName ="isImpact" threshold="1"/>
 		</transition>
 	</animatorState>
   
@@ -31,14 +31,9 @@
 		</transition>
 	</animatorState>
   
-  <animatorState name ="impact" animationList="knight" animationState="Dead">
-    <transition name ="" currentState="impact" destinationState="idle">
-      <condition mode ="1" paraName ="isImpact" threshold="0"/>
-      <condition mode ="4" paraName ="speed" threshold="0"/>
-    </transition>
-	  <transition name ="" currentState="impact" destinationState="run">
-      <condition mode ="1" paraName ="isImpact" threshold="0"/>
-      <condition mode ="5" paraName ="speed" threshold="0"/>
-    </transition>
-  </animatorState>
+	<animatorState name ="impact" animationList="knight" animationState="Dead">
+ 		<transition name ="" currentState="impact" destinationState="idle">
+ 			<condition mode ="1" paraName ="isImpact" threshold="0"/>
+ 		</transition>
+	</animatorState>
 </animatorController>
