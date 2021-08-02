@@ -62,14 +62,38 @@ void InputCommand::LoadPatternFromXML(const std::string& file)
 {
 	rapidxml::xml_document<> doc;
 	auto content = StringHelper::LoadFileToStringBuffer(file);
+	doc.parse<0>(&content[0]);
 
 	auto pGroup = doc.first_node();
 
 	for (auto pPattern = pGroup->first_node(); pPattern; pPattern = pPattern->next_sibling())
 	{
 		std::string name{ std::move(pPattern->first_attribute("name")->value()) };
+		std::vector<INPUT_ID> keys;
 		auto pKey = pPattern->first_node("key");
+		std::stringstream keys_ss{ std::move(pKey->value()) };
+		std::string key;
+		while (keys_ss >> key)
+		{
+			if (key == "up")
+				keys.push_back(INPUT_ID::UP);
+			else if (key == "down")
+				keys.push_back(INPUT_ID::DOWN);
+			else if (key == "left")
+				keys.push_back(INPUT_ID::LEFT);
+			else if (key == "right")
+				keys.push_back(INPUT_ID::RIGHT);
+			else if (key == "btn1")
+				keys.push_back(INPUT_ID::BTN1);
+			else if (key == "btn2")
+				keys.push_back(INPUT_ID::BTN2);
+			else if (key == "btn3")
+				keys.push_back(INPUT_ID::BTN3);
+			else if (key == "btn4")
+				keys.push_back(INPUT_ID::BTN4);
 
+		}
+		m_impl->m_patternMap.emplace(std::move(name), std::move(keys));
 	}
 
 	doc.clear();
