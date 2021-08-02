@@ -32,7 +32,7 @@ void TileMap::LoadMapDataFromXML(const std::string& fileName, const std::string&
 	auto content = StringHelper::LoadFileToStringBuffer(fileName);
 	doc.parse<0>(&content[0]);
 
-	rapidxml::xml_node<>* pMap = doc.first_node();
+	auto pMap = doc.first_node();
 
 	// Tile info
 	for (auto pAttr = pMap->first_attribute(); pAttr; pAttr = pAttr->next_attribute())

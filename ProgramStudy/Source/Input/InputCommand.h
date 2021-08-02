@@ -14,6 +14,7 @@ public:
 	~InputCommand();
 
 	void AddPattern(const std::string& key, std::vector<INPUT_ID> inputIDs);
+	void LoadPatternFromXML(const std::string& file);
 
 	bool IsMatch(const std::string& patternKey);
 	bool IsMatch(const std::string& patternKey, float inLastTime_s);

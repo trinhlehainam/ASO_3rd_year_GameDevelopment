@@ -282,4 +282,9 @@
       <Filter>ヘッダー ファイル</Filter>
     </ClInclude>
   </ItemGroup>
+  <ItemGroup>
+    <Xsd Include="Assets\InputPatterns\inputpattern.xml">
+      <Filter>ヘッダー ファイル</Filter>
+    </Xsd>
+  </ItemGroup>
 </Project>

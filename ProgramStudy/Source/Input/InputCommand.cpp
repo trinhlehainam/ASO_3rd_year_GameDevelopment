@@ -2,7 +2,11 @@
 
 #include <unordered_map>
 #include <chrono>
+#include <sstream>
 
+#include <rapidxml.hpp>
+
+#include "../Utilities/StringHelper.h"
 #include "../Utilities/static_ring.h"
 #include "../Input/IInput.h"
 #include "../_debug/_DebugConOut.h"
@@ -52,6 +56,23 @@ void InputCommand::AddPattern(const std::string& key, std::vector<INPUT_ID> inpu
 {
 	assert(!m_impl->m_patternMap.count(key));
 	m_impl->m_patternMap[key] = std::move(inputIDs);
+}
+
+void InputCommand::LoadPatternFromXML(const std::string& file)
+{
+	rapidxml::xml_document<> doc;
+	auto content = StringHelper::LoadFileToStringBuffer(file);
+
+	auto pGroup = doc.first_node();
+
+	for (auto pPattern = pGroup->first_node(); pPattern; pPattern = pPattern->next_sibling())
+	{
+		std::string name{ std::move(pPattern->first_attribute("name")->value()) };
+		auto pKey = pPattern->first_node("key");
+
+	}
+
+	doc.clear();
 }
 
 bool InputCommand::IsMatch(const std::string& key)
